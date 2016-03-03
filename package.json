@@ -13,7 +13,17 @@
     "prepublish": "npm run lint && npm run build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
-  "dependencies": {},
+  "dependencies": {
+    "conventional-commits-parser": "^1.0.1",
+    "es6-promisify": "^3.0.0",
+    "fs-promise": "^0.5.0",
+    "git-branch": "^0.3.0",
+    "latest-version": "^2.0.0",
+    "lodash": "^4.6.1",
+    "package-json": "^2.3.1",
+    "resolve": "^1.1.7",
+    "semver": "^5.1.0"
+  },
   "devDependencies": {
     "babel-eslint": "^5.0.0",
     "babel-plugin-external-helpers": "^6.5.0",
