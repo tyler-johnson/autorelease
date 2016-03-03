@@ -5,7 +5,7 @@ import gitRawCommits from "git-raw-commits";
 export default async function(pkg) {
 	// grab all raw commits since the last release
 	let fetch = gitRawCommits({
-		from: pkg.gitHead
+		from: pkg ? pkg.gitHead : null
 	});
 
 	// parse commits like the changelog
@@ -37,5 +37,5 @@ export default async function(pkg) {
 	}
 
 	// return the new version
-	return semver.inc(pkg.version, type);
+	return pkg ? semver.inc(pkg.version, type) : "1.0.0";
 }
