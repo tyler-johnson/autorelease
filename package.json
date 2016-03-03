@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "autorelease": "node ./cli.js pre && npm publish && node ./cli.js post"
   },
   "dependencies": {
     "conventional-changelog": "^1.1.0",
@@ -28,6 +28,8 @@
     "semver": "^5.1.0"
   },
   "devDependencies": {
+    "autorelease-github": "^1.0.0",
+    "autorelease-travis": "^1.0.0",
     "babel-eslint": "^5.0.0",
     "babel-plugin-external-helpers": "^6.5.0",
     "babel-plugin-transform-async-to-generator": "^6.5.0",
