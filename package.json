@@ -1,28 +1,56 @@
 {
   "name": "autorelease",
-  "description": "Release NPM versions based on commit messages.",
+  "description": "Automatically release NPM packages based on commit messages.",
   "author": "Tyler Johnson <tyler@tylerjohnson.me>",
   "repository": {
     "type": "git",
     "url": "https://github.com/tyler-johnson/autorelease.git"
   },
   "main": "index.js",
-  "jsnext:main": "src/index.js",
   "scripts": {
-    "lint": "jshint src/ test/",
-    "build": "make",
-    "prepublish": "npm run lint && npm run build",
+    "lint": "eslint src/ test/",
+    "build": "make clean && make",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
-  "dependencies": {},
-  "keywords": [],
-  "license": "MIT",
+  "autorelease": {
+    "branch": "master"
+  },
+  "dependencies": {
+    "conventional-changelog": "^1.1.0",
+    "conventional-commits-parser": "^1.0.1",
+    "es6-promisify": "^3.0.0",
+    "fs-promise": "^0.5.0",
+    "git-branch": "^0.3.0",
+    "git-raw-commits": "^1.1.0",
+    "latest-version": "^2.0.0",
+    "lodash": "^4.6.1",
+    "package-json": "^2.3.1",
+    "resolve": "^1.1.7",
+    "semver": "^5.1.0"
+  },
   "devDependencies": {
-    "babel-preset-es2015-rollup": "~1.1.1",
-    "jshint": "~2.9.1",
-    "rollup": "~0.25.4",
-    "rollup-plugin-babel": "~2.4.0",
-    "tape": "~4.4.0",
-    "semantic-release": "^4.3.5"
-  }
+    "babel-eslint": "^5.0.0",
+    "babel-plugin-external-helpers": "^6.5.0",
+    "babel-plugin-transform-async-to-generator": "^6.5.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.4",
+    "babel-plugin-transform-es2015-parameters": "^6.6.4",
+    "babel-plugin-transform-object-rest-spread": "^6.6.4",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint": "^2.2.0",
+    "rollup": "^0.25.4",
+    "rollup-plugin-babel": "^2.4.0",
+    "semantic-release": "^4.3.5",
+    "tape": "^4.4.0"
+  },
+  "keywords": [
+    "auto",
+    "automatic",
+    "release",
+    "semantic",
+    "version",
+    "package",
+    "publish",
+    "commit"
+  ],
+  "license": "MIT"
 }
