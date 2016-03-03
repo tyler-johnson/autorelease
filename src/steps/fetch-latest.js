@@ -5,5 +5,9 @@ export default async function(r, {npmtag="latest",package:pkg}) {
 		throw new Error("Missing a package name.");
 	}
 
-	return await fetchPkg(pkg.name, npmtag);
+	try {
+		return await fetchPkg(pkg.name, npmtag);
+	} catch(e) {
+		if (!/doesn't exist/.test(e.message)) throw e;
+	}
 }
