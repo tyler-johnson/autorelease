@@ -1,6 +1,8 @@
 import changelog from "conventional-changelog";
 
-export default async function(r, {packageFile:pkgfile,preset="angular"}) {
+export default async function(r, {changelog:enableChangelog=true,packageFile:pkgfile,preset="angular"}) {
+	if (!enableChangelog) return;
+
 	let clog = changelog({
 		pkg: { path: pkgfile },
 		preset
