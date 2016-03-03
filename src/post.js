@@ -8,8 +8,8 @@ export default async function post(opts={}) {
 	let steps = opts.post || {};
 
 	if (!Array.isArray(steps)) steps = [
-		opts.generateChangelog || generateChangelog,
-		opts.publishChangelog || publishChangelog
+		steps.generateChangelog || generateChangelog,
+		steps.publishChangelog || publishChangelog
 	];
 
 	await pipeline(steps, opts);

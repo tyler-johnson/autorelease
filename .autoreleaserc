@@ -1,3 +1,10 @@
 {
-	"branch": "master"
+	"branch": "master",
+	"preset": "angular",
+	"pre": {
+		"verify": [ "autorelease-github/verify", "autorelease-travis/verify" ]
+	},
+	"post": {
+		"publishChangelog": "autorelease-github/create-release"
+	}
 }

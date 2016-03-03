@@ -3,7 +3,7 @@ import options from "./options";
 import fetchLatest from "./steps/fetch-latest";
 import verify from "./steps/verify";
 import nextVersion from "./steps/next-version";
-import saveVersion from "./steps/save-version";
+import prepPublish from "./steps/prep-publish";
 
 export default async function pre(opts={}) {
 	opts = await options(opts);
@@ -13,7 +13,7 @@ export default async function pre(opts={}) {
 		steps.verify || verify,
 		steps.fetchLatest || fetchLatest,
 		steps.nextVersion || nextVersion,
-		steps.saveVersion || saveVersion
+		steps.prepPublish || prepPublish
 	];
 
 	await pipeline(steps, opts);

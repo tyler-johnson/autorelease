@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "autorelease": "node ./cli.js pre && npm publish && node ./cli.js post"
   },
   "dependencies": {
     "conventional-changelog": "^1.1.0",
@@ -23,17 +23,19 @@
     "latest-version": "^2.0.0",
     "lodash": "^4.6.1",
     "package-json": "^2.3.1",
+    "registry-url": "^3.0.3",
     "resolve": "^1.1.7",
     "semver": "^5.1.0"
   },
   "devDependencies": {
+    "autorelease-github": "^1.0.0",
+    "autorelease-travis": "^1.0.0",
     "babel-eslint": "^5.0.0",
     "babel-plugin-external-helpers": "^6.5.0",
     "babel-plugin-transform-async-to-generator": "^6.5.0",
     "babel-plugin-transform-es2015-destructuring": "^6.6.4",
     "babel-plugin-transform-es2015-parameters": "^6.6.4",
     "babel-plugin-transform-object-rest-spread": "^6.6.4",
-    "babel-preset-es2015-rollup": "^1.1.1",
     "eslint": "^2.2.0",
     "rollup": "^0.25.4",
     "rollup-plugin-babel": "^2.4.0",
