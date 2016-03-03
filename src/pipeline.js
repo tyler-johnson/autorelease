@@ -7,19 +7,25 @@ const resolve = promisify(_resolve, function(err, res) {
 });
 
 export default async function(steps, opts={}) {
+	steps = [].concat(steps);
 	let {basedir} = opts;
 	let res;
-	steps = [].concat(steps).filter(Boolean);
 
-	for (let i = 0; i < steps.length; i++) {
-		let step = steps[i];
-		if (typeof step === "string" && step) {
+	while (steps.length) {
+		let step = steps.shift();
+		if (!step) continue;
+
+		if (typeof step === "string") {
 			step = require(await resolve(step, { basedir }));
 		}
-		if (typeof step !== "function") {
+
+		if (Array.isArray(step)) {
+			steps.unshift.apply(steps, step);
+		} else if (typeof step === "function") {
+			res = await step.call(this, res, opts);
+		} else {
 			throw new Error("Expecting a function or path to module for step.");
 		}
-		res = await step.call(this, res, opts);
 	}
 
 	return res;
