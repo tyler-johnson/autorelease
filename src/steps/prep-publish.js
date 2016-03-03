@@ -26,7 +26,7 @@ export default async function(version, {
 		}
 
 		await loadNpm({});
-		npm.config.set(`${nerfDart(registry)}:_authToken`, "${NPM_TOKEN}", "project");
+		npm.config.set(`${nerfDart(registry)}:_authToken`, npmToken, "project");
 		await new Promise((resolve, reject) => {
 			npm.config.save("project", (err) => err ? reject(err) : resolve());
 		});
