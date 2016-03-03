@@ -1,10 +1,13 @@
-import {readFile,writeFile} from "fs-promise";
+import {writeFile} from "fs-promise";
 import getRegistryUrl from "registry-url";
-import {resolve} from "path";
+import nerfDart from "nerf-dart";
+import npm from "global-npm";
+import promisify from "es6-promisify";
+
+const loadNpm = promisify(npm.load.bind(npm));
 
 export default async function(version, {
 	npmToken = process.env.NPM_TOKEN,
-	basedir = ".",
 	package: pkg,
 	packageFile: pkgfile
 }) {
@@ -22,18 +25,10 @@ export default async function(version, {
 			registry = getRegistryUrl(pkg.name.split("/")[0]);
 		}
 
-		let npmrc = "";
-		let npmrcfile = resolve(basedir, ".npmrc");
-		try { npmrc = await readFile(npmrcfile); }
-		catch(e) { if (e.code !== "ENOENT") throw e; }
-
-		npmrc = npmrc.trim().replace(/^registry\s*=/gm, function(m) {
-			return "#" + m;
+		await loadNpm({});
+		npm.config.set(`${nerfDart(registry)}:_authToken`, "${NPM_TOKEN}", "project");
+		await new Promise((resolve, reject) => {
+			npm.config.save("project", (err) => err ? reject(err) : resolve());
 		});
-
-		if (npmrc) npmrc += "\n";
-		npmrc += `registry=${registry}${registry.substr(-1) !== "/" ? "/" : ""}:_authToken=${npmToken}\n`;
-
-		await writeFile(npmrcfile, npmrc);
 	}
 }
