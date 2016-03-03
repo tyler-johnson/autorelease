@@ -23,6 +23,7 @@
     "global-npm": "^0.3.0",
     "latest-version": "^2.0.0",
     "lodash": "^4.6.1",
+    "minimist": "^1.2.0",
     "nerf-dart": "^1.0.0",
     "package-json": "^2.3.1",
     "registry-url": "^3.0.3",
