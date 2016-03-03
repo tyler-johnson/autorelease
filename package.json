@@ -1,6 +1,6 @@
 {
   "name": "autorelease",
-  "description": "Release NPM versions based on commit messages.",
+  "description": "Automatically release NPM packages based on commit messages.",
   "author": "Tyler Johnson <tyler@tylerjohnson.me>",
   "repository": {
     "type": "git",
@@ -12,6 +12,9 @@
     "build": "make",
     "prepublish": "npm run lint && npm run build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "autorelease": {
+    "branch": "master"
   },
   "dependencies": {
     "conventional-changelog": "^1.1.0",
