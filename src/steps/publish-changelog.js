@@ -19,6 +19,6 @@ export default async function(log, {package:pkg,basedir="."}) {
 		let existing = "";
 		try { existing = await readFile(cfile, "utf-8"); }
 		catch(e) { if (e.code !== "ENOENT") throw e; }
-		await writeFile(cfile, existing + log);
+		await writeFile(cfile, log + existing);
 	}
 }
