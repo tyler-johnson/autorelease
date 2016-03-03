@@ -18,4 +18,4 @@ cli.js: src/cli.js $(SRC)
 clean:
 	rm -f index.js cli.js $(STEPS_OUT)
 
-.PHONY: build
+.PHONY: build clean
