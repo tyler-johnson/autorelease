@@ -9,8 +9,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/ test/",
-    "build": "make",
-    "prepublish": "npm run lint && npm run build",
+    "build": "make clean && make",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "autorelease": {
@@ -43,6 +42,15 @@
     "semantic-release": "^4.3.5",
     "tape": "^4.4.0"
   },
-  "keywords": [],
+  "keywords": [
+    "auto",
+    "automatic",
+    "release",
+    "semantic",
+    "version",
+    "package",
+    "publish",
+    "commit"
+  ],
   "license": "MIT"
 }
