@@ -7,9 +7,9 @@ const resolve = promisify(_resolve, function(err, res) {
 });
 
 export default async function(steps, opts={}) {
-	let {basedir=process.cwd()} = opts;
-	steps = [].concat(steps).filter(Boolean);
+	let {basedir} = opts;
 	let res;
+	steps = [].concat(steps).filter(Boolean);
 
 	for (let i = 0; i < steps.length; i++) {
 		let step = steps[i];

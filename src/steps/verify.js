@@ -17,7 +17,7 @@ export default async function(r, {branch,basedir="."}) {
 		}
 
 		if (!pass) {
-			throw new Error(`This autorelease was triggered by git branch ${current}, which is not a branch autorelease is configured to publish from.`);
+			throw new Error(`This autorelease was triggered on branch ${current}, which is not a branch autorelease is configured to publish from.`);
 		}
 	}
 }
