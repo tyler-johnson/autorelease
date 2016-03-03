@@ -7,13 +7,11 @@
     "url": "https://github.com/tyler-johnson/autorelease.git"
   },
   "main": "index.js",
+  "bin": "cli.js",
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
-  },
-  "autorelease": {
-    "branch": "master"
   },
   "dependencies": {
     "conventional-changelog": "^1.1.0",
