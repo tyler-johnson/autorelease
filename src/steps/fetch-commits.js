@@ -1,10 +1,10 @@
 import parseCommits from "conventional-commits-parser";
 import gitRawCommits from "git-raw-commits";
 
-export default async function(pkg) {
+export default async function(pkg={}) {
 	// grab all raw commits since the last release
 	let fetch = gitRawCommits({
-		from: pkg ? pkg.gitHead : null
+		from: pkg.gitHead
 	});
 
 	// parse commits like the changelog

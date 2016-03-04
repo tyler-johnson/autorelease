@@ -18,5 +18,5 @@ export default async function(pkg) {
 	}
 
 	// return the new version
-	return pkg ? semver.inc(pkg.version, type) : "1.0.0";
+	return pkg.version ? semver.inc(pkg.version, type) : "1.0.0";
 }
