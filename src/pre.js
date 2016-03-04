@@ -2,7 +2,8 @@ import pipeline from "./pipeline";
 import options from "./options";
 import fetchLatest from "./steps/fetch-latest";
 import verify from "./steps/verify";
-import nextVersion from "./steps/next-version";
+import fetchCommits from "./steps/fetch-commits";
+import resolveVersion from "./steps/resolve-version";
 import prepPublish from "./steps/prep-publish";
 import configureNpm from "./steps/configure-npm";
 
@@ -14,7 +15,8 @@ export default async function pre(opts={}) {
 		steps.verify || verify,
 		steps.configureNpm || configureNpm,
 		steps.fetchLatest || fetchLatest,
-		steps.nextVersion || nextVersion,
+		steps.fetchCommits || fetchCommits,
+		steps.resolveVersion || resolveVersion,
 		steps.prepPublish || prepPublish
 	];
 
