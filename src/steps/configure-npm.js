@@ -6,7 +6,7 @@ import promisify from "es6-promisify";
 const loadNpm = promisify(npm.load.bind(npm));
 
 // write npm token to the .npmrc file
-export default async function(version, {
+export default async function(r, {
 	npmToken = process.env.NPM_TOKEN,
 	package: pkg
 }) {
