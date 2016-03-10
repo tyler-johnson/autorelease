@@ -2,10 +2,15 @@ import exec from "../utils/exec";
 import parseCommits from "conventional-commits-parser";
 import gitRawCommits from "git-raw-commits";
 
-export default async function(pkg={}) {
+export default async function(pkg={}, { gitRef }) {
+	// user can choose a different base ref if the package is missing
+	if (!pkg.version && gitRef) {
+		pkg.gitHead = gitRef;
+	}
+
 	// sometimes the package file exists but is missing a gitHead reference
 	// (looking at you gemfury). will throw an error if the tag doesn't exist.
-	if (pkg.version && !pkg.gitHead) {
+	else if (pkg.version && !pkg.gitHead) {
 		pkg.gitHead = (await exec(`git show-ref -s v${pkg.version}`)).trim();
 	}
 

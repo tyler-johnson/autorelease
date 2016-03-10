@@ -1,6 +1,6 @@
 import semver from "semver";
 
-export default async function(pkg) {
+export default async function(pkg, { baseVersion }) {
 	// calculate how the version should change
 	let type = null;
 	pkg.commits.filter(Boolean).every((commit) => {
@@ -18,5 +18,6 @@ export default async function(pkg) {
 	}
 
 	// return the new version
-	return pkg.version ? semver.inc(pkg.version, type) : "1.0.0";
+	let version = pkg.version || baseVersion;
+	return version ? semver.inc(version, type) : "1.0.0";
 }
