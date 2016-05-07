@@ -1,12 +1,12 @@
 import fetchPkg from "package-json";
 
-export default async function(r, {npmtag="latest",package:pkg}) {
+export default async function(r, {version="latest",package:pkg}) {
 	if (!pkg.name) {
 		throw new Error("Missing a package name.");
 	}
 
 	try {
-		return await fetchPkg(pkg.name, npmtag);
+		return await fetchPkg(pkg.name, version);
 	} catch(e) {
 		if (!/doesn't exist/.test(e.message)) throw e;
 	}

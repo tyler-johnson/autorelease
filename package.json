@@ -1,5 +1,6 @@
 {
   "name": "autorelease",
+  "version": "0.0.0-edge",
   "description": "Automatically release NPM packages based on commit messages.",
   "author": "Tyler Johnson <tyler@tylerjohnson.me>",
   "repository": {
@@ -11,9 +12,11 @@
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
+    "prepublish": "npm run build",
     "autorelease": "node ./cli.js pre && npm publish && node ./cli.js post"
   },
   "dependencies": {
+    "cli-format": "^3.0.8",
     "conventional-changelog": "^1.1.0",
     "conventional-commits-parser": "^1.0.1",
     "es6-promisify": "^3.0.0",
@@ -25,6 +28,7 @@
     "minimist": "^1.2.0",
     "nerf-dart": "^1.0.0",
     "package-json": "^2.3.1",
+    "rc": "^1.1.6",
     "registry-url": "^3.0.3",
     "resolve": "^1.1.7",
     "semver": "^5.1.0"
@@ -41,6 +45,7 @@
     "eslint": "~2.2.0",
     "rollup": "^0.25.4",
     "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-json": "^2.0.0",
     "tape": "^4.4.0"
   },
   "keywords": [
@@ -53,5 +58,17 @@
     "publish",
     "commit"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "cli.js",
+    "configure-npm.js",
+    "fetch-commits.js",
+    "fetch-latest.js",
+    "generate-changelog.js",
+    "index.js",
+    "prep-publish.js",
+    "publish-changelog.js",
+    "resolve-version.js",
+    "verify.js"
+  ]
 }
