@@ -36,7 +36,7 @@ export default async function(pkg, { version, prerelease }) {
 
 	// prerelease if desired
 	if (prerelease) {
-		// pre+ if last version was a prerelease too
+		// pre+ if last version was not a prerelease
 		if (base.prerelease.length === 0) {
 			type = "pre" + type;
 		} else {
