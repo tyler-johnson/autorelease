@@ -19,7 +19,7 @@
     "cli-format": "^3.0.8",
     "conventional-changelog": "^1.1.0",
     "conventional-commits-parser": "^1.0.1",
-    "es6-promisify": "^3.0.0",
+    "es6-promisify": "^4.0.0",
     "fs-promise": "^0.5.0",
     "git-branch": "^0.3.0",
     "git-raw-commits": "^1.1.0",

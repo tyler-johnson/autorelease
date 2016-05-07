@@ -1,7 +1,9 @@
-import {exec as _exec} from "child_process";
-import promisify from "es6-promisify";
+import {exec} from "child_process";
 
-export default promisify(_exec, function(err, res) {
-	if (err) this.reject(err);
-	else this.resolve(Array.isArray(res) ? res[0] : res);
-});
+export default function(...args) {
+	return new Promise((resolve, reject) => {
+		exec.apply(null, args.concat(function(err, stdout) {
+			err ? reject(err) : resolve(stdout);
+		}));
+	});
+}
