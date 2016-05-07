@@ -1,26 +1,16 @@
-import fs from "fs-promise";
 import {resolve} from "path";
+import rc from "rc";
 
 export default async function(opts) {
-	let {basedir=process.cwd()} = opts;
-	let pkgfile = resolve(basedir, "package.json");
-	let pkg = JSON.parse(await fs.readFile(pkgfile, "utf-8"));
+	const {basedir=process.cwd()} = opts;
+	const pkgfile = resolve(basedir, "package.json");
+	const pkg = require(pkgfile);
 
-	let rc;
-	try {
-		rc = await fs.readFile(resolve(basedir, ".autoreleaserc"), "utf-8");
-	} catch(e) {
-		if (e.code !== "ENOENT") throw e;
-	}
-
-	if (rc) rc = JSON.parse(rc);
-
-	return {
-		...opts,
+	return rc("autorelease", {}, {
 		...pkg.autorelease,
-		...rc,
+		...opts,
 		basedir,
 		package: pkg,
 		packageFile: pkgfile
-	};
+	});
 }

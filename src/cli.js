@@ -4,11 +4,12 @@ import minimist from "minimist";
 const autorelease = require("./");
 
 let argv = minimist(process.argv.slice(2), {
-	string: [ ],
+	string: [ "config" ],
 	boolean: [ "help", "version" ],
 	alias: {
 		h: "help", H: "help",
-		v: "version", V: "version"
+		v: "version", V: "version",
+		c: "config"
 	}
 });
 
