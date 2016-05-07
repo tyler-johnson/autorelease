@@ -7,10 +7,10 @@ const autorelease = require("./");
 
 let argv = minimist(process.argv.slice(2), {
 	string: [ "config" ],
-	boolean: [ "help", "version" ],
+	boolean: [ "help", "v" ],
 	alias: {
 		h: "help", H: "help",
-		v: "version", V: "version",
+		V: "v",
 		c: "config"
 	}
 });
@@ -43,7 +43,7 @@ if (argv.help) {
 	process.exit(0);
 }
 
-if (argv.version) {
+if (argv.v) {
 	console.log("%s %s", name, version || "edge");
 	process.exit(0);
 }
