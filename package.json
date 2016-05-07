@@ -12,6 +12,7 @@
   "scripts": {
     "lint": "eslint src/ test/",
     "build": "make clean && make",
+    "prepublish": "npm run build",
     "autorelease": "node ./cli.js pre && npm publish && node ./cli.js post"
   },
   "dependencies": {
