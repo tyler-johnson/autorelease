@@ -1,6 +1,7 @@
 {
 	"branch": "master",
 	"preset": "angular",
+	"prerelease": "alpha",
 	"pre": {
 		"verify": [ "autorelease-github/verify", "autorelease-travis/verify" ]
 	},
