@@ -13,14 +13,11 @@ export default async function(pkg, { version, prerelease }) {
 		return true;
 	});
 
-	// don't release if there are commits that warrant a version bump
-	if (!type) {
-		throw new Error("No relevant changes detected so no version is released.");
-	}
-
 	// get the base version
+	let hasChanges = Boolean(type);
 	let last = pkg.version || version;
 	let base = null;
+	let pre = null;
 
 	// base version must be valid, otherwise major version bump from 0.0.0
 	if (SemVer.valid(last)) {
@@ -30,10 +27,16 @@ export default async function(pkg, { version, prerelease }) {
 		base = new SemVer("0.0.0");
 	}
 
+	// if last version was a prerelease, it is okay to release without changes
+	if (!hasChanges && (prerelease || base.prerelease.length === 0)) {
+		throw new Error("No relevant changes detected so no version is released.");
+	} else if (!type) {
+		type = "patch";
+	}
+
 	// prerelease if desired
-	let pre = null;
 	if (prerelease) {
-		// prepatch if last version was a prerelase too
+		// pre+ if last version was a prerelease too
 		if (base.prerelease.length === 0) {
 			type = "pre" + type;
 		} else {
