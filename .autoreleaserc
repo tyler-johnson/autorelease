@@ -1,6 +1,10 @@
 {
 	"branch": "master",
 	"preset": "angular",
+	"prerelease": {
+		"branch": "prerelease",
+		"id": "alpha"
+	},
 	"pre": {
 		"verify": [ "autorelease-github/verify", "autorelease-travis/verify" ]
 	},
