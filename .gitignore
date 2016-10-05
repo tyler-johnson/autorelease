@@ -1,3 +1,1 @@
-/node_modules
-/*.js
-!rollup.config.js
+packages/*/*.js

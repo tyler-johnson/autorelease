@@ -1,6 +1,6 @@
 {
-    "parser": "babel-eslint",
-    "extends": "eslint:recommended",
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
 	"rules": {
 		"semi": 1,
 		"no-console": 0
@@ -12,6 +12,6 @@
 	"env": {
 		"node": true,
 		"es6": true,
-        "browser": true
+    "browser": true
 	}
 }

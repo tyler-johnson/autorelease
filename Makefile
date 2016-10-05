@@ -1,21 +1,30 @@
 BIN = ./node_modules/.bin
-SRC = $(wildcard src/* src/*/*)
-STEPS = $(wildcard src/steps/*)
-STEPS_OUT = $(STEPS:src/steps/%.js=%.js)
+SRCS = $(wildcard packages/*/src/* packages/*/src/*/*)
+INDEX = $(wildcard packages/*/src/index.js)
+INDEXOUT = $(INDEX:src/index.js=index.js)
+CLI = $(wildcard packages/*/src/cli.js)
+CLIOUT = $(CLI:src/cli.js=cli.js)
+TEST = $(wildcard packages/*/test/index.js)
+TESTOUT = $(TEST:test/index.js=test.js)
 
-build: index.js cli.js $(STEPS_OUT)
+build: $(INDEXOUT) $(CLIOUT)
 
-index.js: src/index.js $(SRC)
-	$(BIN)/rollup $< -c -f cjs > $@
+packages/%/index.js: packages/%/src/index.js $(SRCS)
+	$(BIN)/rollup $< -c > $@
 
-cli.js: src/cli.js $(SRC)
+packages/%/cli.js: packages/%/src/cli.js $(SRCS)
 	echo "#!/usr/bin/env node" > $@
-	$(BIN)/rollup $< -c -f cjs >> $@
+	$(BIN)/rollup $< -c >> $@
 
-%.js: src/steps/%.js
-	$(BIN)/rollup $< -c -f cjs > $@
+packages/%/test.js: packages/%/test/index.js
+	$(BIN)/rollup $< -c > $@
+
+test: $(TESTOUT) build
+	@- for t in $(TESTOUT) ; do \
+		node $$t ; \
+	done
 
 clean:
-	rm -f index.js cli.js $(STEPS_OUT)
+	rm -rf $(TESTOUT) $(INDEXOUT)
 
-.PHONY: build clean
+.PHONY: build test clean
