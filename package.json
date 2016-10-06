@@ -2,7 +2,10 @@
   "name": "autorelease",
   "private": true,
   "scripts": {
-    "lint": "eslint packages/"
+    "lint": "eslint packages/",
+    "test": "make test",
+    "build": "make clean && make",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
@@ -11,7 +14,7 @@
     "babel-plugin-transform-class-properties": "^6.16.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "eslint": "^3.7.1",
-    "lerna": "2.0.0-beta.30",
+    "lerna": "^2.0.0-beta.30",
     "rollup": "^0.36.1",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-json": "^2.0.2",

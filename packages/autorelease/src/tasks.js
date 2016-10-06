@@ -20,7 +20,7 @@ export default async function applyTasks(tasks, basedir, pipeline, name) {
 
     if (name) pipeline.add(name, task);
   } else if (typeof tasks === "string") {
-    const task = await resolve(tasks, basedir);
+    const task = await resolve("autorelease-task-", tasks, basedir);
     if (name) pipeline.add(name, task);
     else pipeline.add(task);
   }

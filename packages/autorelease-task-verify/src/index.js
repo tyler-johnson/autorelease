@@ -1,13 +1,5 @@
-import _gitBranch from "git-branch";
 import {isRegExp} from "lodash";
-
-function gitBranch(dir) {
-  return new Promise((resolve, reject) => {
-    _gitBranch(dir, (err, r) => {
-      err ? reject(err) : resolve(r);
-    });
-  });
-}
+import {gitBranch} from "autorelease-utils";
 
 export default async function({ options={}, basedir="." }) {
 	if (!options.branch) return;

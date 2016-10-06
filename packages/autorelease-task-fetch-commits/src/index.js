@@ -1,22 +1,6 @@
 import parseCommits from "conventional-commits-parser";
 import gitRawCommits from "git-raw-commits";
-import {exec as _exec} from "child_process";
-
-function exec(...args) {
-	return new Promise((resolve, reject) => {
-		_exec.apply(null, args.concat(function(err, stdout) {
-			err ? reject(err) : resolve(stdout);
-		}));
-	});
-}
-
-async function unsafeExec(...args) {
-	try {
-		await exec(...args);
-	} catch(e) {
-		// eat errors
-	}
-}
+import {exec,unsafeExec} from "autorelease-utils";
 
 export default async function(ctx) {
 	const {latest={},options={}} = ctx;

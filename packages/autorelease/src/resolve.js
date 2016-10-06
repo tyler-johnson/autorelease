@@ -12,15 +12,14 @@ function nodeResolve(name, opts) {
 
 const pathex = /^\.{0,2}\/|^\.{1,2}$/;
 const missing = /cannot find module/i;
-const prefix = "autorelease-plugin-";
 
-export default async function resolve(name, basedir) {
+export default async function resolve(prefix, name, basedir) {
   if (Array.isArray(name)) {
     return Promise.all(name
       .filter(v => typeof v === "string")
       .map(v => v.trim())
       .filter(Boolean)
-      .map((n) => resolve(n, basedir)));
+      .map((n) => resolve(prefix, n, basedir)));
   }
 
   let filepath;

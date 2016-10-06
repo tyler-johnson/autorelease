@@ -4,6 +4,9 @@
   "dependencies": {
     "autorelease-task-verify": "^2.0.0",
     "autorelease-task-fetch-latest": "^2.0.0",
-    "autorelease-task-fetch-commits": "^2.0.0"
+    "autorelease-task-fetch-commits": "^2.0.0",
+    "autorelease-task-resolve-version": "^2.0.0",
+    "autorelease-task-configure-npm": "^2.0.0",
+    "autorelease-task-prep-publish": "^2.0.0"
   }
 }

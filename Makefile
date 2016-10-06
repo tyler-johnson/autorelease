@@ -7,7 +7,10 @@ CLIOUT = $(CLI:src/cli.js=cli.js)
 TEST = $(wildcard packages/*/test/index.js)
 TESTOUT = $(TEST:test/index.js=test.js)
 
-build: $(INDEXOUT) $(CLIOUT)
+build: bootstrap $(INDEXOUT) $(CLIOUT)
+
+bootstrap:
+	$(BIN)/lerna bootstrap
 
 packages/%/index.js: packages/%/src/index.js $(SRCS)
 	$(BIN)/rollup $< -c > $@
@@ -25,6 +28,7 @@ test: $(TESTOUT) build
 	done
 
 clean:
-	rm -rf $(TESTOUT) $(INDEXOUT)
+	rm -rf $(TESTOUT) $(INDEXOUT) $(CLIOUT)
+	$(BIN)/lerna clean --yes
 
-.PHONY: build test clean
+.PHONY: build bootstrap test clean
