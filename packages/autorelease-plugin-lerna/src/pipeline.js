@@ -2,6 +2,7 @@ import {resolve,join} from "path";
 import pkgutils from "lerna/lib/PackageUtilities";
 import PkgDiffer from "lerna/lib/UpdatedPackagesCollector";
 import createPipeline from "autorelease-pipeline";
+import {find} from "lodash";
 
 function getUpdatedPackages(packages, publishConfig={}) {
   const pkggraph = pkgutils.getPackageGraph(packages);
@@ -20,6 +21,12 @@ async function fetchPackages(ctx, next) {
     ctx.independent = ctx.lerna.version === "independent";
     ctx.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
     ctx.updated = getUpdatedPackages(ctx.packages, ctx.lerna.publishConfig);
+
+    // always add the "main" package to the list that needs releasing
+    if (ctx.package.name && !ctx.updated.some(pkg => pkg.name === ctx.package.name)) {
+      const pkg = find(ctx.packages, (p) => p.name === ctx.package.name);
+      if (pkg) ctx.updated.push(pkg);
+    }
   }
 
   await next(ctx);

@@ -1,10 +1,11 @@
 import verify from "autorelease-task-verify";
 import fetchLatest from "autorelease-task-fetch-latest";
 import configureNpm from "autorelease-task-configure-npm";
-import prepPublish from "autorelease-task-prep-publish";
 import createPipeline from "./pipeline";
 import fetchCommits from "./fetch-commits";
 import resolveVersion from "autorelease-task-resolve-version";
+import prepPublish from "./prep-publish";
+import generateChangelog from "./generate-changelog";
 
 export default function(autorelease) {
   const pipeline = createPipeline();
@@ -23,8 +24,8 @@ export default function(autorelease) {
       contextKeys: [ "version" ],
       updatedOnly: true
     })
-    .addLernaTask("prepPublish", prepPublish, {
-      updatedOnly: true,
-      forceLoop: true
-    });
+    .add("prepPublish", prepPublish());
+
+  // add custom changelog generator (overwrite mode)
+  autorelease.add("post.generateChangelog", generateChangelog);
 }
