@@ -44,8 +44,8 @@ function addLernaTask(name, fn, opts={}) {
     let {packages:all,updated} = ctx;
 
     // don't re-run if this task was run previously
-    if (!ctx.lerna_tasks) ctx.lerna_tasks = [];
     if (id) {
+      if (!ctx.lerna_tasks) ctx.lerna_tasks = [];
       if (ctx.lerna_tasks.indexOf(id) > -1) return;
       ctx.lerna_tasks.push(id);
     }

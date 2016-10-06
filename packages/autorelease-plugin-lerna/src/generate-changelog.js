@@ -9,13 +9,32 @@ export default async function(ctx) {
   const {changelog=true,preset} = options;
   if (!changelog) return;
 
-  await fetchCommits(ctx);
+  let config;
+  if (preset) {
+    try {
+      config = require('conventional-changelog-' + preset.toLowerCase());
+    } catch (err) {
+      console.warn('Changelog Preset: "' + preset + '" does not exist');
+    }
+  }
+
   const conf = await mergeConfig({
     pkg: { path: packageFile },
-    preset
+    config
   });
 
-  const clog = toStream(ctx.commits)
+  const commitctx = {
+    ...ctx,
+    options: {
+      ...ctx.options,
+      gitRawCommitsOpts: conf.gitRawCommitsOpts,
+      parserOpts: conf.parserOpts
+    }
+  };
+
+  await fetchCommits(commitctx);
+
+  const clog = toStream(commitctx.commits)
     .pipe(through.obj(function(chunk, enc, cb) {
       try {
         conf.options.transform.call(this, chunk, cb);
@@ -34,5 +53,6 @@ export default async function(ctx) {
     clog.on("error", reject);
   });
 
-  console.log(data);
+  ctx.changelog = data;
+  console.log("Generated changelog");
 }
