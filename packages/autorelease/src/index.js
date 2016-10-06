@@ -17,7 +17,7 @@ export default async function(opts={}) {
 
   const pipeline = createPipeline((o, next) => next(ctx));
   pipeline.context = ctx;
-  await tasks(ctx.options.tasks, basedir, pipeline);
   await plugins(ctx.options.plugins, basedir, pipeline);
+  await tasks(ctx.options.tasks, basedir, pipeline);
   return pipeline;
 }
