@@ -1,6 +1,6 @@
 import SemVer from "semver";
 
-export default async function(ctx) {
+export default function(ctx) {
 	const {commits=[],latest,options={}} = ctx;
 	const {version, prerelease} = options;
 
