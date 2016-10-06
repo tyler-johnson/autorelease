@@ -4,7 +4,7 @@ import {exec,unsafeExec} from "autorelease-utils";
 
 export default async function(ctx) {
 	const {latest={},options={}} = ctx;
-	const {version,gitRef} = options;
+	const {version,gitRef,gitRawCommitsOpts,parserOpts} = options;
 	let gitHead;
 
 	if (latest.gitHead) {
@@ -27,12 +27,13 @@ export default async function(ctx) {
 
 	// grab all raw commits since the last release
 	let fetch = gitRawCommits({
+		...gitRawCommitsOpts,
 		from: gitHead
 	});
 
 	// parse commits like the changelog
 	ctx.commits = [];
-	let parser = fetch.pipe(parseCommits());
+	let parser = fetch.pipe(parseCommits(parserOpts));
 	parser.on("data", (r) => ctx.commits.push(r));
 
 	// wait for the fetch/parse process to complete
