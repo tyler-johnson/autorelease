@@ -1,7 +1,7 @@
 import SemVer from "semver";
 
 export default async function(ctx) {
-	const {commits=[],latest={},options={}} = ctx;
+	const {commits=[],latest,options={}} = ctx;
 	const {version, prerelease} = options;
 
 	// calculate how the version should change
@@ -18,7 +18,7 @@ export default async function(ctx) {
 
 	// get the base version
 	let hasChanges = Boolean(type);
-	let last = latest.version || version;
+	let last = latest != null && latest.version ? latest.version : version;
 	let base = null;
 	let pre = null;
 
@@ -59,5 +59,5 @@ export default async function(ctx) {
 		next: base.toString()
 	};
 
-	console.log("Detected %s version bump to %s", type, ctx.version.next);
+	console.log("%s: %s version bump to %s", ctx.package.name, type, ctx.version.next);
 }
