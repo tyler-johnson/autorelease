@@ -1,8 +1,10 @@
 {
   "branch": ["master","dev"],
   "preset": "angular",
+  "prerelease": "alpha",
   "plugins": [
     "./packages/autorelease-plugin-lerna",
-    "./packages/autorelease-plugin-post"
+    "./packages/autorelease-plugin-github",
+    "./packages/autorelease-plugin-travis"
   ]
 }
