@@ -16,10 +16,7 @@ function loadConfig() {
 export default async function(ctx) {
 	const {options={},package:pkg={}} = ctx;
 	const {npmToken=process.env.NPM_TOKEN} = options;
-
-	if (!npmToken) {
-		throw new Error("Missing NPM token.");
-	}
+	if (!npmToken) return;
 
 	let registry;
 
