@@ -3,8 +3,13 @@ import {toPath} from "lodash";
 
 export function init() {
   this.__pipeline = true;
+  this.clear();
+}
+
+export function clear() {
   this._tasks = [];
   this._byName = {};
+  return this;
 }
 
 export function add(name, task, before) {
