@@ -14,6 +14,6 @@ export default async function(ctx) {
 			console.log("Fetched %s@%s", ctx.latest.name, ctx.latest.version);
 		}
 	} catch(e) {
-		if (!/doesn't exist/.test(e.message)) throw e;
+		if (!e.message || !/doesn't exist/.test(e.message)) throw e;
 	}
 }

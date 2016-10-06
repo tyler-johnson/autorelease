@@ -3,7 +3,7 @@ import {writeFile} from "fs";
 // write version to the package.json
 export default async function(ctx) {
 	const {version,package:pkg={},packageFile,tag} = ctx;
-	if (!version) return;
+	if (version == null) return;
 
 	// set the correct dist tag
 	if (tag) {
@@ -12,7 +12,7 @@ export default async function(ctx) {
 	}
 
 	// set new version
-	pkg.version = version;
+	if (version.next) pkg.version = version.next;
 
 	// write the package file
 	await new Promise((resolve, reject) => {
