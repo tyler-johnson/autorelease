@@ -1,0 +1,14 @@
+{
+  "name": "autorelease-plugin-lerna",
+  "version": "0.0.0",
+  "dependencies": {
+    "lerna": "^2.0.0-beta.30",
+    "autorelease-task-verify": "*",
+    "autorelease-task-fetch-latest": "*",
+    "autorelease-task-fetch-commits": "*",
+    "autorelease-task-resolve-version": "*",
+    "autorelease-task-configure-npm": "*",
+    "autorelease-task-prep-publish": "*",
+    "autorelease-pipeline": "*"
+  }
+}

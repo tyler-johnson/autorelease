@@ -2,7 +2,7 @@
   "branch": ["master","dev"],
   "preset": "angular",
   "plugins": [
-    "./packages/autorelease-plugin-pre",
+    "./packages/autorelease-plugin-lerna",
     "./packages/autorelease-plugin-post"
   ]
 }
