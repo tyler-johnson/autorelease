@@ -1,9 +1,9 @@
 {
   "name": "autorelease-task-fetch-commits",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "dependencies": {
     "conventional-commits-parser": "^1.2.3",
     "git-raw-commits": "^1.1.2",
-    "autorelease-utils": "^2.0.0"
+    "autorelease-utils": "*"
   }
 }
