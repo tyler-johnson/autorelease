@@ -1,0 +1,7 @@
+{
+  "name": "autorelease-plugin-post",
+  "version": "0.0.0",
+  "dependencies": {
+    "autorelease-task-generate-changelog": "*"
+  }
+}

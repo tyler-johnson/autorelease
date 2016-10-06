@@ -1,6 +1,8 @@
 {
   "branch": ["master","dev"],
+  "preset": "angular",
   "plugins": [
-    "./packages/autorelease-plugin-pre"
+    "./packages/autorelease-plugin-pre",
+    "./packages/autorelease-plugin-post"
   ]
 }
