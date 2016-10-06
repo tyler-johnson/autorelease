@@ -1,0 +1,11 @@
+{
+  "name": "autorelease-plugin-github",
+  "version": "1.0.0-alpha.0",
+  "dependencies": {
+    "autorelease-pipeline": "*",
+    "autorelease-task-git-remote": "*",
+    "autorelease-utils": "*",
+    "git-head": "^1.14.0",
+    "github": "^4.0.0"
+  }
+}
