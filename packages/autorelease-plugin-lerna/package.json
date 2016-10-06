@@ -2,14 +2,18 @@
   "name": "autorelease-plugin-lerna",
   "version": "0.0.0",
   "dependencies": {
-    "lerna": "^2.0.0-beta.30",
-    "autorelease-task-verify": "*",
-    "autorelease-task-fetch-latest": "*",
-    "autorelease-task-fetch-commits": "*",
-    "autorelease-task-resolve-version": "*",
-    "autorelease-task-configure-npm": "*",
-    "autorelease-task-prep-publish": "*",
     "autorelease-pipeline": "*",
-    "autorelease-utils": "*"
+    "autorelease-task-configure-npm": "*",
+    "autorelease-task-fetch-commits": "*",
+    "autorelease-task-fetch-latest": "*",
+    "autorelease-task-prep-publish": "*",
+    "autorelease-task-resolve-version": "*",
+    "autorelease-task-verify": "*",
+    "autorelease-utils": "*",
+    "conventional-changelog-core": "^1.5.0",
+    "conventional-changelog-writer": "^1.4.1",
+    "lerna": "^2.0.0-beta.30",
+    "stream-array": "^1.1.2",
+    "through2": "^2.0.1"
   }
 }

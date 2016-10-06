@@ -38,10 +38,17 @@ function addLernaTask(name, fn, opts={}) {
     [opts,fn,name] = [fn,name,null];
   }
 
-  const {contextKeys,forceLoop,updatedOnly} = opts;
+  const {contextKeys,forceLoop,updatedOnly,id} = opts;
 
   return this.add(name, async function(ctx) {
     let {packages:all,updated} = ctx;
+
+    // don't re-run if this task was run previously
+    if (!ctx.lerna_tasks) ctx.lerna_tasks = [];
+    if (id) {
+      if (ctx.lerna_tasks.indexOf(id) > -1) return;
+      ctx.lerna_tasks.push(id);
+    }
 
     // don't loop when non-independent
     if (forceLoop !== true && !ctx.independent) {

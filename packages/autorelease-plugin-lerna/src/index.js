@@ -8,16 +8,17 @@ import prepPublish from "./prep-publish";
 import generateChangelog from "./generate-changelog";
 
 export default function(autorelease) {
-  const pipeline = createPipeline();
-  autorelease.add("pre", pipeline);
+  const pre = createPipeline();
+  autorelease.add("pre", pre);
 
-  // push verify to end of pipeline (no-conflict mode)
-  pipeline.pipeline("verify").add(verify);
+  // push verify to end of pre pipeline (no-conflict mode)
+  pre.pipeline("verify").add(verify);
 
   // set the remaining tasks by name (overwrite mode)
-  pipeline.add("configureNpm", configureNpm)
+  pre.add("configureNpm", configureNpm)
     .addLernaTask("fetchLatest", fetchLatest, {
-      contextKeys: [ "latest" ]
+      contextKeys: [ "latest" ],
+      id: "fetchLatest"
     })
     .add("fetchCommits", fetchCommits)
     .addLernaTask("resolveVersion", resolveVersion, {
@@ -26,6 +27,13 @@ export default function(autorelease) {
     })
     .add("prepPublish", prepPublish());
 
-  // add custom changelog generator (overwrite mode)
-  autorelease.add("post.generateChangelog", generateChangelog);
+  const post = createPipeline();
+  autorelease.add("post", post);
+
+  post
+    .addLernaTask("fetchLatest", fetchLatest, {
+      contextKeys: [ "latest" ],
+      id: "fetchLatest"
+    })
+    .add("generateChangelog", generateChangelog);
 }
