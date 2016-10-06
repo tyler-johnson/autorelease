@@ -1,0 +1,7 @@
+{
+  "name": "autorelease-task-write-changelog",
+  "version": "0.0.0",
+  "dependencies": {
+    "autorelease-utils": "*"
+  }
+}
