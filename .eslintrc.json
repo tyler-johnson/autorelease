@@ -3,7 +3,8 @@
   "extends": "eslint:recommended",
 	"rules": {
 		"semi": 1,
-		"no-console": 0
+		"no-console": 0,
+		"no-shadow": 1
 	},
 	"parserOptions": {
 		"ecmaVersion": 6,
