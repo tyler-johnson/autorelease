@@ -18,9 +18,12 @@ async function fetchPackages(ctx, next) {
     const {basedir="."} = ctx;
     const fullbase = resolve(basedir);
     ctx.lerna = require(join(fullbase, "lerna.json"));
+    if (ctx.lerna.lerna) console.log("Using Lerna v%s", ctx.lerna.lerna);
+
     ctx.independent = ctx.lerna.version === "independent";
     ctx.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
     ctx.updated = getUpdatedPackages(ctx.packages, ctx.lerna.publishConfig);
+    console.log("Releasing %s updated packages of %s total", ctx.updated.length, ctx.packages.length);
 
     // always add the "main" package to the list that needs releasing
     if (ctx.package.name && !ctx.updated.some(pkg => pkg.name === ctx.package.name)) {
