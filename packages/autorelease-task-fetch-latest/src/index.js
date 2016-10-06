@@ -15,5 +15,6 @@ export default async function(ctx) {
 		}
 	} catch(e) {
 		if (!e.message || !/doesn't exist/.test(e.message)) throw e;
+		ctx.latest = null; // always reset to show there is no latest
 	}
 }
