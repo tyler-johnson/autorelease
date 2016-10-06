@@ -16,10 +16,10 @@ export default async function(ctx) {
 
 	// write the package file
 	await new Promise((resolve, reject) => {
-		writeFile(packageFile, JSON.stringify(pkg, null, 2), (err) => {
+		writeFile(packageFile, JSON.stringify(pkg, null, 2) + "\n", (err) => {
 			err ? reject(err) : resolve();
 		});
 	});
 
-	console.log("Wrote new version to package.json");
+	console.log("%s: Wrote new version to package.json", pkg.name);
 }
