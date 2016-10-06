@@ -28,6 +28,10 @@ export default async function(ctx) {
 		registry = getRegistryUrl(pkg.name.split("/")[0]);
 	}
 
+	if (!registry) {
+		throw new Error("Could not locate NPM registry URL.");
+	}
+
 	const conf = await loadConfig({ prefix: basedir });
 	conf.set(`${nerfDart(registry)}:_authToken`, npmToken, "project");
 	await new Promise((resolv, reject) => {

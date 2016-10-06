@@ -26,12 +26,7 @@ pipeline.add(async (ctx) => {
 });
 
 // write new versions to all updated packages
-pipeline.addLernaTask((ctx) => {
-  return prepPublish({
-    ...ctx,
-    publishConfig: ctx.lerna.publishConfig
-  });
-}, {
+pipeline.addLernaTask(prepPublish, {
   updatedOnly: true,
   forceLoop: true
 });

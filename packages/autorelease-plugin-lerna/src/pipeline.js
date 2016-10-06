@@ -2,7 +2,7 @@ import {resolve,join} from "path";
 import pkgutils from "lerna/lib/PackageUtilities";
 import PkgDiffer from "lerna/lib/UpdatedPackagesCollector";
 import createPipeline from "autorelease-pipeline";
-import {find} from "lodash";
+import {find,clone} from "lodash";
 
 function getUpdatedPackages(packages, publishConfig={}) {
   const pkggraph = pkgutils.getPackageGraph(packages);
@@ -69,8 +69,16 @@ function addLernaTask(name, fn, opts={}) {
         ...pkg.autorelease_ctx,
         parentContext: ctx,
         basedir: pkg.location,
-        package: pkg._package,
+        package: clone(pkg._package),
         packageFile: join(pkg.location, "package.json")
+      };
+
+      newctx.package = {
+        ...newctx.package,
+        publishConfig: {
+          ...newctx.package.publishConfig,
+          ...ctx.package.publishConfig
+        }
       };
 
       await fn(newctx);
