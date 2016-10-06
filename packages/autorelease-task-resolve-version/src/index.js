@@ -53,4 +53,5 @@ export default async function(ctx) {
 
 	base.inc(type, pre);
 	ctx.version = base.toString();
+	console.log("Detected %s version bump to %s", type, ctx.version);
 }

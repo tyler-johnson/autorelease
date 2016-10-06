@@ -31,4 +31,6 @@ export default async function(ctx) {
 	await new Promise((resolve, reject) => {
 		conf.save("project", (err) => err ? reject(err) : resolve());
 	});
+
+	console.log("Wrote NPM_TOKEN to project .npmrc");
 }

@@ -41,4 +41,6 @@ export default async function(ctx) {
 		parser.on("error", reject);
 		fetch.on("error", reject);
 	});
+
+	console.log("Detected %s new commits", ctx.commits.length);
 }

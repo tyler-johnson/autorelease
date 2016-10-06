@@ -20,4 +20,6 @@ export default async function(ctx) {
 			err ? reject(err) : resolve();
 		});
 	});
+
+	console.log("Wrote new version to package.json");
 }

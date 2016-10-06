@@ -10,6 +10,9 @@ export default async function(ctx) {
 
 	try {
 		ctx.latest = await fetchPkg(pkg.name, version);
+		if (ctx.latest && ctx.latest.version) {
+			console.log("Fetched %s@%s", ctx.latest.name, ctx.latest.version);
+		}
 	} catch(e) {
 		if (!/doesn't exist/.test(e.message)) throw e;
 	}
