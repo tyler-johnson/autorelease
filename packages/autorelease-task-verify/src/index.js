@@ -1,11 +1,14 @@
 import {isRegExp} from "lodash";
-import {gitBranch} from "autorelease-utils";
+import _gitBranch from "git-branch";
+import {promisify} from "autorelease-utils";
+
+const gitBranch = promisify(_gitBranch);
 
 export default async function({ options={}, basedir="." }) {
 	if (!options.branch) return;
 
-  let current = await gitBranch(basedir);
-  let pass = [].concat(options.branch).some(b => {
+  const current = await gitBranch(basedir);
+  const pass = [].concat(options.branch).some(b => {
     if (isRegExp(b)) {
       return b.test(current);
     } else if (typeof b === "string") {

@@ -1,7 +1,5 @@
 {
   "name": "autorelease-utils",
   "version": "0.0.0",
-  "dependencies": {
-    "git-branch": "^0.3.0"
-  }
+  "dependencies": {}
 }

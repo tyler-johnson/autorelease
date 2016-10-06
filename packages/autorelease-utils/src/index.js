@@ -1,26 +1,16 @@
-import _gitBranch from "git-branch";
 import {exec as _exec} from "child_process";
 
-export function gitBranch(dir) {
-  return new Promise((resolve, reject) => {
-    _gitBranch(dir, (err, r) => {
-      err ? reject(err) : resolve(r);
-    });
-  });
+export function promisify(fn) {
+	return function(...args) {
+		return new Promise((res, rej) => {
+			fn.apply(this, args.concat((e, r) => e ? rej(e) : res(r)));
+		});
+	};
 }
 
-export function exec(...args) {
-	return new Promise((resolve, reject) => {
-		_exec.apply(null, args.concat(function(err, stdout) {
-			err ? reject(err) : resolve(stdout);
-		}));
-	});
-}
+export const exec = promisify(_exec);
 
 export async function unsafeExec(...args) {
-	try {
-		await exec(...args);
-	} catch(e) {
-		// eat errors
-	}
+	try { await exec(...args); }
+	catch(e) { /* eat errors */ }
 }
