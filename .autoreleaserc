@@ -1,5 +1,5 @@
 {
-  "branch": ["master","dev"],
+  "branch": "master",
   "preset": "angular",
   "prerelease": "alpha",
   "plugins": [

@@ -5,7 +5,8 @@
     "lint": "eslint packages/",
     "test": "make test",
     "build": "make clean && make",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "autorelease": "node packages/autorelease/cli.js run pre publish post"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
