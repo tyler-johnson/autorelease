@@ -8,8 +8,10 @@ export default function(autorelease) {
     .add(gitRemote)
     .add(verify);
 
-  autorelease.pipeline("pre.verify").add(verifyPipeline);
+  // verify in standard verification pipeline
+  autorelease.pipeline("verify").add(verifyPipeline);
 
+  // run on post-release pipeline
   const post = autorelease.pipeline("post");
   post.pipeline("verify").add(verifyPipeline);
   post.add("githubRelease", createRelease);
