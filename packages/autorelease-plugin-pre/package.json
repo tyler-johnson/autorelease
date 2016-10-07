@@ -2,7 +2,6 @@
   "name": "autorelease-plugin-pre",
   "version": "0.0.0",
   "dependencies": {
-    "autorelease-task-verify": "*",
     "autorelease-task-fetch-latest": "*",
     "autorelease-task-fetch-commits": "*",
     "autorelease-task-resolve-version": "*",

@@ -9,7 +9,6 @@
     "autorelease-task-generate-changelog": "*",
     "autorelease-task-prep-publish": "*",
     "autorelease-task-resolve-version": "*",
-    "autorelease-task-verify": "*",
     "autorelease-utils": "*",
     "lodash": "^4.16.4"
   },

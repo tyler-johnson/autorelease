@@ -1,5 +1,5 @@
 {
-  "name": "autorelease-task-verify",
+  "name": "autorelease-task-verify-branch",
   "version": "0.0.0",
   "dependencies": {
     "autorelease-utils": "*",
