@@ -7,7 +7,7 @@
     "cli-format": "^3.0.8",
     "lodash": "^4.16.3",
     "minimist": "^1.2.0",
-    "rc": "^1.1.6",
-    "resolve": "^1.1.7"
+    "resolve": "^1.1.7",
+    "autorelease-rc": "*"
   }
 }

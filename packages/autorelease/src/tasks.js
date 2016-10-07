@@ -1,6 +1,6 @@
 import resolve from "./resolve";
 
-export default async function applyTasks(tasks, basedir, pipeline, name) {
+export default async function applyTasks(pipeline, tasks, basedir, name) {
   let task = tasks;
 
   if (Array.isArray(tasks)) {
@@ -9,7 +9,7 @@ export default async function applyTasks(tasks, basedir, pipeline, name) {
     pipe.clear(); // array always overwrites existing tasks
 
     while (tasks.length) {
-      await applyTasks(tasks.shift(), basedir, pipe);
+      await applyTasks(pipe, tasks.shift(), basedir);
     }
 
     return;
@@ -19,7 +19,7 @@ export default async function applyTasks(tasks, basedir, pipeline, name) {
 
     while (keys.length) {
       const key = keys.shift();
-      await applyTasks(tasks[key], basedir, pipe, key);
+      await applyTasks(pipe, tasks[key], basedir, key);
     }
 
     return;

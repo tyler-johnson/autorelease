@@ -24,6 +24,7 @@ packages/%/test.js: packages/%/test/index.js
 
 test: $(TESTOUT) build
 	@- for t in $(TESTOUT) ; do \
+		echo "=>" $$t ; \
 		node $$t ; \
 	done
 

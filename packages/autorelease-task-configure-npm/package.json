@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "dependencies": {
     "global-npm": "^0.3.0",
-    "nerf-dart": "^1.0.0",
-    "registry-url": "^3.1.0"
+    "autorelease-utils": "*"
+  },
+  "devDependencies": {
+    "autorelease-test-utils": "*"
   }
 }

@@ -1,2 +1,5 @@
 packages/*/*.js
 .npmrc
+testrepo/
+node_modules/
+*.log

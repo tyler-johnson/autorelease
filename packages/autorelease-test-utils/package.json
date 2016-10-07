@@ -1,0 +1,11 @@
+{
+  "name": "autorelease-test-utils",
+  "version": "0.0.0",
+  "dependencies": {
+    "autorelease-rc": "*",
+    "autorelease-utils": "*",
+    "debug": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.5.4"
+  }
+}

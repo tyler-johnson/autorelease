@@ -4,5 +4,8 @@
   "dependencies": {
     "autorelease-utils": "*",
     "git-branch": "^0.3.0"
+  },
+  "devDependencies": {
+    "autorelease-test-utils": "*"
   }
 }

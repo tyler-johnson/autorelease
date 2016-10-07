@@ -1,5 +1,4 @@
-import getRegistryUrl from "registry-url";
-import nerfDart from "nerf-dart";
+import {getRegistryUrl} from "autorelease-utils";
 import {GLOBAL_NPM_PATH} from "global-npm";
 import {resolve,relative} from "path";
 
@@ -20,20 +19,9 @@ export default async function(ctx) {
 	const {npmToken=process.env.NPM_TOKEN} = options;
 	if (!npmToken) return;
 
-	let registry;
-
-	if (pkg.publishConfig && pkg.publishConfig.registry) {
-		registry = pkg.publishConfig.registry;
-	} else {
-		registry = getRegistryUrl(pkg.name.split("/")[0]);
-	}
-
-	if (!registry) {
-		throw "Could not locate NPM registry URL.";
-	}
-
+	const registry = getRegistryUrl(pkg);
 	const conf = await loadConfig({ prefix: basedir });
-	conf.set(`${nerfDart(registry)}:_authToken`, npmToken, "project");
+	conf.set(`${registry}:_authToken`, npmToken, "project");
 	await new Promise((resolv, reject) => {
 		conf.save("project", (err) => err ? reject(err) : resolv());
 	});

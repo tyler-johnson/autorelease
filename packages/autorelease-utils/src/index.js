@@ -1,4 +1,6 @@
 import {exec as _exec} from "child_process";
+import registryUrl from "registry-url";
+import nerfDart from "nerf-dart";
 
 export function promisify(fn) {
 	return function(...args) {
@@ -19,4 +21,20 @@ export function addVersion(autorelease, name, version) {
 	autorelease.pipeline("version").add(() => {
     console.log("%s %s", name, version);
   });
+}
+
+export function getRegistryUrl(pkg={}) {
+	let registry;
+
+	if (pkg.publishConfig && pkg.publishConfig.registry) {
+		registry = pkg.publishConfig.registry;
+	} else {
+		registry = registryUrl(pkg.name.split("/")[0]);
+	}
+
+	if (!registry) {
+		throw "Could not locate NPM registry URL.";
+	}
+
+	return nerfDart(registry);
 }

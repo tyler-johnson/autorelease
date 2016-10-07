@@ -1,0 +1,11 @@
+{
+  "name": "autorelease-rc",
+  "version": "0.0.0",
+  "dependencies": {
+    "autorelease-utils": "*",
+    "find-up": "^2.0.0",
+    "ini": "^1.3.4",
+    "pkg-up": "^1.0.0",
+    "yaml-parser": "^3.5.3"
+  }
+}

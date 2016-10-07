@@ -1,20 +1,10 @@
 import createPipeline from "autorelease-pipeline";
 import plugins from "./plugins";
 import tasks from "./tasks";
-import rc from "rc";
-import {resolve} from "path";
+import rc from "autorelease-rc";
 
 export default async function(opts={}) {
-  const {basedir=process.cwd()} = opts;
-	const pkgfile = resolve(basedir, "package.json");
-	const pkg = require(pkgfile);
-  const ctx = { package: pkg, packageFile: pkgfile, basedir };
-
-  ctx.options = rc("autorelease", {
-    ...pkg.autorelease,
-		...opts
-  });
-
+  const ctx = await rc(opts);
   const autorelease = createPipeline((o, next) => next(ctx));
 
   // cyclical links so everythink can talk
@@ -22,8 +12,8 @@ export default async function(opts={}) {
   ctx.root = autorelease;
 
   // add plugins and tasks
-  await plugins(ctx.options.plugins, basedir, autorelease);
-  await tasks(ctx.options.tasks, basedir, autorelease);
+  await plugins(autorelease, ctx.options.plugins, ctx.basedir);
+  await tasks(autorelease, ctx.options.tasks, ctx.basedir);
 
   return autorelease;
 }

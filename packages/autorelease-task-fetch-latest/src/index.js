@@ -1,27 +1,14 @@
-import fetchPkg from "package-json";
-
-async function fetch(name, version) {
-	try {
-		return await fetchPkg(name, version);
-	} catch(e) {
-		if (!e.message || !/doesn't exist/.test(e.message)) throw e;
-		return null;
-	}
-}
+import fetch from "./fetch";
 
 export default async function(ctx) {
   const {options={},package:pkg} = ctx;
   const {version="latest",tag} = options;
 
-	if (!pkg.name) {
-		throw "Missing a package name.";
-	}
+	const tags = [ version || "latest" ];
+	if (tag) tags.unshift(tag);
+	ctx.latest = await fetch(pkg, tags);
 
-	let latest = tag ? await fetch(pkg.name, tag) : null;
-	if (!latest) latest = await fetch(pkg.name, version);
-	ctx.latest = latest; // always reset to show there is no latest
-
-	if (latest && latest.version) {
-		console.log("Fetched %s@%s", latest.name, latest.version);
+	if (ctx.latest && ctx.latest.version) {
+		console.log("Fetched %s@%s", ctx.latest.name, ctx.latest.version);
 	}
 }
