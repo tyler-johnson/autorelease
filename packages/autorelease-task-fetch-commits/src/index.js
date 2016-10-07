@@ -2,9 +2,9 @@ import parseCommits from "conventional-commits-parser";
 import gitRawCommits from "git-raw-commits";
 import {exec,unsafeExec} from "autorelease-utils";
 
-export default async function(ctx) {
+export default async function(ctx, gitRawCommitsOpts, parserOpts) {
 	const {latest={},options={}} = ctx;
-	const {version,gitRef,gitRawCommitsOpts,parserOpts} = options;
+	const {version,gitRef} = options;
 	let gitHead;
 
 	if (latest.gitHead) {
@@ -43,5 +43,5 @@ export default async function(ctx) {
 		fetch.on("error", reject);
 	});
 
-	console.log("Detected %s new commits", ctx.commits.length);
+	return ctx.commits;
 }
