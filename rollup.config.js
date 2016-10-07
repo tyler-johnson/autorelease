@@ -5,9 +5,9 @@ export default {
 	onwarn: ()=>{},
 	format: "cjs",
 	plugins: [
+		json(),
 		babel({
 			exclude: 'node_modules/**'
-		}),
-		json()
+		})
 	]
 };

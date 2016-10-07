@@ -14,3 +14,9 @@ export async function unsafeExec(...args) {
 	try { await exec(...args); }
 	catch(e) { /* eat errors */ }
 }
+
+export function addVersion(autorelease, name, version) {
+	autorelease.pipeline("version").add(() => {
+    console.log("%s %s", name, version);
+  });
+}

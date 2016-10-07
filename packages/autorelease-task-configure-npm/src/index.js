@@ -29,7 +29,7 @@ export default async function(ctx) {
 	}
 
 	if (!registry) {
-		throw new Error("Could not locate NPM registry URL.");
+		throw "Could not locate NPM registry URL.";
 	}
 
 	const conf = await loadConfig({ prefix: basedir });

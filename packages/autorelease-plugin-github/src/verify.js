@@ -6,14 +6,14 @@ export default async function(ctx) {
 	const {githubToken=process.env.GH_TOKEN} = options;
 
 	if (!gitUrl) {
-		throw new Error(`No repository url found in package.json.`);
+		throw(`No repository url found in package.json.`);
 	}
 
 	if (gitUrl.source !== "github.com") {
-		throw new Error(`Repository URL does not seem to be from Github: ${gitUrl.toString()}`);
+		throw(`Repository URL does not seem to be from Github: ${gitUrl.toString()}`);
 	}
 
 	if (!githubToken) {
-		throw new Error("No github token specified.");
+		throw("No github token specified.");
 	}
 }

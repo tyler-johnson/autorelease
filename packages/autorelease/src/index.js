@@ -15,9 +15,15 @@ export default async function(opts={}) {
 		...opts
   });
 
-  const pipeline = createPipeline((o, next) => next(ctx));
-  pipeline.context = ctx;
-  await plugins(ctx.options.plugins, basedir, pipeline);
-  await tasks(ctx.options.tasks, basedir, pipeline);
-  return pipeline;
+  const autorelease = createPipeline((o, next) => next(ctx));
+
+  // cyclical links so everythink can talk
+  autorelease.context = ctx;
+  ctx.root = autorelease;
+
+  // add plugins and tasks
+  await plugins(ctx.options.plugins, basedir, autorelease);
+  await tasks(ctx.options.tasks, basedir, autorelease);
+
+  return autorelease;
 }

@@ -1,5 +1,10 @@
 import minimist from "minimist";
-import * as commands from "./cmds/index";
+import {difference,toPath} from "lodash";
+import chalk from "chalk";
+import {name,version} from "../package.json";
+import help from "./help";
+
+const autorelease = require("./");
 
 const argv = minimist(process.argv.slice(2), {
   boolean: [ "help", "version" ],
@@ -10,13 +15,77 @@ const argv = minimist(process.argv.slice(2), {
   stopEarly: true
 });
 
-let cmd;
-if (argv.help) cmd = "help";
-else if (argv.version) cmd = "version";
-else if (argv._.length) cmd = argv._.shift();
-if (!cmd || !commands[cmd]) cmd = "help";
+if (argv.help) argv._ = ["help"];
+else if (argv.version) argv._ = ["version"];
 
-Promise.resolve(commands[cmd](argv)).catch(e => {
-  console.error(e);
+(async () => {
+  const pipeline = await autorelease(argv);
+
+  pipeline.add("help.autorelease", help);
+  pipeline.pipeline("version").add(function() {
+    console.log("%s %s", name, version);
+  });
+
+  let tasknames = commonPaths(argv._);
+  tasknames = tasknames.map(t => t.trim()).filter(Boolean);
+
+  if (tasknames.some(t => {
+    return t.toLowerCase() === "help";
+  })) {
+    tasknames = tasknames
+      .filter(t => t.toLowerCase() !== "help")
+      .map(t => "help." + t);
+  }
+
+  if (!tasknames.length) {
+    tasknames.push("help.autorelease");
+  }
+
+  const tasks = [];
+  const missing = [];
+  while (tasknames.length) {
+    const n = tasknames.shift();
+    const task = pipeline.get(n);
+    if (!task) missing.push(n);
+    else tasks.push(task);
+  }
+
+  if (missing.length) {
+    throw "Missing the following tasks:\n  " + missing.join("\n  ");
+  }
+
+  while (tasks.length) {
+    await tasks.shift()(pipeline.context);
+  }
+})().catch(e => {
+  console.error(chalk.bgRed.white.bold("Aborted Release"));
+  console.error(e.stack ? e.stack : e.toString ? e.toString() : e);
   process.exit(1);
 });
+
+function commonPaths(paths) {
+  return paths.reduce((m, path) => {
+    path = toPath(path);
+
+    // check if a shorter variant already exists
+    if (m.some(p => arrayStartsWith(path, p))) {
+      return m;
+    }
+
+    // check if a longer variant already exists
+    m.some((p,i) => {
+      if (arrayStartsWith(p, path)) {
+        m.splice(i, 1);
+        return true;
+      }
+    });
+
+    m.push(path);
+    return m;
+  }, []).map(path => path.join("."));
+}
+
+function arrayStartsWith(arr, test) {
+  return test.length > arr.length ? false :
+    !difference(arr.slice(0, test.length), test).length;
+}

@@ -32,7 +32,7 @@ export default function(ctx) {
 
 	// if last version was a prerelease, it is okay to release without changes
 	if (!hasChanges && (prerelease || base.prerelease.length === 0)) {
-		throw new Error("No relevant changes detected so no version is released.");
+		throw "No relevant changes detected so no version is released.";
 	} else if (!type) {
 		type = "patch";
 	}

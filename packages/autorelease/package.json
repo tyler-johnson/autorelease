@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "autorelease-pipeline": "*",
+    "chalk": "^1.1.3",
+    "cli-format": "^3.0.8",
     "lodash": "^4.16.3",
     "minimist": "^1.2.0",
     "rc": "^1.1.6",

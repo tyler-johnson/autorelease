@@ -14,7 +14,7 @@ export default async function(ctx) {
   const {version="latest",tag} = options;
 
 	if (!pkg.name) {
-		throw new Error("Missing a package name.");
+		throw "Missing a package name.";
 	}
 
 	let latest = tag ? await fetch(pkg.name, tag) : null;

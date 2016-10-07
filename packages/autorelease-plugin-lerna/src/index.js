@@ -6,8 +6,13 @@ import fetchCommits from "./fetch-commits";
 import prepPublish from "./prep-publish";
 import generateChangelog from "./generate-changelog";
 import runPublish from "./publish";
+import {addVersion} from "autorelease-utils";
+import {name,version} from "../package.json";
 
 export default function(autorelease) {
+  // add version info
+  addVersion(autorelease, name, version);
+
   const pre = createPipeline();
   autorelease.add("pre", pre);
 
