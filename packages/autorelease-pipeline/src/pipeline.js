@@ -68,21 +68,21 @@ export function remove(task) {
 
 export function get(name) {
   const parts = toPath(name);
-  let pipeline = this;
+  let pipe = this;
 
-  while (pipeline && parts.length) {
-    pipeline = pipeline.__pipeline ? pipeline._byName[parts.shift()] : void 0;
+  while (pipe && parts.length) {
+    pipe = pipe.__pipeline ? pipe._byName[parts.shift()] : void 0;
   }
 
-  return pipeline;
+  return pipe;
 }
 
 export function pipeline(name) {
   const existing = this.get(name);
   if (existing && existing.__pipeline) return existing;
 
-  const pipeline = createPipeline();
-  this.add(name, pipeline);
-  if (existing) pipeline.add(existing);
-  return pipeline;
+  const pipe = createPipeline();
+  this.add(name, pipe);
+  if (existing) pipe.add(existing);
+  return pipe;
 }

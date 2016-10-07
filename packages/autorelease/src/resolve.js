@@ -3,9 +3,9 @@ import {resolve as pathResolve} from "path";
 import {startsWith} from "lodash";
 
 function nodeResolve(name, opts) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolv, reject) => {
     _resolve(name, opts, (err, r) => {
-      err ? reject(err) : resolve(r);
+      err ? reject(err) : resolv(r);
     });
   });
 }

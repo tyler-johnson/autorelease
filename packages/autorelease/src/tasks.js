@@ -5,21 +5,21 @@ export default async function applyTasks(tasks, basedir, pipeline, name) {
 
   if (Array.isArray(tasks)) {
     tasks = tasks.slice(0);
-    const task = name ? pipeline.pipeline(name) : pipeline;
-    task.clear(); // array always overwrites existing tasks
+    const pipe = name ? pipeline.pipeline(name) : pipeline;
+    pipe.clear(); // array always overwrites existing tasks
 
     while (tasks.length) {
-      await applyTasks(tasks.shift(), basedir, task);
+      await applyTasks(tasks.shift(), basedir, pipe);
     }
 
     return;
   } else if (typeof tasks === "object" && tasks != null) {
     const keys = Object.keys(tasks);
-    const task = name ? pipeline.pipeline(name) : pipeline;
+    const pipe = name ? pipeline.pipeline(name) : pipeline;
 
     while (keys.length) {
       const key = keys.shift();
-      await applyTasks(tasks[key], basedir, task, key);
+      await applyTasks(tasks[key], basedir, pipe, key);
     }
 
     return;
