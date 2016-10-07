@@ -1,17 +1,11 @@
 import fetchCommits from "autorelease-task-fetch-commits";
 import {exec} from "autorelease-utils";
-// import {set} from "lodash";
 
-export default async function(ctx) {
-  // do normal stuff on non-independent
-  if (!ctx.independent) {
-    await fetchCommits(ctx);
-    return;
-  }
-
+export async function newestCommitHash(packages) {
   // get the newest commit hash out of all packages
   const hashes = (await exec(`git rev-list HEAD`)).split(/\n\r?/g);
-  const index = ctx.packages.reduce((newest, pkg) => {
+
+  const index = packages.reduce((newest, pkg) => {
     const {latest} = pkg.autorelease_ctx || {};
 
     if (latest != null && latest.gitHead) {
@@ -21,15 +15,25 @@ export default async function(ctx) {
 
     return newest;
   }, -1);
-  const gitHead = index >= 0 ? hashes[index] : null;
 
+  return index >= 0 ? hashes[index] : null;
+}
+
+export async function fetchCommitsContext(ctx) {
   // generate new context with that gitHead
-  const newctx = {
+  return {
     ...ctx,
-    latest: { gitHead }
+    latest: {
+      gitHead: await newestCommitHash(ctx.packages)
+    }
   };
+}
+
+export default async function(ctx) {
+  // do normal stuff on non-independent
+  if (!ctx.independent) return await fetchCommits(ctx);
 
   // fetch commits
-  await fetchCommits(newctx);
-  ctx.commits = newctx.commits;
+  ctx.commits = await fetchCommits(await fetchCommitsContext(ctx));
+  return ctx.commits;
 }
