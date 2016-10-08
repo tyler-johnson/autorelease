@@ -10,8 +10,8 @@ export default async function(pkg={}, tags="latest") {
 
   const registry = getRegistryUrl(pkg);
   const auth = getAuthToken(registry);
-  const {host,protocol,pathname} = parse(registry, false, true);
-  const reqopts = {host,protocol};
+  const {hostname,port,protocol,pathname} = parse(registry, false, true);
+  const reqopts = {hostname,port,protocol};
 
   reqopts.method = "GET";
   reqopts.path = "/" + pathname
@@ -52,12 +52,15 @@ export default async function(pkg={}, tags="latest") {
     req.end();
   });
 
-  if (pkgdata == null) return null;
+  if (pkgdata == null || !pkgdata.versions) return null;
 
   tags = [].concat(tags);
   for (let i = 0; i < tags.length; i++) {
-    const disttag = pkgdata["dist-tags"][tags[i]];
-    if (disttag) return pkgdata.versions[disttag];
+    if (pkgdata["dist-tags"]) {
+      const disttag = pkgdata["dist-tags"][tags[i]];
+      if (disttag) return pkgdata.versions[disttag];
+    }
+
     const version = pkgdata.versions[tags[i]];
     if (version) return version;
   }
