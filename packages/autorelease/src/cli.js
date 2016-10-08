@@ -3,6 +3,7 @@ import {difference,toPath} from "lodash";
 import chalk from "chalk";
 import {name,version} from "../package.json";
 import help from "./help";
+import ls from "./ls";
 
 const autorelease = require("./");
 
@@ -21,6 +22,7 @@ else if (argv.version) argv._ = ["version"];
 (async () => {
   const pipeline = await autorelease(argv);
 
+  pipeline.add("ls", ls);
   pipeline.add("help.autorelease", help);
   pipeline.pipeline("version").add(function() {
     console.log("%s %s", name, version);

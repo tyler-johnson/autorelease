@@ -53,15 +53,11 @@ export function remove(task) {
 
   if (typeof task !== "function") return this;
 
+  const name = parent.getName(task);
+  if (name) delete parent._byName[name];
+
   const index = parent._tasks.indexOf(task);
   if (index > -1) parent._tasks.splice(index, 1);
-
-  Object.keys(parent._byName).some(k => {
-    if (parent._byName[k] === task) {
-      delete parent._byName[k];
-      return true;
-    }
-  });
 
   return this;
 }
@@ -75,6 +71,16 @@ export function get(name) {
   }
 
   return pipe;
+}
+
+export function getName(task) {
+  const keys = Object.keys(this._byName);
+
+  for (let i = 0; i < keys.length; i++) {
+    if (this._byName[keys[i]] === task) {
+      return keys[i];
+    }
+  }
 }
 
 export function pipeline(name) {
