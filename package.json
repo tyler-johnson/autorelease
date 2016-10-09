@@ -6,7 +6,7 @@
     "test": "make test",
     "build": "make clean && make",
     "prepublish": "npm run build",
-    "autorelease": "node packages/autorelease/cli.js verify pre publish post"
+    "autorelease": "node packages/autorelease/lib/cli.js verify pre publish post"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
