@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-fetch-latest",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-utils": "*",
     "registry-auth-token": "^3.0.1"

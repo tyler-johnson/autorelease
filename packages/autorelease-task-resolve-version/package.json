@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-resolve-version",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "semver": "^5.3.0"
   }

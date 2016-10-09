@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-configure-npm",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "global-npm": "^0.3.0",
     "autorelease-utils": "*"

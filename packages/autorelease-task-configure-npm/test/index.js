@@ -1,8 +1,8 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
 import {Repository} from "autorelease-test-utils";
+import configureNpm from "../src/index.js";
 
-const configureNpm = require("./");
 const test = tapePromise(tape);
 const testrepo = new Repository(__dirname + "/testrepo");
 

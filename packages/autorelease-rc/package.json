@@ -1,6 +1,7 @@
 {
   "name": "autorelease-rc",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-utils": "*",
     "find-up": "^2.0.0",

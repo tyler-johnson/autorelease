@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-fetch-commits",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "conventional-commits-parser": "^1.2.3",
     "git-raw-commits": "^1.1.2",

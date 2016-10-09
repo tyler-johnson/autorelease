@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-verify-branch",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-utils": "*",
     "git-branch": "^0.3.0"

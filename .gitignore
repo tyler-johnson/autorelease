@@ -1,4 +1,4 @@
-packages/*/*.js
+lib/
 .npmrc
 testrepo/
 node_modules/

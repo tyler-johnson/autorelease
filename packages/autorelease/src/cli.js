@@ -4,8 +4,7 @@ import chalk from "chalk";
 import {name,version} from "../package.json";
 import help from "./help";
 import ls from "./ls";
-
-const autorelease = require("./");
+import autorelease from "./index";
 
 const argv = minimist(process.argv.slice(2), {
   boolean: [ "help", "version" ],

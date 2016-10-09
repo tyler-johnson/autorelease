@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-git-remote",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "git-remotes": "^1.0.2",
     "git-url-parse": "^6.0.5",

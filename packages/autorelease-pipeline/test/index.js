@@ -1,8 +1,8 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
+import {createPipeline} from "../src/index.js";
 
 const test = tapePromise(tape);
-const {createPipeline} = require("./");
 
 test("creates and runs empty pipeline", async (t) => {
   t.plan(2);

@@ -1,6 +1,7 @@
 {
   "name": "autorelease-test-utils",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-rc": "*",
     "autorelease-utils": "*",

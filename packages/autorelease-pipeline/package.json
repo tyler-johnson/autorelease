@@ -1,6 +1,7 @@
 {
   "name": "autorelease-pipeline",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "lodash": "^4.16.3"
   },

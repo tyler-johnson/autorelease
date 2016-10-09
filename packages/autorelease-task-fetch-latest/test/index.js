@@ -1,8 +1,8 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
 import {Repository} from "autorelease-test-utils";
+import fetchLatest from "../src/index.js";
 
-const fetchLatest = require("./");
 const test = tapePromise(tape);
 const testrepo = new Repository(__dirname + "/testrepo");
 

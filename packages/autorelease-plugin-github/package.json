@@ -1,6 +1,7 @@
 {
   "name": "autorelease-plugin-github",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-pipeline": "*",
     "autorelease-task-git-remote": "*",

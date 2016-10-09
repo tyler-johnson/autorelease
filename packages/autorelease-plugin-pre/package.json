@@ -1,6 +1,7 @@
 {
   "name": "autorelease-plugin-pre",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-task-fetch-latest": "*",
     "autorelease-task-fetch-commits": "*",

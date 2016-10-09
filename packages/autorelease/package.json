@@ -1,6 +1,8 @@
 {
   "name": "autorelease",
   "version": "0.0.0",
+  "main": "lib/index.js",
+  "bin": "lib/cli.js",
   "dependencies": {
     "autorelease-pipeline": "*",
     "autorelease-rc": "*",

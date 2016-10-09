@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-generate-changelog",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-task-fetch-commits": "*",
     "conventional-changelog-core": "^1.5.0",

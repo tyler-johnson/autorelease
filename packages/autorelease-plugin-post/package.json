@@ -1,6 +1,7 @@
 {
   "name": "autorelease-plugin-post",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
     "autorelease-task-generate-changelog": "*",
     "autorelease-task-write-changelog": "*",

@@ -1,6 +1,7 @@
 {
   "name": "autorelease-task-prep-publish",
   "version": "0.0.0",
+  "main": "lib/index.js",
   "dependencies": {
   }
 }
