@@ -4,10 +4,13 @@ import {cli,treeify} from "autorelease-utils";
 const ignoreRoot = [ "ls", "help", "version" ];
 
 export default function(ctx) {
-  cli.reset(1);
+  cli.reset(0);
 
   cli.newline();
-  cli.print(`These are autorelease pipelines and tasks as configured by plugins and your .autoreleaserc. The order they appear in is the order they will be run in. Tasks labeled ${chalk.dim("anonymous")} were added without a name.`);
+  cli.print(`These are autorelease pipelines and tasks as configured by plugins and your .autoreleaserc.
+The order they appear in is the order they will be run.
+Tasks labeled ${chalk.dim("anonymous")} were added without a name.
+Tasks labeled ${chalk.red("*")} are pipelines and can have zero or more children tasks.`);
   cli.newline();
 
   const tree = toTree(ctx.root).filter(k => ignoreRoot.indexOf(k.key) < 0);
@@ -24,17 +27,19 @@ export default function(ctx) {
   }
 }
 
-function toTree(pipe) {
+function toTree(pipe, depth=0) {
   if (!pipe.__pipeline || !pipe._tasks.length) return null;
 
   return pipe._tasks.reduce((m, task) => {
-    const name = pipe.getName(task) || chalk.dim("anonymous");
+    const key = pipe.getName(task) || chalk.dim("anonymous");
+    const node = { key };
 
-    m.push({
-      key: name,
-      children: toTree(task)
-    });
+    if (task.__pipeline) {
+      if (depth) node.key += " " + chalk.red("*");
+      node.children = toTree(task, depth + 1);
+    }
 
+    m.push(node);
     return m;
   }, []);
 }
