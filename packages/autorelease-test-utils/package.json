@@ -4,8 +4,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "autorelease-context": "*",
-    "autorelease-utils": "*",
     "debug": "^2.2.0",
+    "es6-promisify": "^5.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.5.4"
   }

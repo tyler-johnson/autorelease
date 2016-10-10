@@ -2,12 +2,13 @@ import gitRemote from "autorelease-task-git-remote";
 import createPipeline from "autorelease-pipeline";
 import verify from "./verify";
 import createRelease from "./create-release";
-import {addVersion} from "autorelease-utils";
 import {name,version} from "../package.json";
 
 export default function(autorelease) {
   // add version info
-  addVersion(autorelease, name, version);
+  autorelease.pipeline("version").add(() => {
+    console.log("%s %s", name, version);
+  });
 
   const verifyPipeline = createPipeline()
     .add(gitRemote)

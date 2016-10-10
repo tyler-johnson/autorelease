@@ -1,4 +1,4 @@
-import {promisify} from "autorelease-utils";
+import promisify from "es6-promisify";
 import {resolve,relative} from "path";
 import {readFile as _readFile, writeFile as _writeFile} from "fs";
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "autorelease-utils": "*",
+    "es6-promisify": "^5.0.0",
     "find-up": "^2.0.0",
     "ini": "^1.3.4",
     "pkg-up": "^1.0.0",

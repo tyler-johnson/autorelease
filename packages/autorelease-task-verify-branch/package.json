@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "autorelease-utils": "*",
+    "es6-promisify": "^5.0.0",
     "git-branch": "^0.3.0"
   },
   "devDependencies": {

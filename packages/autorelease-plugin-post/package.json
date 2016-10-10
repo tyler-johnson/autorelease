@@ -5,7 +5,6 @@
   "dependencies": {
     "autorelease-task-generate-changelog": "*",
     "autorelease-task-write-changelog": "*",
-    "autorelease-task-git-tag": "*",
-    "autorelease-utils": "*"
+    "autorelease-task-git-tag": "*"
   }
 }

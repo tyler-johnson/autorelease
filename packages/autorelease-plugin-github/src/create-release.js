@@ -1,8 +1,8 @@
 import _gitHead from "git-head";
 import GitHub from "github";
-import {promisify} from "autorelease-utils";
 import {resolve} from "path";
 import url from "url";
+import promisify from "es6-promisify";
 
 const gitHead = promisify(_gitHead);
 

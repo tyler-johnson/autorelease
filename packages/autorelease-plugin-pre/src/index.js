@@ -3,12 +3,13 @@ import fetchCommits from "autorelease-task-fetch-commits";
 import resolveVersion from "autorelease-task-resolve-version";
 import configureNpm from "autorelease-task-configure-npm";
 import prepPublish from "autorelease-task-prep-publish";
-import {addVersion} from "autorelease-utils";
 import {name,version} from "../package.json";
 
 export default function(autorelease) {
   // add version info
-  addVersion(autorelease, name, version);
+  autorelease.pipeline("version").add(() => {
+    console.log("%s %s", name, version);
+  });
 
   // set tasks by name (overwrite mode)
   autorelease.pipeline("pre")

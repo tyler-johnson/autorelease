@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
+    "es6-promisify": "^5.0.0",
     "git-remotes": "^1.0.2",
-    "git-url-parse": "^6.0.5",
-    "autorelease-utils": "*"
+    "git-url-parse": "^6.0.5"
   }
 }

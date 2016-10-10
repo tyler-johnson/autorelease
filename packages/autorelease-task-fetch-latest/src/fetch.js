@@ -1,4 +1,4 @@
-import {getRegistryUrl} from "autorelease-utils";
+import getRegistryUrl from "autorelease-task-npm-registry";
 import getAuthToken from "registry-auth-token";
 import {parse} from "url";
 import {request} from "http";
@@ -8,7 +8,11 @@ export default async function(pkg={}, tags="latest") {
 		throw "Missing a package name.";
 	}
 
-  const registry = getRegistryUrl(pkg);
+  const registry = getRegistryUrl({ package: pkg });
+  if (!registry) {
+    throw new Error("Couldn't locate NPM registry url");
+  }
+  
   const auth = getAuthToken(registry);
   const {hostname,port,protocol,pathname} = parse(registry, false, true);
   const reqopts = {hostname,port,protocol};

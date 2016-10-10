@@ -1,6 +1,6 @@
-import {getRegistryUrl} from "autorelease-utils";
+import getRegistryUrl from "autorelease-task-npm-registry";
 import {GLOBAL_NPM_PATH} from "global-npm";
-import {resolve,relative} from "path";
+import {resolve} from "path";
 
 const config = require(GLOBAL_NPM_PATH + "/lib/config/core");
 
@@ -15,18 +15,18 @@ function loadConfig(opts) {
 
 // write npm token to the .npmrc file
 export default async function(ctx) {
-	const {options={},package:pkg={},basedir} = ctx;
+	const {options={},basedir} = ctx;
 	const {npmToken=process.env.NPM_TOKEN} = options;
 	if (!npmToken) return;
 
-	const registry = getRegistryUrl(pkg);
+	const registry = getRegistryUrl(ctx);
+	if (!registry) return;
+
 	const conf = await loadConfig({ prefix: basedir });
 	conf.set(`${registry}:_authToken`, npmToken, "project");
 	await new Promise((resolv, reject) => {
 		conf.save("project", (err) => err ? reject(err) : resolv());
 	});
 
-	const npmrc = resolve(basedir, ".npmrc");
-	const relfile = relative((ctx.parentContext && ctx.parentContext.basedir) || ctx.basedir || ".", npmrc);
-	console.log("Wrote NPM_TOKEN to %s", relfile);
+	return resolve(basedir, ".npmrc");
 }

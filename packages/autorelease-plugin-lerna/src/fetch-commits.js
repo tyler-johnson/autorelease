@@ -1,7 +1,6 @@
 import fetchCommits from "autorelease-task-fetch-commits";
-import {exec} from "autorelease-utils";
 
-export async function newestCommitHash(packages) {
+export async function newestCommitHash(packages, exec) {
   // get the newest commit hash out of all packages
   const hashes = (await exec(`git rev-list HEAD`)).split(/\n\r?/g);
 
@@ -24,7 +23,7 @@ export async function fetchCommitsContext(ctx) {
   return {
     ...ctx,
     latest: {
-      gitHead: await newestCommitHash(ctx.packages)
+      gitHead: await newestCommitHash(ctx.packages, ctx.exec.bind(ctx))
     }
   };
 }

@@ -1,10 +1,11 @@
 import _mkdirp from "mkdirp";
-import {promisify,exec} from "autorelease-utils";
+import promisify from "es6-promisify";
 import {readFile as _readFile,writeFile as _writeFile} from "fs";
 import {join,resolve} from "path";
 import _debug from "debug";
-import rc from "autorelease-rc";
+import createContext from "autorelease-context";
 import _rimraf from "rimraf";
+import {exec as _exec} from "child_process";
 
 const debug = _debug("autorelease:test");
 const debugexec = _debug("autorelease:test:exec");
@@ -12,6 +13,7 @@ const readFile = promisify(_readFile);
 const writeFile = promisify(_writeFile);
 const mkdirp = promisify(_mkdirp);
 const rimraf = promisify(_rimraf);
+const exec = promisify(_exec);
 
 export class Repository {
 	constructor(dirname) {
@@ -135,7 +137,7 @@ export class Repository {
 	}
 
 	async context(opts) {
-		return await rc({
+		return await createContext({
 			basedir: this.dirname,
 			...opts
 		});

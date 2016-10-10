@@ -7,7 +7,6 @@
     "autorelease-task-fetch-commits": "*",
     "autorelease-task-resolve-version": "*",
     "autorelease-task-configure-npm": "*",
-    "autorelease-task-prep-publish": "*",
-    "autorelease-utils": "*"
+    "autorelease-task-prep-publish": "*"
   }
 }

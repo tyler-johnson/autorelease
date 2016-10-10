@@ -7,8 +7,5 @@ export default async function(ctx) {
 	const tags = [ version || "latest" ];
 	if (tag) tags.unshift(tag);
 	ctx.latest = await fetch(pkg, tags);
-
-	if (ctx.latest && ctx.latest.version) {
-		console.log("Fetched %s@%s", ctx.latest.name, ctx.latest.version);
-	}
+	return ctx.latest;
 }

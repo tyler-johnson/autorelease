@@ -1,6 +1,6 @@
 import gitUrlParse from "git-url-parse";
 import _gitRemotes from "git-remotes";
-import {promisify} from "autorelease-utils";
+import promisify from "es6-promisify";
 
 const gitRemotes = promisify(_gitRemotes);
 
@@ -23,7 +23,7 @@ export default async function(ctx) {
 		}
 	}
 
-	if (repourl) {
-		ctx.gitUrl = gitUrlParse(repourl);
-	}
+	if (!repourl) return;
+	ctx.gitUrl = gitUrlParse(repourl);
+	return ctx.gitUrl;
 }

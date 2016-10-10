@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import {treeify} from "autorelease-utils";
+import treeify from "./treeify";
 
 const ignoreRoot = [ "ls", "help", "version" ];
 

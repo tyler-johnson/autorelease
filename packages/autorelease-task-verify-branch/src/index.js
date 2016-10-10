@@ -1,6 +1,6 @@
 import {isRegExp} from "lodash";
 import _gitBranch from "git-branch";
-import {promisify} from "autorelease-utils";
+import promisify from "es6-promisify";
 
 const gitBranch = promisify(_gitBranch);
 

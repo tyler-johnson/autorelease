@@ -1,8 +1,8 @@
 {
-  "name": "autorelease-task-write-changelog",
+  "name": "autorelease-task-ls",
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "es6-promisify": "^5.0.0"
+    "chalk": "^1.1.3"
   }
 }

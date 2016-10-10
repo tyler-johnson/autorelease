@@ -3,7 +3,7 @@ import {difference,toPath} from "lodash";
 import chalk from "chalk";
 import {name,version} from "../package.json";
 import help from "./help";
-import ls from "./ls";
+import ls from "autorelease-task-ls";
 import autorelease from "./index";
 import * as cli from "./cli-utils";
 
