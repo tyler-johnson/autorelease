@@ -1,8 +1,8 @@
 import parseCommits from "conventional-commits-parser";
-import gitRawCommits from "git-raw-commits";
+import gitRawCommits from "./git-raw-commits";
 
 export default async function(ctx, gitRawCommitsOpts, parserOpts) {
-	const {latest={},options={}} = ctx;
+	const {latest={},options={},basedir="."} = ctx;
 	const {version,gitRef} = options;
 	let gitHead;
 
@@ -33,7 +33,8 @@ export default async function(ctx, gitRawCommitsOpts, parserOpts) {
 	// grab all raw commits since the last release
 	let fetch = gitRawCommits({
 		...gitRawCommitsOpts,
-		from: gitHead
+		from: gitHead,
+		cwd: basedir
 	});
 
 	// parse commits like the changelog
