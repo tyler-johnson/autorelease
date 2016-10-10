@@ -3,7 +3,7 @@ PKGS = $(wildcard packages/*)
 PKGNAMES = $(subst packages/,,$(PKGS))
 TESTS = $(wildcard packages/*/test/index.js)
 
-build: bootstrap $(PKGNAMES) cli.js
+build: bootstrap $(PKGNAMES) cli.js packages/autorelease/README.md
 
 bootstrap:
 	$(BIN)/lerna bootstrap
@@ -17,6 +17,10 @@ test: build
 cli.js: packages/autorelease/lib/cli.js
 	rm -f $@
 	ln -s $< $@
+
+packages/autorelease/README.md: README.md
+	rm -f $@
+	cp $< $@
 
 define GEN_BABEL
 $1: packages/$1
