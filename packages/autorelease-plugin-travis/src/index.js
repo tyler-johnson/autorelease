@@ -7,5 +7,5 @@ export default function(autorelease) {
     console.log("%s %s", name, version);
   });
 
-  autorelease.pipeline("verify").add(verify);
+  autorelease.pipeline("verify").add("travisVerify", verify);
 }

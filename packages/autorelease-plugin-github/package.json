@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "autorelease-pipeline": "*",
     "autorelease-task-git-remote": "*",
     "es6-promisify": "^5.0.0",
     "git-head": "^1.14.0",

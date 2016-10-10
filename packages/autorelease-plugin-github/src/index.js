@@ -1,5 +1,3 @@
-import gitRemote from "autorelease-task-git-remote";
-import createPipeline from "autorelease-pipeline";
 import verify from "./verify";
 import createRelease from "./create-release";
 import {name,version} from "../package.json";
@@ -10,15 +8,11 @@ export default function(autorelease) {
     console.log("%s %s", name, version);
   });
 
-  const verifyPipeline = createPipeline()
-    .add(gitRemote)
-    .add(verify);
-
   // verify in standard verification pipeline
-  autorelease.pipeline("verify").add(verifyPipeline);
+  autorelease.pipeline("verify").add("githubVerify", verify);
 
   // run on post-release pipeline
   const post = autorelease.pipeline("post");
-  post.pipeline("verify").add(verifyPipeline);
+  post.add("githubVerify", verify);
   post.add("githubRelease", createRelease);
 }

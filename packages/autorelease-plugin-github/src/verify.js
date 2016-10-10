@@ -1,8 +1,11 @@
+import gitRemote from "autorelease-task-git-remote";
+
 export default async function(ctx) {
 	if (ctx._githubVerify) return;
 	ctx._githubVerify = true;
 
-  const {gitUrl,options={}} = ctx;
+  const {options={}} = ctx;
+	const gitUrl = await gitRemote(ctx);
 	const {githubToken=process.env.GH_TOKEN} = options;
 
 	if (!gitUrl) {
