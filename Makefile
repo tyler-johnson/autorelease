@@ -39,7 +39,7 @@ packages/$1/lib/%.js: packages/$1/src/%.js packages/$1/lib
 	mkdir -p `dirname $$@`
 	$(BIN)/babel $$< > $$@
 
-test-$1: packages/$1/test/index.js
+test-$1: packages/$1/test/index.js build
 	$(BIN)/babel-node $$<
 endef
 
