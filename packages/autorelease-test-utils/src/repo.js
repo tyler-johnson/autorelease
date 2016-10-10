@@ -8,7 +8,6 @@ import _rimraf from "rimraf";
 import {exec as _exec} from "child_process";
 
 const debug = _debug("autorelease-test-utils");
-const debugexec = _debug("autorelease-test-utils:exec");
 const debugstdout = _debug("autorelease-test-utils:stdout");
 const readFile = promisify(_readFile);
 const writeFile = promisify(_writeFile);
@@ -29,25 +28,31 @@ export class Repository {
 
 	static operations = {
 		create: async function(repo) {
-			await Repository.operations.destroy(repo);
+			debug("op: create %s", repo.dirname);
 			await mkdirp(repo.dirname);
-			await repo.exec("git init");
 		},
 		destroy: async function(repo) {
+			debug("op: destroy %s", repo.dirname);
 			await rimraf(repo.dirname, { disableGlob: true });
 		},
 		command: async function(repo, op) {
+			debug("op: command %s", op.command);
 			await repo.exec(op.command, op.options);
 		},
 		file: async function(repo, op) {
+			debug("op: file %s", op.name);
 			await writeFile(join(repo.dirname, op.name), op.contents);
 		}
 	};
 
 	create() {
-		this._operations.push({
-			type: "create"
-		});
+		this.destroy();
+		this._operations.push({ type: "create" });
+		this.command("git init");
+
+		// always create rc and package to prevent conflict
+		this.rc({});
+		this.package({});
 
 		return this;
 	}
@@ -118,7 +123,6 @@ export class Repository {
 				continue;
 			}
 
-			debug("run op: %s", op.type);
 			await Repository.operations[op.type](this, op);
 		}
 	}
@@ -128,7 +132,6 @@ export class Repository {
 	}
 
 	async exec(cmd, options) {
-		debugexec(cmd);
 		const r = await exec(cmd, {
 			cwd: this.dirname,
 			...options
