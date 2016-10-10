@@ -1,4 +1,4 @@
-import {dirname} from "path";
+import {dirname,resolve} from "path";
 import pkgUp from "pkg-up";
 import findUp from "find-up";
 import parser from "./parser";
@@ -29,7 +29,7 @@ export default async function(opts={}) {
     }
   }
 
-  ctx.basedir = basedir;
+  ctx.basedir = resolve(basedir || ".");
   ctx.options = merge(conf, opts);
 
   const pkgfile = ctx.packageFile = await pkgUp(basedir);
