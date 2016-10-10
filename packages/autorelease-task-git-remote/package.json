@@ -6,5 +6,8 @@
     "es6-promisify": "^5.0.0",
     "git-remotes": "^1.0.2",
     "git-url-parse": "^6.0.5"
+  },
+  "devDependencies": {
+    "autorelease-test-utils": "*"
   }
 }
