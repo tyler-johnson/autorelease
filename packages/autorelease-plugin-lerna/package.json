@@ -10,6 +10,7 @@
     "autorelease-task-generate-changelog": "*",
     "autorelease-task-prep-publish": "*",
     "autorelease-task-resolve-version": "*",
+    "autorelease-task-npm-publish": "*",
     "lodash": "^4.16.4"
   },
   "peerDependencies": {

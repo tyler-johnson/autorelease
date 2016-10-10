@@ -32,6 +32,7 @@ packages/$1/lib/cli.js: packages/$1/src/cli.js packages/$1/lib
 	chmod +x $$@
 
 packages/$1/lib/%.js: packages/$1/src/%.js packages/$1/lib
+	mkdir -p `dirname $$@`
 	$(BIN)/babel $$< > $$@
 
 test-$1: packages/$1/test/index.js
@@ -39,7 +40,7 @@ test-$1: packages/$1/test/index.js
 endef
 
 $(foreach pkg,$(PKGNAMES), \
-	$(eval $(call GEN_BABEL,$(pkg),$(wildcard packages/$(pkg)/src/*))))
+	$(eval $(call GEN_BABEL,$(pkg),$(wildcard packages/$(pkg)/src/*.js packages/$(pkg)/src/*/*.js))))
 
 clean:
 	rm -rf $(wildcard packages/*/lib)

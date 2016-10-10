@@ -1,11 +1,11 @@
-import createPipeline from "./pipeline";
+import createPipeline from "../pipeline";
 import prepPublish from "autorelease-task-prep-publish";
 
 const pipeline = createPipeline();
 export default pipeline;
 
 // write version to outer package.json for post step
-pipeline.add(async (ctx) => {
+pipeline.add("prepLernaGlobal", async (ctx) => {
   // non-independent mode, bump outer version normally
   if (!ctx.independent) {
     await prepPublish(ctx);
@@ -26,7 +26,7 @@ pipeline.add(async (ctx) => {
 });
 
 // write new versions to all updated packages
-pipeline.addLernaTask(prepPublish, {
+pipeline.addLernaTask("prepPackages", prepPublish, {
   updatedOnly: true,
   forceLoop: true
 });
