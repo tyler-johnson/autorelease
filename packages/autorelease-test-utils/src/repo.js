@@ -7,8 +7,9 @@ import createContext from "autorelease-context";
 import _rimraf from "rimraf";
 import {exec as _exec} from "child_process";
 
-const debug = _debug("autorelease:test");
-const debugexec = _debug("autorelease:test:exec");
+const debug = _debug("autorelease-test-utils");
+const debugexec = _debug("autorelease-test-utils:exec");
+const debugstdout = _debug("autorelease-test-utils:stdout");
 const readFile = promisify(_readFile);
 const writeFile = promisify(_writeFile);
 const mkdirp = promisify(_mkdirp);
@@ -127,12 +128,13 @@ export class Repository {
 	}
 
 	async exec(cmd, options) {
+		debugexec(cmd);
 		const r = await exec(cmd, {
 			cwd: this.dirname,
 			...options
 		});
 
-		if (r.trim()) debugexec(r.trim());
+		if (r.trim()) debugstdout(r.trim());
 		return r;
 	}
 

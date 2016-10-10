@@ -6,7 +6,9 @@ import {readFile as _readFile} from "fs";
 import {merge} from "lodash";
 import {exec as _exec,spawn as _spawn} from "child_process";
 import promisify from "es6-promisify";
+import _debug from "debug";
 
+const debugexec = _debug("autorelease-context:exec");
 const readFile = promisify(_readFile);
 const execAsync = promisify(_exec);
 
@@ -40,6 +42,7 @@ export default async function(opts={}) {
 }
 
 async function exec(cmd, opts) {
+  debugexec(cmd);
   return await execAsync(cmd, {
     cwd: this.basedir,
     ...opts
@@ -51,6 +54,7 @@ function spawn(cmd, args, opts) {
     [opts,args] = [args,[]];
   }
 
+  debugexec("%s %s", cmd, JSON.stringify(args));
   return _spawn(cmd, args, {
     cwd: this.basedir,
     ...opts
