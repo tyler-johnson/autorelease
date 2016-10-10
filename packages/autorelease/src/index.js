@@ -1,10 +1,10 @@
 import createPipeline from "autorelease-pipeline";
+import createContext from "autorelease-context";
 import plugins from "./plugins";
 import tasks from "./tasks";
-import rc from "autorelease-rc";
 
 export default async function(opts={}) {
-  const ctx = await rc(opts);
+  const ctx = await createContext(opts);
   const autorelease = createPipeline((o, next) => next(ctx));
 
   // cyclical links so everythink can talk

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "autorelease-rc": "*",
+    "autorelease-context": "*",
     "autorelease-utils": "*",
     "debug": "^2.2.0",
     "mkdirp": "^0.5.1",

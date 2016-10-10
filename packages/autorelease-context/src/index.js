@@ -11,6 +11,7 @@ const readFile = promisify(_readFile);
 export default async function(opts={}) {
   let {basedir} = opts;
   const configfile = await findUp(".autoreleaserc", { cwd: basedir });
+  const ctx = {};
   const conf = {};
 
   if (configfile) {
@@ -18,19 +19,15 @@ export default async function(opts={}) {
 
     try {
       Object.assign(conf, parser(await readFile(configfile, "utf8")));
+      ctx.configFile = configfile;
     } catch(e) {
       throw(`Could not parse config file '${configfile}'`);
     }
   }
 
-  const pkgfile = await pkgUp(basedir);
-  if (pkgfile == null) {
-    throw "Could not locate a package.json";
-  }
-
-  const ctx = { basedir };
-  ctx.packageFile = pkgfile;
-  ctx.package = JSON.parse(await readFile(pkgfile, "utf-8"));
+  ctx.basedir = basedir;
+  const pkgfile = ctx.packageFile = await pkgUp(basedir);
+  ctx.package = pkgfile ? JSON.parse(await readFile(pkgfile, "utf-8")) : {};
   ctx.options = merge(conf, opts);
   return ctx;
 }

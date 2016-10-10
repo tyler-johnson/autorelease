@@ -1,8 +1,7 @@
 import chalk from "chalk";
-import {cli} from "autorelease-utils";
 
-export default function() {
-  cli.reset(1);
+export default function({ cli }) {
+  cli.reset(0);
   cli.newline();
   cli.print(`${chalk.bold.bgWhite.black("Autorelease")}`);
 
@@ -33,9 +32,9 @@ export default function() {
 	cli.newline();
 
   cli.printOptions({
-    "help": `Show help message for autorelease or specific tasks. This task is special because it prevents the typical task run and instead pulls help on all the listed tasks. For example, calling ${chalk.blue("autorelease help pre post")} is the equivalent of calling ${chalk.blue("autorelease help.pre help.post")}.`,
-    "version": "Print the version of autorelease and plugins.",
-    "ls": "A special task that prints a tree of all tasks by name.",
+    "help": `Show help message for autorelease or specific tasks. This will prevent the typical task run and instead pulls help on all the listed tasks.`,
+    "version": "Prints the version of autorelease and configured plugins.",
+    "ls": "Prints a tree of all configured tasks by name.",
     "setup": "Runs a fancy CLI tool that walks you through the process of setting up a project with autorelease."
   });
   cli.outdent();

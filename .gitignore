@@ -3,3 +3,4 @@ lib/
 testrepo/
 node_modules/
 *.log
+/cli.js

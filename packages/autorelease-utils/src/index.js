@@ -1,10 +1,9 @@
 import {exec as _exec} from "child_process";
 import registryUrl from "registry-url";
 import nerfDart from "nerf-dart";
-import * as cli from "./cli-utils";
 import treeify from "./treeify";
 
-export {cli,treeify};
+export {treeify};
 
 export function promisify(fn) {
 	return function(...args) {

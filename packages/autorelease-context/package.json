@@ -1,5 +1,5 @@
 {
-  "name": "autorelease-rc",
+  "name": "autorelease-context",
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {

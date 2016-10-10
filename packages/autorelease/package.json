@@ -5,12 +5,12 @@
   "bin": "lib/cli.js",
   "dependencies": {
     "autorelease-pipeline": "*",
-    "autorelease-rc": "*",
+    "autorelease-context": "*",
     "autorelease-utils": "*",
     "chalk": "^1.1.3",
+    "cli-format": "^3.0.8",
     "lodash": "^4.16.3",
     "minimist": "^1.2.0",
-    "resolve": "^1.1.7",
-    "treeify": "^1.0.1"
+    "resolve": "^1.1.7"
   }
 }

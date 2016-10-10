@@ -5,14 +5,14 @@ import {name,version} from "../package.json";
 import help from "./help";
 import ls from "./ls";
 import autorelease from "./index";
+import * as cli from "./cli-utils";
 
 const argv = minimist(process.argv.slice(2), {
   boolean: [ "help", "version" ],
   alias: {
     h: "help", H: "help",
     v: "version", V: "version"
-  },
-  stopEarly: true
+  }
 });
 
 if (argv.help) argv._ = ["help"];
@@ -20,6 +20,7 @@ else if (argv.version) argv._ = ["version"];
 
 (async () => {
   const pipeline = await autorelease(argv);
+  pipeline.context.cli = cli;
 
   pipeline.add("ls", ls);
   pipeline.add("help.autorelease", help);
@@ -52,15 +53,17 @@ else if (argv.version) argv._ = ["version"];
   }
 
   if (missing.length) {
-    throw "Missing the following tasks:\n  " + missing.join("\n  ");
+    throw(`Missing the following tasks:\n  ${missing.join("\n  ")}\n\nNeed help? Run ${chalk.blue("autorelease help")}`);
   }
 
   while (tasks.length) {
     await tasks.shift()(pipeline.context);
   }
 })().catch(e => {
+  console.error("");
   console.error(chalk.bgRed.white.bold("Aborted Release"));
   console.error(e.stack ? e.stack : e.toString ? e.toString() : e);
+  console.error("");
   process.exit(1);
 });
 

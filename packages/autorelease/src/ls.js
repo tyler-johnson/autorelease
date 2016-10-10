@@ -1,9 +1,9 @@
 import chalk from "chalk";
-import {cli,treeify} from "autorelease-utils";
+import {treeify} from "autorelease-utils";
 
 const ignoreRoot = [ "ls", "help", "version" ];
 
-export default function(ctx) {
+export default function({ cli, root }) {
   cli.reset(0);
 
   cli.newline();
@@ -13,7 +13,7 @@ Tasks labeled ${chalk.dim("anonymous")} were added without a name.
 Tasks labeled ${chalk.red("*")} are pipelines and can have zero or more children tasks.`);
   cli.newline();
 
-  const tree = toTree(ctx.root).filter(k => ignoreRoot.indexOf(k.key) < 0);
+  const tree = toTree(root).filter(k => ignoreRoot.indexOf(k.key) < 0);
 
   if (!tree.length) {
     cli.print(chalk.red.bold("No tasks configured!"));

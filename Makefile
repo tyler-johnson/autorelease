@@ -3,7 +3,7 @@ PKGS = $(wildcard packages/*)
 PKGNAMES = $(subst packages/,,$(PKGS))
 TESTS = $(wildcard packages/*/test/index.js)
 
-build: bootstrap $(PKGNAMES)
+build: bootstrap $(PKGNAMES) cli.js
 
 bootstrap:
 	$(BIN)/lerna bootstrap
@@ -13,6 +13,9 @@ test: build
 		echo "=>" $$t ; \
 		babel-node $$t ; \
 	done
+
+cli.js: packages/autorelease/lib/cli.js
+	ln -s $< $@
 
 define GEN_BABEL
 $1: packages/$1
