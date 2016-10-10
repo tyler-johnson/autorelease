@@ -23,7 +23,8 @@ export default async function(ctx) {
     config
   });
 
-  const commits = await fetchCommits(ctx, conf.gitRawCommitsOpts, conf.parserOpts);
+  const commits = Array.isArray(ctx.commits) ? ctx.commits :
+    await fetchCommits(ctx, conf.gitRawCommitsOpts, conf.parserOpts);
 
   const clog = toStream(commits)
     .pipe(through.obj(function(chunk, enc, cb) {

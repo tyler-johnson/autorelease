@@ -8,5 +8,8 @@
     "conventional-changelog-writer": "^1.4.1",
     "stream-array": "^1.1.2",
     "through2": "^2.0.1"
+  },
+  "devDependencies": {
+    "autorelease-test-utils": "*"
   }
 }
