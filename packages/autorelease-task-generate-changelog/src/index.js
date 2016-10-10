@@ -45,6 +45,5 @@ export default async function(ctx) {
   });
 
   ctx.changelog = data;
-  console.log("Generated changelog from %s commits", commits.length);
   return data;
 }

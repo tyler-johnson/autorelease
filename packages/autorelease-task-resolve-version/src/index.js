@@ -59,5 +59,5 @@ export default function(ctx) {
 		next: base.toString()
 	};
 
-	console.log("%s: %s version bump to %s", ctx.package.name, type, ctx.version.next);
+	return ctx.version;
 }
