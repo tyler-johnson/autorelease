@@ -2,5 +2,8 @@
   "name": "autorelease-task-git-tag",
   "version": "0.0.0",
   "main": "lib/index.js",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "autorelease-test-utils": "*"
+  }
 }
