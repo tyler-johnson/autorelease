@@ -5,7 +5,7 @@ export default async function(ctx) {
   console.log("Generating changelog from commit messages");
 
   let newctx = ctx;
-  if (ctx.independent) {
+  if (ctx.lerna.independent) {
     newctx = await fetchCommitsContext(ctx);
   }
 

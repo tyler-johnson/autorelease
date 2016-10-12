@@ -23,14 +23,14 @@ export async function fetchCommitsContext(ctx) {
   return {
     ...ctx,
     latest: {
-      gitHead: await newestCommitHash(ctx.packages, ctx.exec.bind(ctx))
+      gitHead: await newestCommitHash(ctx.lerna.packages, ctx.exec.bind(ctx))
     }
   };
 }
 
 export default async function(ctx) {
   // do normal stuff on non-independent
-  if (!ctx.independent) return await fetchCommits(ctx);
+  if (!ctx.lerna.independent) return await fetchCommits(ctx);
 
   // fetch commits
   ctx.commits = await fetchCommits(await fetchCommitsContext(ctx));

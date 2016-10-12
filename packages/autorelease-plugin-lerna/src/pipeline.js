@@ -15,21 +15,23 @@ function getUpdatedPackages(packages, publishConfig={}) {
 }
 
 async function fetchPackages(ctx, next) {
-  if (!ctx.packages) {
+  if (!ctx.lerna) {
     const {basedir="."} = ctx;
     const fullbase = resolve(basedir);
-    ctx.lerna = require(join(fullbase, "lerna.json"));
-    if (ctx.lerna.lerna) console.log("Using Lerna v%s", ctx.lerna.lerna);
+    const lerna = ctx.lerna = {};
 
-    ctx.independent = ctx.lerna.version === "independent";
-    ctx.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
-    ctx.updated = getUpdatedPackages(ctx.packages, ctx.lerna.publishConfig);
-    console.log("Releasing %s packages of %s total", ctx.updated.length, ctx.packages.length);
+    lerna.config = require(join(fullbase, "lerna.json"));
+    if (lerna.config.lerna) console.log("Using Lerna v%s", lerna.config.lerna);
+
+    lerna.independent = lerna.config.version === "independent";
+    lerna.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
+    lerna.updated = getUpdatedPackages(lerna.packages, lerna.config.publishConfig);
+    console.log("Releasing %s packages of %s total", lerna.updated.length, lerna.packages.length);
 
     // always add the "main" package to the list that needs releasing
-    if (ctx.package.name && !ctx.updated.some(pkg => pkg.name === ctx.package.name)) {
-      const pkg = find(ctx.packages, (p) => p.name === ctx.package.name);
-      if (pkg) ctx.updated.push(pkg);
+    if (ctx.package.name && !lerna.updated.some(pkg => pkg.name === ctx.package.name)) {
+      const pkg = find(lerna.packages, (p) => p.name === ctx.package.name);
+      if (pkg) lerna.updated.push(pkg);
     }
   }
 
@@ -45,17 +47,18 @@ function addLernaTask(name, fn, opts={}) {
   const {contextKeys,forceLoop,updatedOnly,id,progress=true,log=""} = opts;
 
   return this.add(name, async function(ctx) {
-    let {packages:all,updated} = ctx;
+    const {lerna={}} = ctx;
+    const {packages:all,updated} = lerna;
 
     // don't re-run if this task was run previously
     if (id) {
-      if (!ctx.lerna_tasks) ctx.lerna_tasks = [];
-      if (ctx.lerna_tasks.indexOf(id) > -1) return;
-      ctx.lerna_tasks.push(id);
+      if (!lerna.tasks) lerna.tasks = [];
+      if (lerna.tasks.indexOf(id) > -1) return;
+      lerna.tasks.push(id);
     }
 
     // don't loop when non-independent
-    if (forceLoop !== true && !ctx.independent) {
+    if (forceLoop !== true && !lerna.independent) {
       if (log) console.log(log);
       await fn(ctx);
       return;

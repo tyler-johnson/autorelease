@@ -7,8 +7,10 @@ export default pipeline;
 
 // write version to outer package.json for post step
 pipeline.add("prepLernaGlobal", async (ctx) => {
+  const {lerna} = ctx;
+
   // get all versions
-  ctx.package_versions = ctx.packages.reduce((v, p) => {
+  lerna.package_versions = lerna.packages.reduce((v, p) => {
     let ver = get(p, "autorelease_ctx.version.next");
     if (!ver) ver = get(p, "autorelease_ctx.latest.version");
     if (ver) v[p.name] = ver;
@@ -16,14 +18,14 @@ pipeline.add("prepLernaGlobal", async (ctx) => {
   }, {});
 
   // non-independent mode, bump outer version normally
-  if (!ctx.independent) {
+  if (!lerna.independent) {
     await prepPublish(ctx);
     return;
   }
 
   // find version for "main" package
   let version;
-  ctx.updated.some(pkg => {
+  lerna.updated.some(pkg => {
     if (pkg.name === ctx.package.name) {
       if (pkg.autorelease_ctx) version = pkg.autorelease_ctx.version;
       return true;
@@ -37,7 +39,8 @@ pipeline.add("prepLernaGlobal", async (ctx) => {
 
 // write new versions to all updated packages
 pipeline.addLernaTask("prepPackages", async (ctx) => {
-  const {package:pkg,package_versions:versions} = ctx;
+  const {package:pkg,lerna} = ctx;
+  const versions = lerna.package_versions;
   const deps = pkg.dependencies || {};
 
   pkg.dependencies = Object.keys(deps).reduce((d, key) => {
