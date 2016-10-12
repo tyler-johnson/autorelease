@@ -3,6 +3,7 @@ import pkgutils from "lerna/lib/PackageUtilities";
 import PkgDiffer from "lerna/lib/UpdatedPackagesCollector";
 import createPipeline from "autorelease-pipeline";
 import {find,clone} from "lodash";
+import ProgressBar from "progress";
 
 function getUpdatedPackages(packages, publishConfig={}) {
   const pkggraph = pkgutils.getPackageGraph(packages);
@@ -23,7 +24,7 @@ async function fetchPackages(ctx, next) {
     ctx.independent = ctx.lerna.version === "independent";
     ctx.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
     ctx.updated = getUpdatedPackages(ctx.packages, ctx.lerna.publishConfig);
-    console.log("Releasing %s updated packages of %s total", ctx.updated.length, ctx.packages.length);
+    console.log("Releasing %s packages of %s total", ctx.updated.length, ctx.packages.length);
 
     // always add the "main" package to the list that needs releasing
     if (ctx.package.name && !ctx.updated.some(pkg => pkg.name === ctx.package.name)) {
@@ -41,7 +42,7 @@ function addLernaTask(name, fn, opts={}) {
     [opts,fn,name] = [fn,name,null];
   }
 
-  const {contextKeys,forceLoop,updatedOnly,id} = opts;
+  const {contextKeys,forceLoop,updatedOnly,id,progress=true,log=""} = opts;
 
   return this.add(name, async function(ctx) {
     let {packages:all,updated} = ctx;
@@ -55,11 +56,28 @@ function addLernaTask(name, fn, opts={}) {
 
     // don't loop when non-independent
     if (forceLoop !== true && !ctx.independent) {
+      if (log) console.log(log);
       await fn(ctx);
       return;
     }
 
     const packages = (updatedOnly ? updated : all).slice(0);
+    let pb;
+
+    if (progress && process.stdout.isTTY && process.stdout.clearLine) {
+      pb = new ProgressBar(`${log ? log + " " : ""}╢:bar╟ `, {
+        total: packages.length,
+        complete: "█",
+        incomplete: "░",
+        clear: true,
+        stream: process.stdout,
+
+        // terminal columns - package name length - additional characters length
+        width: (process.stdout.columns || 100) - log.length - 3
+      });
+    } else if (log) {
+      console.log(log);
+    }
 
     while (packages.length) {
       const pkg = packages.shift();
@@ -82,6 +100,7 @@ function addLernaTask(name, fn, opts={}) {
       };
 
       await fn(newctx);
+      pb && pb.tick();
 
       if (Array.isArray(contextKeys)) {
         // create an object of modified context keys
@@ -93,6 +112,11 @@ function addLernaTask(name, fn, opts={}) {
 
         pkg.autorelease_ctx = Object.assign(pkg.autorelease_ctx || {}, changedCtx);
       }
+    }
+
+    if (pb && log) {
+      pb.terminate();
+      console.log(log);
     }
   });
 }

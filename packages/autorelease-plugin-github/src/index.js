@@ -12,7 +12,5 @@ export default function(autorelease) {
   autorelease.pipeline("verify").add("githubVerify", verify);
 
   // run on post-release pipeline
-  const post = autorelease.pipeline("post");
-  post.add("githubVerify", verify);
-  post.add("githubRelease", createRelease);
+  autorelease.pipeline("post").add("githubRelease", createRelease);
 }

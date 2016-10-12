@@ -31,6 +31,7 @@ export default async function(opts={}) {
 
   ctx.basedir = resolve(basedir || ".");
   ctx.options = merge(conf, opts);
+  ctx.dryrun = ctx.options.dryrun || false;
 
   const pkgfile = ctx.packageFile = await pkgUp(basedir);
   ctx.package = pkgfile ? JSON.parse(await readFile(pkgfile, "utf-8")) : {};

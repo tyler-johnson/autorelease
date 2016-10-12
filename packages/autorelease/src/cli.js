@@ -45,11 +45,17 @@ else if (argv.version) argv._ = ["version"];
 
   const tasks = [];
   const missing = [];
+  let hasReal = false;
   while (tasknames.length) {
     const n = tasknames.shift();
     const task = pipeline.get(n);
-    if (!task) missing.push(n);
-    else tasks.push(task);
+    if (!task) {
+      missing.push(n);
+      continue;
+    }
+
+    tasks.push(task);
+    if (n !== "ls" && n !== "version" && n.substr(0, 5) !== "help.") hasReal = true;
   }
 
   if (missing.length) {
@@ -58,6 +64,10 @@ else if (argv.version) argv._ = ["version"];
 
   while (tasks.length) {
     await tasks.shift()(pipeline.context);
+  }
+
+  if (hasReal) {
+    console.log(chalk.green.bold("Autorelease tasks completed successfully 🎉"));
   }
 })().catch(e => {
   console.error("");

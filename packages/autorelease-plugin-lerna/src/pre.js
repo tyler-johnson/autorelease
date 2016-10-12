@@ -10,16 +10,19 @@ export default function() {
 
   // set the remaining tasks by name (overwrite mode)
   pre.addLernaTask("configureNpm", configureNpm, {
-      forceLoop: true
+      forceLoop: true,
+      log: "Configuring NPM for release"
     })
     .addLernaTask("fetchLatest", fetchLatest, {
       contextKeys: [ "latest" ],
-      id: "fetchLatest"
+      id: "fetchLatest",
+      log: "Fetching latest packages"
     })
     .add("fetchCommits", fetchCommits)
     .addLernaTask("resolveVersion", resolveVersion, {
       contextKeys: [ "version" ],
-      updatedOnly: true
+      updatedOnly: true,
+      log: "Determining new versions"
     })
     .add("prepPublish", prepPublish);
 

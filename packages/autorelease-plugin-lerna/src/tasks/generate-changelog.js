@@ -2,6 +2,8 @@ import generateChangelog from "autorelease-task-generate-changelog";
 import {fetchCommitsContext} from "./fetch-commits";
 
 export default async function(ctx) {
+  console.log("Generating changelog from commit messages");
+
   let newctx = ctx;
   if (ctx.independent) {
     newctx = await fetchCommitsContext(ctx);

@@ -31,6 +31,7 @@ pipeline.add("prepLernaGlobal", async (ctx) => {
   });
 
   // write new version to outer package.json
+  if (version) ctx.version = version;
   await prepPublish({ ...ctx, version });
 });
 
@@ -47,5 +48,6 @@ pipeline.addLernaTask("prepPackages", async (ctx) => {
   await prepPublish(ctx);
 }, {
   updatedOnly: true,
-  forceLoop: true
+  forceLoop: true,
+  log: "Saving new versions to package.json"
 });

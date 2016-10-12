@@ -34,5 +34,6 @@ export default async function(ctx) {
 
   // fetch commits
   ctx.commits = await fetchCommits(await fetchCommitsContext(ctx));
+  console.log("Detected %s new commits since last release", ctx.commits.length);
   return ctx.commits;
 }

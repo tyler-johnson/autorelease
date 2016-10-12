@@ -2,7 +2,7 @@ import {writeFile} from "fs";
 
 // write version to the package.json
 export default async function(ctx) {
-	const {version,package:pkg,packageFile,tag} = ctx;
+	const {version,package:pkg,packageFile,tag,dryrun} = ctx;
 
 	// clone the package data so we don't affect the existing
 	const pkgdata = { ...pkg };
@@ -21,6 +21,7 @@ export default async function(ctx) {
 
 	// write the package file
 	await new Promise((resolve, reject) => {
+		if (dryrun) return resolve();
 		writeFile(packageFile, JSON.stringify(pkgdata, null, 2) + "\n", (err) => {
 			err ? reject(err) : resolve();
 		});

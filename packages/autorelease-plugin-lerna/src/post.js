@@ -8,7 +8,8 @@ export default function() {
   post
     .addLernaTask("fetchLatest", fetchLatest, {
       contextKeys: [ "latest" ],
-      id: "fetchLatest"
+      id: "fetchLatest",
+      log: "Fetching latest packages"
     })
     .add("generateChangelog", generateChangelog);
 

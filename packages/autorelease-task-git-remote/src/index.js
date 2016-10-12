@@ -5,6 +5,7 @@ import promisify from "es6-promisify";
 const gitRemotes = promisify(_gitRemotes);
 
 export default async function(ctx) {
+	if (ctx.gitUrl) return ctx.gitUrl;
 	const {package:pkg,basedir="."} = ctx;
 
 	// attempt to find repo url from the package.json
