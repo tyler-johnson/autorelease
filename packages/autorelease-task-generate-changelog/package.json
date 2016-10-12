@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "autorelease-test-utils": "*"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }

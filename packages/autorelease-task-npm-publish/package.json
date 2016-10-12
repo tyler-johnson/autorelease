@@ -2,5 +2,8 @@
   "name": "autorelease-task-npm-publish",
   "version": "0.0.0",
   "main": "lib/index.js",
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "lib"
+  ]
 }

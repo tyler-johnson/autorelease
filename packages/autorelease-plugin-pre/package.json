@@ -8,5 +8,8 @@
     "autorelease-task-resolve-version": "*",
     "autorelease-task-configure-npm": "*",
     "autorelease-task-prep-publish": "*"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }

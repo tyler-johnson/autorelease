@@ -8,5 +8,8 @@
     "es6-promisify": "^5.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.5.4"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }

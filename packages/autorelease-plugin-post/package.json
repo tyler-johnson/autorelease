@@ -6,5 +6,8 @@
     "autorelease-task-generate-changelog": "*",
     "autorelease-task-write-changelog": "*",
     "autorelease-task-git-tag": "*"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
