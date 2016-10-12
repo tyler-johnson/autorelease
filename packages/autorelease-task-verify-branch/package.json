@@ -4,7 +4,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "es6-promisify": "^5.0.0",
-    "git-branch": "^0.3.0"
+    "git-branch": "^0.3.0",
+    "lodash": "^4.16.4"
   },
   "devDependencies": {
     "autorelease-test-utils": "*"
