@@ -1,5 +1,5 @@
 export default async function(ctx) {
-	const {package:pkg={},version} = ctx;
+	const {package:pkg={},version,dryrun} = ctx;
 	let ver;
 
 	if (version && version.next) {
@@ -11,7 +11,8 @@ export default async function(ctx) {
 	if (!ver) return;
 
 	// tag the current commit with new version
-	// done here because github variant tags and releases all-in-one
-	await ctx.exec(`git tag -a v${ver} -m ""`);
+	ver = "v" + ver;
+	if (!dryrun) await ctx.exec(`git tag -a ${ver} -m ""`);
+
 	return ver;
 }

@@ -13,9 +13,17 @@ export default function(autorelease) {
 
   // set tasks by name (overwrite mode)
   autorelease.pipeline("pre")
-    .add("configureNpm", configureNpm)
-    .add("fetchLatest", fetchLatest)
-    .add("fetchCommits", fetchCommits)
-    .add("resolveVersion", resolveVersion)
-    .add("prepPublish", prepPublish);
+    .add("configureNpm", log("Configured NPM for release", configureNpm))
+    .add("fetchLatest", log("Fetched the most recent package.json", fetchLatest))
+    .add("fetchCommits", log((c) => `Detected ${c.length} new commits since last release`, fetchCommits))
+    .add("resolveVersion", log((c) => `Detected ${c.type} version bump to ${c.next}`, resolveVersion))
+    .add("prepPublish", log("Saved new version to package.json", prepPublish));
+}
+
+function log(msg, fn) {
+  return async function(ctx) {
+    const r = await fn(ctx);
+    console.log(typeof msg === "function" ? msg(r, ctx) : msg);
+    return r;
+  };
 }
