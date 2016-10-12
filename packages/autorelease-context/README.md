@@ -17,7 +17,7 @@ import createContext from "autorelease-context";
 #### createContext()
 
 ```
-createContext([ options ]) → context
+createContext([ options ]) → Promise<Context>
 ```
 
 Creates a context object used by Autorelease tasks.
@@ -25,7 +25,7 @@ Creates a context object used by Autorelease tasks.
 - `options` (Object) - Optional options to configure the context with.
   - `options.basedir` (String) - The working directory to release out of.
 
-This will search the filesystem for two files: `.autoreleaserc` and `package.json`. The `.autoreleaserc` file is used as configuration and is merged with `options`. The resulting context object with have the following properties:
+This method is asynchronous since it searches the filesystem for two files: `.autoreleaserc` and `package.json`. The `.autoreleaserc` file is used as configuration and is merged with `options`. The resulting context object with have the following properties:
 
 - `basedir` - The current working directory. This is generally the same directory the `.autoreleaserc` was found in.
 - `options` - The options that were passed in, merged with the `.autoreleaserc` file.
