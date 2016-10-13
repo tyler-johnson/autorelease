@@ -3,16 +3,16 @@ import getAuthToken from "registry-auth-token";
 import {parse} from "url";
 import {request} from "http";
 
-export default async function(pkg={}, tags="latest") {
+export default async function(basedir=".", pkg={}, tags="latest") {
   if (!pkg.name) {
 		throw "Missing a package name.";
 	}
 
-  const registry = getRegistryUrl({ package: pkg });
+  const registry = await getRegistryUrl({ basedir, package: pkg });
   if (!registry) {
     throw new Error("Couldn't locate NPM registry url");
   }
-  
+
   const auth = getAuthToken(registry);
   const {hostname,port,protocol,pathname} = parse(registry, false, true);
   const reqopts = {hostname,port,protocol};

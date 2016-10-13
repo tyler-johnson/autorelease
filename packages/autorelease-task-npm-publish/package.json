@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {},
+  "devDependencies": {
+    "autorelease-test-utils": "*",
+    "autorelease-task-configure-npm": "*",
+    "registry-mock": "^2.0.0",
+    "superagent": "^2.3.0"
+  },
   "files": [
     "lib"
   ]

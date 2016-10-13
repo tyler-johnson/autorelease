@@ -19,7 +19,7 @@ export default async function(ctx) {
 	const {npmToken=process.env.NPM_TOKEN} = options;
 	if (!npmToken) return;
 
-	const registry = getRegistryUrl(ctx);
+	const registry = await getRegistryUrl(ctx);
 	if (!registry) return;
 
 	if (!dryrun) {

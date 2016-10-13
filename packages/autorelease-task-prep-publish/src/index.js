@@ -2,7 +2,8 @@ import {writeFile} from "fs";
 
 // write version to the package.json
 export default async function(ctx) {
-	const {version,package:pkg,packageFile,tag,dryrun} = ctx;
+	const {version,package:pkg,packageFile,options={},dryrun} = ctx;
+	const {tag} = options;
 
 	// clone the package data so we don't affect the existing
 	const pkgdata = { ...pkg };

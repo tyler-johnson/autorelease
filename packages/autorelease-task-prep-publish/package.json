@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {},
+  "devDependencies": {
+    "autorelease-test-utils": "*"
+  },
   "files": [
     "lib"
   ]

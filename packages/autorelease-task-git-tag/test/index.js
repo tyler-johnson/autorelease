@@ -7,7 +7,7 @@ const test = tapePromise(tape);
 const testrepo = new Repository(__dirname + "/testrepo");
 
 test("tags with next version", async (t) => {
-  t.plan(1);
+  t.plan(2);
 
   await testrepo
     .create()
@@ -16,13 +16,12 @@ test("tags with next version", async (t) => {
 
   const ctx = await testrepo.context();
   ctx.version = { next: "1.0.0-alpha.0" };
-  await gitTag(ctx);
-
+  t.equals(await gitTag(ctx), "v1.0.0-alpha.0", "returned new version");
   t.equals(await testrepo.exec("git tag"), "v1.0.0-alpha.0\n", "tagged with correct version");
 });
 
 test("tags with version in package.json", async (t) => {
-  t.plan(1);
+  t.plan(2);
 
   await testrepo
     .create()
@@ -31,9 +30,22 @@ test("tags with version in package.json", async (t) => {
     .flush();
 
   const ctx = await testrepo.context();
-  await gitTag(ctx);
-
+  t.equals(await gitTag(ctx), "v1.0.0-alpha.0", "returned new version");
   t.equals(await testrepo.exec("git tag"), "v1.0.0-alpha.0\n", "tagged with correct version");
+});
+
+test("does not tag in dryrun mode", async (t) => {
+  t.plan(2);
+
+  await testrepo
+    .create()
+    .package({ version: "1.0.0-alpha.0" })
+    .commit("fix: epic bugfix")
+    .flush();
+
+  const ctx = await testrepo.context({ dryrun: true });
+  t.equals(await gitTag(ctx), "v1.0.0-alpha.0", "returned new version");
+  t.equals(await testrepo.exec("git tag"), "", "git tag was empty");
 });
 
 test("cleans up", async (t) => {

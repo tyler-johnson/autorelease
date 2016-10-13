@@ -67,6 +67,25 @@ test("doesn't do anything when no npm token is provided", async (t) => {
   }
 });
 
+test("doesn't do anything in dryrun mode", async (t) => {
+  t.plan(1);
+
+  await testrepo
+    .create()
+    .package({ name: "testrepo" })
+    .flush();
+
+  const ctx = await testrepo.context({ dryrun: true, npmToken: "12345" });
+  await configureNpm(ctx);
+
+  try {
+    await testrepo.readFile(".npmrc");
+    t.fail(".npmrc file exists");
+  } catch(e) {
+    t.equals(e.code, "ENOENT", ".npmrc doesn't exist");
+  }
+});
+
 test("cleans up", async (t) => {
   await testrepo.destroy().flush();
   t.end();
