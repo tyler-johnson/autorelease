@@ -4,15 +4,13 @@
 
 **_Fully Automated NPM Publish._**
 
-Publish quickly, often and consistently with Autorelease, which will automatically:
+Publish quickly, often and consistently with Autorelease, which can automatically:
 
 - **verify releases** before publishing to ensure consistency.
 - **bump the version** in your package.json and publish to NPM.
 - **generate changelogs** from your commit messages.
 - **create git tags** and create releases on Github or your favorite git host.
 - and anything else you can write a JavaScript function for.
-
-Autorelease is highly configurable and works in any environment Node.js works in, including CI or from your local machine. Autorelease is designed for git and will work with many remote git providers, including Github and Gitlab.
 
 To quickly get your project set up with Autorelease, run the following:
 
@@ -21,8 +19,20 @@ npm i autorelease -g
 autorelease setup
 ```
 
+### How do I use Autorelease with ...?
+
+These are some tutorials on configuring Autorelease for popular environments.
+
+- [Github + Travis CI](tutorials/github-travis.md)
+- [Gitlab + Gitlab CI]()
+- [Local Command Line]()
+
 ### Plugins
 
-- [autorelease-plugin-github](http://ghub.io/autorelease-plugin-github) - Create releases on Github.
-- [autorelease-plugin-travis](http://ghub.io/autorelease-plugin-travis) - Verify the release is in Travis CI.
-- [autorelease-plugin-lerna](http://ghub.io/autorelease-plugin-lerna) - Publish [lerna](http://ghub.io/lerna) packages.
+These are some of the plugins available for autorelease. [See NPM for a more complete list.](https://www.npmjs.com/browse/keyword/autorelease)
+
+- [autorelease-plugin-github](packages/autorelease-plugin-github) - Create releases on Github.
+- [autorelease-plugin-travis](packages/autorelease-plugin-travis) - Verify the release is in Travis CI.
+- [autorelease-plugin-lerna](packages/autorelease-plugin-lerna) - Publish [lerna](http://ghub.io/lerna) packages.
+- [autorelease-plugin-pre](packages/autorelease-plugin-pre) - The core `pre` pipeline that handles the version bump.
+- [autorelease-plugin-post](packages/autorelease-plugin-post) - The core `post` pipeline that generates the changelog and creates a git tag.
