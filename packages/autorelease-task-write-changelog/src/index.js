@@ -20,7 +20,7 @@ export default async function(ctx) {
 		let existing = "";
 		try { existing = await readFile(cfile, "utf-8"); }
 		catch(e) { if (e.code !== "ENOENT") throw e; }
-		await writeFile(cfile, changelog + existing);
+		await writeFile(cfile, changelog.trim() + "\n" + existing);
 	}
 
 	return cfile;

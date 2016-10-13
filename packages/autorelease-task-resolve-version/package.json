@@ -5,6 +5,10 @@
   "dependencies": {
     "semver": "^5.3.0"
   },
+  "devDependencies": {
+    "autorelease-test-utils": "*",
+    "autorelease-task-fetch-commits": "*"
+  },
   "files": [
     "lib"
   ]

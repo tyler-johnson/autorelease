@@ -5,6 +5,9 @@
   "dependencies": {
     "es6-promisify": "^5.0.0"
   },
+  "devDependencies": {
+    "autorelease-test-utils": "*"
+  },
   "files": [
     "lib"
   ]

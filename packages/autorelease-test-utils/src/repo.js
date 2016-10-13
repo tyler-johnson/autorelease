@@ -110,7 +110,7 @@ export class Repository {
 	commit(message) {
 		return this
 			.command(`git add --all`)
-			.command(`git commit -m ${JSON.stringify(message)} --allow-empty`);
+			.command(`git commit -m "${message.replace('"', '\\"')}" --allow-empty`);
 	}
 
 	// persist the operations
