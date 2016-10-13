@@ -27,15 +27,14 @@ $1: packages/$1
 
 packages/$1: $(subst /src/,/lib/,$2)
 
-packages/$1/lib:
-	mkdir -p $$@
-
-packages/$1/lib/cli.js: packages/$1/src/cli.js packages/$1/lib
+packages/$1/lib/cli.js: packages/$1/src/cli.js
+	mkdir -p `dirname $$@`
 	echo "#!/usr/bin/env node" > $$@
 	$(BIN)/babel $$< >> $$@
 	chmod +x $$@
 
-packages/$1/lib/%.js: packages/$1/src/%.js packages/$1/lib
+packages/$1/lib/%.js: packages/$1/src/%.js
+	mkdir -p `dirname $$@`
 	$(BIN)/babel $$< > $$@
 
 test-$1: packages/$1/test/index.js build
