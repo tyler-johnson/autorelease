@@ -9,9 +9,9 @@ bootstrap:
 	$(BIN)/lerna bootstrap
 
 test: build
-	@- for t in $(TESTS) ; do \
+	@ for t in $(TESTS) ; do \
 		echo "=>" $$t ; \
-		$(BIN)/babel-node $$t ; \
+		$(BIN)/babel-node $$t || exit 1 ; \
 	done
 
 cli.js: packages/autorelease/lib/cli.js
