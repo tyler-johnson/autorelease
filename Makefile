@@ -19,7 +19,6 @@ cli.js: packages/autorelease/lib/cli.js
 	ln -s $< $@
 
 packages/autorelease/README.md: README.md
-	rm -f $@
 	cp $< $@
 
 define GEN_BABEL
