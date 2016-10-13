@@ -9,6 +9,8 @@ node_js:
 install:
   - npm install
 before_script:
+  - git config user.email "autorelease@travis-ci.org"
+  - git config user.name "Autorelease CI"
   - npm run lint
 script:
   - npm test
