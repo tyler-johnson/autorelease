@@ -45,7 +45,7 @@ $(foreach pkg,$(PKGNAMES), \
 	$(eval $(call GEN_BABEL,$(pkg),$(wildcard packages/$(pkg)/src/*.js packages/$(pkg)/src/*/*.js))))
 
 clean:
-	rm -rf $(wildcard packages/*/lib)
+	rm -rf packages/autorelease/README.md cli.js $(wildcard packages/*/lib)
 	$(BIN)/lerna clean --yes
 
 .PHONY: build $(PKGNAMES) clean bootstrap test $(TESTS)
