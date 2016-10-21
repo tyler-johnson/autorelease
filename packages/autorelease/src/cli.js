@@ -13,7 +13,8 @@ const argv = minimist(process.argv.slice(2), {
   alias: {
     h: "help", H: "help",
     v: "version", V: "version",
-    n: "dryrun"
+    n: "dryrun",
+    p: "plugin"
   }
 });
 
@@ -25,6 +26,10 @@ function isRealTask(n) {
 }
 
 (async () => {
+  argv.plugins = argv.plugins === false ? [] :
+    [].concat(argv.plugins, argv.plugin).filter(Boolean);
+  if (!argv.plugins.length) delete argv.plugins;
+
   const ctx = await createContext(argv);
   const autorelease = await createPipeline(ctx);
   ctx.cli = cli;

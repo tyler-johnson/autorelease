@@ -3,7 +3,7 @@ import pkgUp from "pkg-up";
 import findUp from "find-up";
 import parser from "./parser";
 import {readFile as _readFile} from "fs";
-import {merge} from "lodash";
+import {extend} from "plain-merge";
 import {exec as _exec,spawn as _spawn} from "child_process";
 import promisify from "es6-promisify";
 import _debug from "debug";
@@ -30,7 +30,7 @@ export default async function(opts={}) {
   }
 
   ctx.basedir = resolve(basedir || ".");
-  ctx.options = merge(conf, opts);
+  ctx.options = extend(conf, opts);
   ctx.dryrun = ctx.options.dryrun || false;
 
   const pkgfile = ctx.packageFile = await pkgUp(basedir);

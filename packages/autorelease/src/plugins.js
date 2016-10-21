@@ -1,7 +1,7 @@
 import resolve from "./resolve";
 
 export default async function(pipeline, plugins=[], basedir) {
-  plugins = plugins.slice(0);
+  plugins = [].concat(plugins);
 
   while (plugins.length) {
     let plugin = plugins.shift();

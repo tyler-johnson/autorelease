@@ -9,6 +9,7 @@
     "ini": "^1.3.4",
     "lodash": "^4.16.4",
     "pkg-up": "^1.0.0",
+    "plain-merge": "^2.0.2",
     "yaml-parser": "^3.5.3"
   },
   "files": [

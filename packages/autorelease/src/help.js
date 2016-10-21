@@ -18,7 +18,8 @@ export default function({ cli }) {
   cli.printOptions({
     "-h, --help": "Show help message for autorelease.",
     "-v, --version": "Print the version of autorelease and plugins.",
-    "-n, --dryrun": "Safely run the tasks to see what they do without releasing."
+    "-n, --dryrun": "Safely run the tasks to see what they do without releasing.",
+    "-p, --plugin": "Override configured plugins. Specify more than once for multiple plugins."
   }, {
     optionColor: "gray",
     width: 20
