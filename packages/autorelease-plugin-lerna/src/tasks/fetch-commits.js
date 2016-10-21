@@ -18,22 +18,17 @@ export async function newestCommitHash(packages, exec) {
   return index >= 0 ? hashes[index] : null;
 }
 
-export async function fetchCommitsContext(ctx) {
-  // generate new context with that gitHead
-  return {
-    ...ctx,
-    latest: {
-      gitHead: await newestCommitHash(ctx.lerna.packages, ctx.exec.bind(ctx))
-    }
-  };
-}
-
 export default async function(ctx) {
   // do normal stuff on non-independent
   if (!ctx.lerna.independent) return await fetchCommits(ctx);
 
   // fetch commits
-  ctx.commits = await fetchCommits(await fetchCommitsContext(ctx));
-  console.log("Detected %s new commits since last release", ctx.commits.length);
+  const gitHead = await newestCommitHash(ctx.lerna.packages, ctx.exec.bind(ctx));
+  ctx.commits = await fetchCommits({
+    ...ctx,
+    latest: { gitHead }
+  });
+
+  console.log("Detected %s new commits%s", ctx.commits.length, gitHead ? ` (since ${gitHead.substr(0, 8)})` : "");
   return ctx.commits;
 }

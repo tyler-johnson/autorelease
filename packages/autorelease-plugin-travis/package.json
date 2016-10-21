@@ -6,6 +6,10 @@
     "lodash": "^4.16.4",
     "travis-after-all": "^1.4.4"
   },
+  "devDependencies": {
+    "autorelease-test-utils": "*",
+    "autorelease": "*"
+  },
   "files": [
     "lib"
   ]

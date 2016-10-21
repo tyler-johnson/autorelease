@@ -28,7 +28,7 @@ export default function({ cli }) {
 	cli.newline();
 
   cli.indent();
-  cli.print(`These are common tasks that are available. To view a concrete list of all tasks as they have been configured, use ${chalk.blue("autorelease ls")}`);
+  cli.print(`These are common tasks that are available.\nTo view a concrete list of all tasks as they have been configured, use ${chalk.blue("autorelease ls")}`);
 	cli.newline();
 
   cli.printOptions({

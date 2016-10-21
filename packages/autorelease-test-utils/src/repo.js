@@ -15,7 +15,7 @@ const mkdirp = promisify(_mkdirp);
 const rimraf = promisify(_rimraf);
 const exec = promisify(_exec);
 
-export class Repository {
+export default class Repository {
 	constructor(dirname) {
 		this._dirname = resolve(dirname);
 	}

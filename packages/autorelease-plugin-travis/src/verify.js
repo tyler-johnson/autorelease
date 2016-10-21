@@ -3,7 +3,7 @@ import travisAfterAll from "travis-after-all";
 
 export default async function(ctx) {
 	const {options={}} = ctx;
-	const {branch} = options;
+	const {branch,travis={}} = options;
 
 	if (process.env.TRAVIS !== "true") {
 		throw("This is not running on Travis CI and therefore a new version won't be published.");
@@ -34,20 +34,22 @@ export default async function(ctx) {
 		}
 	}
 
-	await new Promise((resolve, reject) => {
-		travisAfterAll((code, err) => {
-			if (err) return reject(err);
+	if (travis.waitForJobs !== false) {
+		await new Promise((resolve, reject) => {
+			travisAfterAll((code, err) => {
+				if (err) return reject(err);
 
-			if (code === 0) return resolve();
-			else if (code === 1) {
-				return reject("In this run not all jobs passed and therefore a new version won't be published.");
-			}
-			else if (code === 2) {
-				return reject("This test run is not the build leader and therefore a new version won't be published.");
-			}
-			else {
-				return reject("Unkown travis-after-all error");
-			}
+				if (code === 0) return resolve();
+				else if (code === 1) {
+					return reject("In this run not all jobs passed and therefore a new version won't be published.");
+				}
+				else if (code === 2) {
+					return reject("This test run is not the build leader and therefore a new version won't be published.");
+				}
+				else {
+					return reject("Unkown travis-after-all error");
+				}
+			});
 		});
-	});
+	}
 }

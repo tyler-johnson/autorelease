@@ -22,7 +22,7 @@ export default function() {
     .addLernaTask("resolveVersion", resolveVersion, {
       contextKeys: [ "version" ],
       updatedOnly: true,
-      log: "Determining new versions"
+      log: "Determining new package versions from commit messages"
     })
     .add("prepPublish", prepPublish);
 

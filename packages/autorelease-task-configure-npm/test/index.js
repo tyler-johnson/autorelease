@@ -1,6 +1,6 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
-import {Repository} from "autorelease-test-utils";
+import {Repository,env} from "autorelease-test-utils";
 import configureNpm from "../src/index.js";
 
 const test = tapePromise(tape);
@@ -39,12 +39,17 @@ test("accepts npm token from environment", async (t) => {
     })
     .flush();
 
-  process.env.NPM_TOKEN = "12345";
-  const ctx = await testrepo.context();
-  await configureNpm(ctx);
+  env.push("NPM_TOKEN", "12345");
 
-  const npmrc = await testrepo.readFile(".npmrc");
-  t.equals(npmrc, "//customnpmregistry.com/:_authToken=12345\n", "had npmrc file with auth token");
+  try {
+    const ctx = await testrepo.context();
+    await configureNpm(ctx);
+
+    const npmrc = await testrepo.readFile(".npmrc");
+    t.equals(npmrc, "//customnpmregistry.com/:_authToken=12345\n", "had npmrc file with auth token");
+  } finally {
+    env.pop("NPM_TOKEN");
+  }
 });
 
 test("doesn't do anything when no npm token is provided", async (t) => {
@@ -55,15 +60,20 @@ test("doesn't do anything when no npm token is provided", async (t) => {
     .package({ name: "testrepo" })
     .flush();
 
-  delete process.env.NPM_TOKEN;
-  const ctx = await testrepo.context();
-  await configureNpm(ctx);
+  env.push("NPM_TOKEN", void 0);
 
   try {
-    await testrepo.readFile(".npmrc");
-    t.fail(".npmrc file exists");
-  } catch(e) {
-    t.equals(e.code, "ENOENT", ".npmrc doesn't exist");
+    const ctx = await testrepo.context();
+    await configureNpm(ctx);
+
+    try {
+      await testrepo.readFile(".npmrc");
+      t.fail(".npmrc file exists");
+    } catch(e) {
+      t.equals(e.code, "ENOENT", ".npmrc doesn't exist");
+    }
+  } finally {
+    env.pop("NPM_TOKEN");
   }
 });
 

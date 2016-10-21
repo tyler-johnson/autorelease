@@ -4,27 +4,35 @@ import chalk from "chalk";
 import {name,version} from "../package.json";
 import help from "./help";
 import ls from "autorelease-task-ls";
-import autorelease from "./index";
+import {createPipeline} from "./index";
+import createContext from "autorelease-context";
 import * as cli from "./cli-utils";
 
 const argv = minimist(process.argv.slice(2), {
-  boolean: [ "help", "version" ],
+  boolean: [ "help", "version", "dryrun" ],
   alias: {
     h: "help", H: "help",
-    v: "version", V: "version"
+    v: "version", V: "version",
+    n: "dryrun"
   }
 });
 
 if (argv.help) argv._ = ["help"];
 else if (argv.version) argv._ = ["version"];
 
-(async () => {
-  const pipeline = await autorelease(argv);
-  pipeline.context.cli = cli;
+function isRealTask(n) {
+  return n !== "ls" && n !== "version" && n.substr(0, 5) !== "help.";
+}
 
-  pipeline.add("ls", ls);
-  pipeline.add("help.autorelease", help);
-  pipeline.pipeline("version").add(function() {
+(async () => {
+  const ctx = await createContext(argv);
+  const autorelease = await createPipeline(ctx);
+  ctx.cli = cli;
+  ctx.root = autorelease;
+
+  autorelease.add("ls", ls);
+  autorelease.add("help.autorelease", help);
+  autorelease.pipeline("version").add(function() {
     console.log("%s %s", name, version);
   });
 
@@ -48,26 +56,36 @@ else if (argv.version) argv._ = ["version"];
   let hasReal = false;
   while (tasknames.length) {
     const n = tasknames.shift();
-    const task = pipeline.get(n);
+    const task = autorelease.get(n);
     if (!task) {
       missing.push(n);
       continue;
     }
 
-    tasks.push(task);
-    if (n !== "ls" && n !== "version" && n.substr(0, 5) !== "help.") hasReal = true;
+    tasks.push([n, task]);
   }
 
   if (missing.length) {
-    throw(`Missing the following tasks:\n  ${missing.join("\n  ")}\n\nNeed help? Run ${chalk.blue("autorelease help")}`);
+    throw(`Missing the following tasks:\n  ${missing.join("\n  ")}\n\nNeed help? Run ${chalk.blue("autorelease help")} 💁`);
+  }
+
+  if (ctx.dryrun) {
+    console.log(chalk.yellow("This is a dryrun 👻"));
   }
 
   while (tasks.length) {
-    await tasks.shift()(pipeline.context);
+    const [n,task] = tasks.shift();
+
+    if (isRealTask(n)) {
+      hasReal = true;
+      console.log(chalk.blue(`Running ${chalk.bold(n)} task 👷`));
+    }
+
+    await task(ctx);
   }
 
   if (hasReal) {
-    console.log(chalk.green.bold("Autorelease tasks completed successfully 🎉"));
+    console.log(chalk.green.bold("Autorelease completed successfully 🎉"));
   }
 })().catch(e => {
   console.error("");
