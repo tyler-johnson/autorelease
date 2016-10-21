@@ -20,10 +20,11 @@ export const print = function() {
   }));
 };
 
-export const printOption = (msg, opt) => {
+export const printOption = (c={}, msg, opt) => {
+  const {optionColor,width=28} = c;
   console.log(cliformat.columns.wrap([{
-    content: chalk.green(opt),
-    width: 28,
+    content: !optionColor ? opt : chalk[optionColor](opt),
+    width,
     paddingLeft: repeat("  ", tablen)
   }, {
     content: msg,
@@ -32,6 +33,6 @@ export const printOption = (msg, opt) => {
   }]));
 };
 
-export const printOptions = (opts) => {
-  forEach(opts, printOption);
+export const printOptions = (opts, c) => {
+  forEach(opts, printOption.bind(null, c));
 };
