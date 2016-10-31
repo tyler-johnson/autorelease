@@ -1,6 +1,6 @@
 # Autorelease Task: Configure NPM
 
-An autorelease task that creates a project level `.npmrc` file and adds an NPM auth token. This will authenticate future calls to the NPM cli.
+An Autorelease task that creates a project level `.npmrc` file and adds an NPM auth token. This will authenticate future calls to the NPM cli.
 
 This task is a part of [plugin-pre](../autorelease-plugin-pre) and [plugin-core](../autorelease-plugin-core).
 

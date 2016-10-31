@@ -1,6 +1,6 @@
 # Autorelease Task: Fetch Latest
 
-An autorelease task that fetches the latest `package.json` from the NPM registry.
+An Autorelease task that fetches the latest `package.json` from the NPM registry.
 
 This task is a part of [plugin-pre](../autorelease-plugin-pre) and [plugin-core](../autorelease-plugin-core).
 

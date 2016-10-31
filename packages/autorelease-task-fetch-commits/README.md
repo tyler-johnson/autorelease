@@ -1,6 +1,6 @@
 # Autorelease Task: Fetch Commits
 
-An autorelease task that fetches all the git commits since the last release and parses them useable format.
+An Autorelease task that fetches all the git commits since the last release and parses them useable format.
 
 This task is a part of [plugin-pre](../autorelease-plugin-pre) and [plugin-core](../autorelease-plugin-core).
 
