@@ -71,7 +71,7 @@ function isRealTask(n) {
   }
 
   if (missing.length) {
-    throw(`Missing the following tasks:\n  ${missing.join("\n  ")}\n\nNeed help? Run ${chalk.blue("autorelease help")} 💁`);
+    throw(`Missing the following tasks:\n  ${missing.join("\n  ")}\n\nNeed help? 💁  Run ${chalk.blue("autorelease help")}`);
   }
 
   if (ctx.dryrun) {
