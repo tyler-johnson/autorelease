@@ -26,3 +26,11 @@ export function length(key) {
   if (temp[key] == null) return 0;
   return temp[key].length;
 }
+
+export function reset() {
+  Object.keys(temp).forEach(k => {
+    if (!Array.isArray(temp[k]) || !temp[k].length) return;
+    set(k, temp[k][0]);
+    delete temp[k];
+  });
+}
