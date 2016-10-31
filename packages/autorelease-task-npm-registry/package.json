@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
+    "es6-promisify": "^5.0.0",
     "nerf-dart": "^1.0.0",
     "registry-url": "^3.1.0"
   },
