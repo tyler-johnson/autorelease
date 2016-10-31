@@ -15,7 +15,7 @@ Add the task to your `.autoreleaserc` config.
 ```json
 {
   "tasks": {
-    "verify": ["git-remote"]
+    "pre": ["git-remote"]
   }
 }
 ```
