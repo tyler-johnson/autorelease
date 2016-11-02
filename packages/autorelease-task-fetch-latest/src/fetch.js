@@ -5,7 +5,7 @@ import {request} from "http";
 
 export default async function(basedir=".", pkg={}, tags="latest") {
   if (!pkg.name) {
-		throw "Missing a package name.";
+		throw "Your package is missing a name.";
 	}
 
   const registry = await getRegistryUrl({ basedir, package: pkg });

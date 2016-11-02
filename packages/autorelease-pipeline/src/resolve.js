@@ -13,7 +13,7 @@ function nodeResolve(name, opts) {
 const pathex = /^\.{0,2}\/|^\.{1,2}$/;
 const missing = /cannot find module/i;
 
-export default async function resolve(prefix, name, basedir) {
+export default async function resolve(prefix, name, basedir=".") {
   if (Array.isArray(name)) {
     return Promise.all(name
       .filter(v => typeof v === "string")
@@ -24,17 +24,22 @@ export default async function resolve(prefix, name, basedir) {
 
   let filepath;
 
+  // look up as relative if it is a path
   if (pathex.test(name)) {
     filepath = pathResolve(basedir, name);
   } else {
-    try {
-      filepath = await nodeResolve(name, { basedir });
-    } catch(e) {
-      if (missing.test(e.toString()) && !startsWith(name, prefix)) {
+    // look it up with the prefix first
+    if (!startsWith(name, prefix)) {
+      try {
         filepath = await nodeResolve(prefix + name, { basedir });
-      } else {
-        throw e;
+      } catch(e) {
+        if (!missing.test(e.toString())) throw e;
       }
+    }
+
+    // then just look it up normally
+    if (!filepath) {
+      filepath = await nodeResolve(name, { basedir });
     }
   }
 

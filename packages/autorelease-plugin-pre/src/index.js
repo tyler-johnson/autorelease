@@ -18,6 +18,11 @@ export default function(autorelease) {
     .add("fetchCommits", log((c) => `Detected ${c.length} new commits since last release`, fetchCommits))
     .add("resolveVersion", log((c) => `Detected ${c.type} version bump to ${c.next}`, resolveVersion))
     .add("prepPublish", log("Saved new version to package.json", prepPublish));
+
+  // add a setup task to set package.json script
+  autorelease.add("setup.pre", (ctx) => {
+    ctx.script.before("pre");
+  });
 }
 
 function log(msg, fn) {

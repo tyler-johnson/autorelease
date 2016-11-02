@@ -6,10 +6,24 @@ export function init() {
   this.clear();
 }
 
+export async function run(ctx) {
+  const tasks = this._tasks.slice(0);
+
+  while (tasks.length) {
+    await tasks.shift().call(this, ctx);
+  }
+
+  return ctx;
+}
+
 export function clear() {
   this._tasks = [];
   this._byName = {};
   return this;
+}
+
+export function size() {
+  return this._tasks.length;
 }
 
 export function add(name, task, before) {

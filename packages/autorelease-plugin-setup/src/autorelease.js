@@ -3,6 +3,7 @@ import {union,padEnd} from "lodash";
 import shellEscape from "shell-escape";
 import ProgressBar from "progress";
 import chalk from "chalk";
+import createPipeline from "autorelease-pipeline";
 
 function andify(list) {
   const len = list.length;
@@ -62,7 +63,7 @@ async function getPlugins(ctx, install) {
 
 // 2. configure project for autorelease
 export default async function(ctx) {
-  ctx.cli.print(chalk.blue("Let's begin by adding base configuration for Autorelease."));
+  ctx.cli.print(chalk.blue("Alright, let's start by adding base configuration for Autorelease."));
 
   // 2.1. install autorelease as dev dep
   if (!ctx.package.devDependencies || !ctx.package.devDependencies.autorelease) {
@@ -97,6 +98,11 @@ export default async function(ctx) {
 
   install = await getPlugins(ctx, install);
 
+  if (!install.length && (!ctx.config.plugins || !ctx.config.plugins.length)) {
+    ctx.cli.print("No plugins provided so I'm going to setup for the local command line.");
+    // install = ["core"]; // TODO
+  }
+
   if (install.length) {
     if (ctx.config.plugins == null) ctx.config.plugins = [];
 
@@ -121,6 +127,7 @@ export default async function(ctx) {
         ctx.config.plugins.push(name);
       }
 
+      // TODO
       // if (!startsWith(name, "autorelease-plugin-")) {
       //   name = "autorelease-plugin-" + name;
       // }
@@ -129,4 +136,29 @@ export default async function(ctx) {
       pb.tick({ name: truncate(install[0], 30) });
     }
   }
+
+  // 2.4. Load plugins for this setup
+  if (!Array.isArray(ctx.config.plugins) || !ctx.config.plugins.length) {
+    throw "No plugins are configured so there isn't much for me to do. 🤔";
+  }
+
+  ctx.cli.print("Loading plugins to see if they need setup.");
+  const pipeline = ctx.plugins = createPipeline();
+  pipeline.context = ctx;
+
+  const plugins = [].concat(ctx.config.plugins);
+  while (plugins.length) {
+    await pipeline.use(plugins.shift(), ctx.basedir);
+  }
+
+  // 2.5. Ask about git branches
+  let {branches} = await ctx.prompt([{
+    type: "input",
+    name: "branches",
+    message: "Which git branch that should I allow releasing from? Leave empty for any.",
+    default: ctx.config.branch ? [].concat(ctx.config.branch).filter(Boolean).join(",") : null
+  }]);
+
+  branches = parsePlugins(branches);
+  if (branches.length) ctx.config.branch = branches;
 }

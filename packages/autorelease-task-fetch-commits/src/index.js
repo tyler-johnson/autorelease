@@ -2,8 +2,9 @@ import parseCommits from "conventional-commits-parser";
 import gitRawCommits from "./git-raw-commits";
 
 export default async function(ctx, gitRawCommitsOpts, parserOpts) {
-	const {latest={},options={},basedir="."} = ctx;
+	const {options={},basedir="."} = ctx;
 	const {version,gitRef} = options;
+	const latest = ctx.latest || {};
 	let gitHead;
 
 	const showRef = async (v) => (await ctx.exec(`git show-ref -s v${v}`)).trim();

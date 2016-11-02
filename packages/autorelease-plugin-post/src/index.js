@@ -15,6 +15,11 @@ export default function(autorelease) {
     .add("generateChangelog", log("Generated changelog from commit messages", generateChangelog))
     .add("writeChangelog", log((c, {basedir}) => `Wrote changelog to ${relative(basedir, c)}`, writeChangelog))
     .add("gitTag", log((c) => `Created new git tag ${c}`, gitTag));
+
+  // add a setup task to set package.json script
+  autorelease.add("setup.post", (ctx) => {
+    ctx.script.after("post");
+  });
 }
 
 function log(msg, fn) {

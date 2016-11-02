@@ -1,7 +1,5 @@
 import pipeline from "autorelease-pipeline";
 import createContext from "autorelease-context";
-import plugins from "./plugins";
-import tasks from "./tasks";
 
 export default async function(opts={}) {
   const ctx = await createContext(opts);
@@ -14,8 +12,14 @@ export async function createPipeline(ctx={}) {
   const autorelease = pipeline((o, next) => next(ctx));
 
   if (ctx.options) {
-    await plugins(autorelease, ctx.options.plugins, ctx.basedir);
-    await tasks(autorelease, ctx.options.tasks, ctx.basedir);
+    // apply plugins first
+    const plugins = [].concat(ctx.options.plugins);
+    while (plugins.length) {
+      await autorelease.use(plugins.shift(), ctx.basedir);
+    }
+
+    // then apply user tasks to override plugins
+    await autorelease.applyTasks(ctx.options.tasks, ctx.basedir);
   }
 
   return autorelease;

@@ -31,8 +31,9 @@ These are some tutorials on configuring Autorelease for popular environments.
 
 These are some of the plugins available for autorelease. [See NPM for a more complete list.](https://www.npmjs.com/browse/keyword/autorelease)
 
-- [autorelease-plugin-github](packages/autorelease-plugin-github) - Create releases on Github.
-- [autorelease-plugin-travis](packages/autorelease-plugin-travis) - Verify the release is in Travis CI.
+- [autorelease-plugin-pre](packages/autorelease-plugin-pre) - The `pre` pipeline that bumps the version based on commit messages.
+- [autorelease-plugin-post](packages/autorelease-plugin-post) - The `post` pipeline that generates the changelog and creates a git tag.
+- [autorelease-plugin-core](packages/autorelease-plugin-core) - An all-in-one plugin that includes plugin-pre, plugin-post, [task-verify-branch](./packages/autorelease-task-verify-branch) and [task-npm-publish](./packages/autorelease-task-npm-publish).
+- [autorelease-plugin-github](packages/autorelease-plugin-github) - Create releases and upload changelogs to Github.
+- [autorelease-plugin-travis](packages/autorelease-plugin-travis) - Run Autorelease inside a Travis CI environment.
 - [autorelease-plugin-lerna](packages/autorelease-plugin-lerna) - Publish [lerna](http://ghub.io/lerna) packages.
-- [autorelease-plugin-pre](packages/autorelease-plugin-pre) - The core `pre` pipeline that handles the version bump.
-- [autorelease-plugin-post](packages/autorelease-plugin-post) - The core `post` pipeline that generates the changelog and creates a git tag.

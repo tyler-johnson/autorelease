@@ -1,0 +1,14 @@
+{
+  "name": "autorelease-plugin-core",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "dependencies": {
+    "autorelease-plugin-pre": "*",
+    "autorelease-plugin-post": "*",
+    "autorelease-task-verify-branch": "*",
+    "autorelease-task-npm-publish": "*"
+  },
+  "files": [
+    "lib"
+  ]
+}

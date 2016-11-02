@@ -36,7 +36,7 @@ const hijack = {
       .map(t => "help." + t);
   },
   setup: function(t, a) {
-    a.plugins.unshift(setup);
+    a.plugins = [setup];
     return ["setup"];
   }
 };
@@ -59,6 +59,10 @@ const hijack = {
 
   if (!tasknames.length) {
     tasknames.push("help.autorelease");
+  }
+
+  if (!argv.plugins.length) {
+    delete argv.plugins;
   }
 
   const ctx = await createContext(argv);
