@@ -4,6 +4,7 @@ import chalk from "chalk";
 import {name,version} from "../package.json";
 import help from "./help";
 import ls from "autorelease-task-ls";
+import setup from "autorelease-plugin-setup";
 import {createPipeline} from "./index";
 import createContext from "autorelease-context";
 import * as cli from "./cli-utils";
@@ -22,13 +23,43 @@ if (argv.help) argv._ = ["help"];
 else if (argv.version) argv._ = ["version"];
 
 function isRealTask(n) {
-  return n !== "ls" && n !== "version" && n.substr(0, 5) !== "help.";
+  return n !== "ls" &&
+    n !== "setup" &&
+    n !== "version" &&
+    n.substr(0, 5) !== "help.";
 }
+
+const hijack = {
+  help: function(tasknames) {
+    return tasknames
+      .filter(t => t.toLowerCase() !== "help")
+      .map(t => "help." + t);
+  },
+  setup: function(t, a) {
+    a.plugins.unshift(setup);
+    return ["setup"];
+  }
+};
 
 (async () => {
   argv.plugins = argv.plugins === false ? [] :
     [].concat(argv.plugins, argv.plugin).filter(Boolean);
-  if (!argv.plugins.length) delete argv.plugins;
+
+  let tasknames = commonPaths(argv._)
+    .map(t => t.trim())
+    .filter(Boolean);
+
+  tasknames.some(t => {
+    const task = t.toLowerCase();
+    if (typeof hijack[task] === "function") {
+      tasknames = hijack[task](tasknames, argv);
+      return true;
+    }
+  });
+
+  if (!tasknames.length) {
+    tasknames.push("help.autorelease");
+  }
 
   const ctx = await createContext(argv);
   const autorelease = await createPipeline(ctx);
@@ -40,21 +71,6 @@ function isRealTask(n) {
   autorelease.pipeline("version").add(function() {
     console.log("%s %s", name, version);
   });
-
-  let tasknames = commonPaths(argv._);
-  tasknames = tasknames.map(t => t.trim()).filter(Boolean);
-
-  if (tasknames.some(t => {
-    return t.toLowerCase() === "help";
-  })) {
-    tasknames = tasknames
-      .filter(t => t.toLowerCase() !== "help")
-      .map(t => "help." + t);
-  }
-
-  if (!tasknames.length) {
-    tasknames.push("help.autorelease");
-  }
 
   const tasks = [];
   const missing = [];

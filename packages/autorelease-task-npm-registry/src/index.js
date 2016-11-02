@@ -9,8 +9,10 @@ export default async function(ctx) {
 		registry = pkg.publishConfig.registry;
 	} else {
 		const conf = await loadNpmConf({ prefix: basedir });
-		const name = pkg.name.split("/")[0];
-		if (name[0] === "@") registry = conf.get(name + ":registry", "project");
+		if (pkg.name) {
+			const name = pkg.name.split("/")[0];
+			if (name[0] === "@") registry = conf.get(name + ":registry", "project");
+		}
 		if (!registry) registry = conf.get("registry", "project");
 	}
 
