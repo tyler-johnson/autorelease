@@ -1,6 +1,10 @@
 # Configuring Autorelease for GitHub and Travis CI
 
-This is a guide to help you set up Autorelease to automatically publish your Node.js projects using Travis CI and Github.
+This is a guide to help you set up Autorelease to automatically publish your Node.js projects using Travis CI and Github. This guide assumes a couple of things:
+
+- You are using Github and Travis CI (obviously).
+- You have an account with [NPM](https://npmjs.org).
+- You use [semantic commit message conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
 
 ## Easy Method
 
@@ -12,8 +16,26 @@ Run the following command in your shell:
 
 ```bash
 npm i autorelease -g
-autorelease setup -i github,travis
+autorelease setup -i pre,github,travis
 ```
+
+The above process unfortuantely does not add generated changelogs as that feature is provided by a task and not a plugin. Run the following to add that task:
+
+```bash
+npm i autorelease-task-generate-changelog -D
+```
+
+And add the following to the `.autoreleaserc` file so the task runs before the Github release is created.
+
+```json
+"tasks": {
+  "post": {
+    "generateChangelog": "generate-changelog:githubRelease"
+  }
+}
+```
+
+And that's it! Commit and push to GitHub and Travis CI should take over with the release. Make sure to stick to [commit message convention](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit) and start labelling commits with a type (i.e. `chore: setup project with autorelease`).
 
 ## Manual Method
 
@@ -24,7 +46,7 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
 1. *To begin, install some NPM dependencies needed for autorelease*
 
   ```bash
-  npm i autorelease autorelease-plugin-github autorelease-plugin-travis -D
+  npm i autorelease autorelease-plugin-pre autorelease-plugin-github autorelease-plugin-travis autorelease-task-generate-changelog -D
   ```
 
 2. *Create an `.autoreleaserc` file in the root of your package with the following contents*
@@ -33,13 +55,21 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
   {
     "branch": [ "master" ],
     "plugins": [
+      "pre",
       "github",
       "travis"
-    ]
+    ],
+    "tasks": {
+      "post": {
+        "generateChangelog": "generate-changelog:githubRelease"
+      }
+    }
   }
   ```
 
   The `branch` option will be verified in Travis CI before releasing. Set this value to the git branch you want to run autorelease from. All other branches will be denied.
+
+  The `tasks` object allows overriding of existing tasks. In this case, we are generating changelogs before releasing to github.
 
 3. *Add an `autorelease` NPM script to your `package.json`*
 
@@ -65,7 +95,9 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
     - npm run autorelease
   ```
 
-6. *Commit and push these changes to your remote GitHub repository.*
+6. *Commit and push these changes to your GitHub repository.*
+
+  Make sure to stick to [commit message convention](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit) and start labelling commits with a type (i.e. `chore: setup project with autorelease`).
 
 ### Step 2: Configure Travis CI
 

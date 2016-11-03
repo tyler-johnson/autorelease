@@ -155,7 +155,7 @@ export default async function(ctx) {
   let {branches} = await ctx.prompt([{
     type: "input",
     name: "branches",
-    message: "Which git branch that should I allow releasing from? Leave empty for any.",
+    message: "Which git branch should I allow releasing from? Leave empty for any.",
     default: ctx.config.branch ? [].concat(ctx.config.branch).filter(Boolean).join(",") : null
   }]);
 

@@ -1,5 +1,6 @@
 import verify from "./verify";
 import createRelease from "./create-release";
+import setup from "./setup";
 import {name,version} from "../package.json";
 
 export default function(autorelease) {
@@ -13,4 +14,7 @@ export default function(autorelease) {
 
   // run on post-release pipeline
   autorelease.pipeline("post").add("githubRelease", createRelease);
+
+  // add setup
+  autorelease.add("setup.github", setup);
 }

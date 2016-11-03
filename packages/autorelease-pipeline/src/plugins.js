@@ -15,6 +15,5 @@ export default async function(plugin, basedir) {
       throw new Error(`Unexpected ${typeof plugin} from plugin`);
   }
 
-  if (typeof fn.default === "function") fn = fn.default;
   if (typeof fn === "function") fn(this, opts);
 }

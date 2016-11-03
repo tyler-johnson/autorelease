@@ -6,7 +6,8 @@
     "autorelease-task-git-remote": "*",
     "es6-promisify": "^5.0.0",
     "git-head": "^1.14.0",
-    "github": "^4.0.0"
+    "github": "^4.0.0",
+    "request": "^2.76.0"
   },
   "files": [
     "lib"

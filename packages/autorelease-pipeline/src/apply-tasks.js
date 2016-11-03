@@ -2,6 +2,7 @@ import resolve from "./resolve";
 
 export default async function applyTasks(tasks, basedir, name) {
   let task = tasks;
+  let before;
 
   if (Array.isArray(tasks)) {
     tasks = tasks.slice(0);
@@ -24,13 +25,15 @@ export default async function applyTasks(tasks, basedir, name) {
 
     return;
   } else if (typeof tasks === "string") {
-    task = await resolve("autorelease-task-", tasks, basedir);
+    let p = tasks.split(":");
+    before = p[1];
+    task = await resolve("autorelease-task-", p[0], basedir);
   }
 
   if (typeof task !== "function") {
     return;
   }
 
-  if (name) this.add(name, task);
-  else this.add(task);
+  if (name) this.add(name, task, before);
+  else this.add(task, before);
 }

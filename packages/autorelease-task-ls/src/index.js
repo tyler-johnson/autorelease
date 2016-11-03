@@ -3,7 +3,7 @@ import treeify from "./treeify";
 
 const anon = chalk.gray("anonymous");
 const ispipe = chalk.red("*");
-const ignoreRoot = [ "ls", "help", "version" ];
+const ignoreRoot = [ "ls", "help", "version", "setup" ];
 
 export default function({ cli, root }) {
   cli.reset(0);

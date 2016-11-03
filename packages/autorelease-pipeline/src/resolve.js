@@ -43,5 +43,7 @@ export default async function resolve(prefix, name, basedir=".") {
     }
   }
 
-  return require(filepath);
+  let fn = require(filepath);
+  if (typeof fn.default === "function") fn = fn.default;
+  return fn;
 }
