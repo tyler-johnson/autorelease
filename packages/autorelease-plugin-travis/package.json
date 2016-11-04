@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "dependencies": {
+    "es6-promisify": "^5.0.0",
+    "js-yaml": "^3.6.1",
     "lodash": "^4.16.4",
-    "travis-after-all": "^1.4.4"
+    "request": "^2.78.0",
+    "travis-after-all": "^1.4.4",
+    "travis-ci": "^2.1.1"
   },
   "devDependencies": {
     "autorelease-test-utils": "*",

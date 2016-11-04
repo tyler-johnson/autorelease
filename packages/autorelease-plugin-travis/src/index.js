@@ -1,4 +1,5 @@
 import verify from "./verify";
+import setup from "./setup";
 import {name,version} from "../package.json";
 
 export default function(autorelease) {
@@ -8,4 +9,6 @@ export default function(autorelease) {
   });
 
   autorelease.pipeline("verify").add("travisVerify", verify);
+
+  autorelease.add("setup.travis", setup);
 }

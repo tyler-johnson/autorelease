@@ -115,7 +115,7 @@ const hijack = {
 })().catch(e => {
   console.error("");
   console.error(chalk.bgRed.white.bold("Aborted Release"));
-  console.error(e.stack ? e.stack : e.toString ? e.toString() : e);
+  console.error(e.stack ? e.stack : e);
   console.error("");
   process.exit(1);
 });

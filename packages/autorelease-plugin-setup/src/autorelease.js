@@ -76,7 +76,7 @@ export default async function(ctx) {
     const {keep} = await ctx.prompt([{
       type: "confirm",
       name: "keep",
-      message: "It looks like this project has an existing Autorelease configuration. Would you like to keep it?",
+      message: "It looks like this project has existing configuration. Would you like to keep it?",
       default: true
     }]);
 
