@@ -4,8 +4,13 @@ notifications:
   email: false
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
+      - g++-4.8
       - libgnome-keyring-dev
+env:
+  - CXX=g++-4.8
 cache:
   - node_modules
 node_js:
