@@ -4,6 +4,7 @@ import {resolve} from "path";
 import url from "url";
 import promisify from "es6-promisify";
 import gitRemote from "autorelease-task-git-remote";
+import generateChangelog from "autorelease-task-generate-changelog";
 
 const gitHead = promisify(_gitHead);
 
@@ -13,12 +14,16 @@ export default async function(ctx) {
     package: pkg,
     version,
     options = {},
-    changelog = "",
     dryrun
   } = ctx;
 
   const ver = version ? version.next : pkg.version;
   if (!ver) return;
+
+  let changelog = ctx.changelog;
+  if (typeof changelog !== "string") {
+    changelog = await generateChangelog(ctx);
+  }
 
   const gitUrl = await gitRemote(ctx);
   const head = await gitHead(resolve(basedir, ".git"));

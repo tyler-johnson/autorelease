@@ -4,6 +4,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "autorelease-task-git-remote": "*",
+    "autorelease-task-generate-changelog": "*",
     "es6-promisify": "^5.0.0",
     "git-head": "^1.14.0",
     "github": "^4.0.0",
