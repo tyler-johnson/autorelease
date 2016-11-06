@@ -120,7 +120,7 @@ test("doesn't throw error when environment checks out", async (t) => {
     branch: ["master"],
     travis: { waitForJobs: false }
   });
-  
+
   const autorelease = await createPipeline(ctx);
   travisPlugin(autorelease);
 

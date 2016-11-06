@@ -71,7 +71,7 @@ export default async function(ctx) {
       default: true,
       when: () => Boolean(password)
     },{
-      type: "input",
+      type: "password",
       name: "password",
       message: "What is your NPM password?",
       when: ({confirm:c}) => !c
@@ -81,7 +81,7 @@ export default async function(ctx) {
     ctx.cli.print(`Thanks! Your NPM token is ${ctx.npmToken}`);
 
     // add password after we successfully get a token
-    if (r.password) keytar.addPassword("npm:" + registry, username, password);
+    if (r.password) keytar.addPassword("npm:" + registry, username, r.password);
   }
 
   ctx.cli.print("Depending on your environment, you may need to manually set this to the NPM_TOKEN env var.");

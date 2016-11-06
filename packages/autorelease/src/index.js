@@ -12,14 +12,16 @@ export async function createPipeline(ctx={}) {
   const autorelease = pipeline((o, next) => next(ctx));
 
   if (ctx.options) {
+    let {plugins,tasks} = ctx.options;
+    plugins = plugins != null ? [].concat(plugins) : [];
+
     // apply plugins first
-    const plugins = [].concat(ctx.options.plugins);
     while (plugins.length) {
       await autorelease.use(plugins.shift(), ctx.basedir);
     }
 
     // then apply user tasks to override plugins
-    await autorelease.applyTasks(ctx.options.tasks, ctx.basedir);
+    await autorelease.applyTasks(tasks, ctx.basedir);
   }
 
   return autorelease;
