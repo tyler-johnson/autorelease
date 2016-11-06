@@ -2,6 +2,10 @@ sudo: false
 language: node_js
 notifications:
   email: false
+addons:
+  apt:
+    packages:
+      - libgnome-keyring-dev
 cache:
   - node_modules
 node_js:
