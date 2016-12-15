@@ -3,12 +3,12 @@
 This is a guide to help you set up Autorelease to automatically publish your Node.js projects using Travis CI and Github. This guide assumes a couple of things:
 
 - You are using Github and Travis CI (obviously).
-- You have an account with [NPM](https://npmjs.org).
-- You use [semantic commit message conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
+- You want to publish to a NPM registry and you have an account.
+- You use [semantic commit message conventions](../semantic-commit-messages.md)
 
 ## Easy Method
 
-The easiest way to configure autorelease for GitHub and Travis CI is to use the autorelease setup CLI. This will take you through a series of prompts and then properly configure your project. This automated setup more or less follows the same steps as the manual process.
+The easiest way to configure Autorelease for GitHub and Travis CI is to use the Autorelease setup CLI. This will take you through a series of prompts and then properly configure your project. This automated setup more or less follows the same steps as the manual process.
 
 > Note: this process will obtain access tokens for Github and NPM, which requires that you enter your credentials. If you don't trust giving your credentials to the CLI tool, you can always install Autorelease using the manual method below.
 
@@ -19,23 +19,13 @@ npm i autorelease -g
 autorelease setup -i pre,github,travis
 ```
 
-The above process unfortuantely does not add generated changelogs as that feature is provided by a task and not a plugin. Run the following to add that task:
+After, you can commit and push to GitHub so Travis CI will take over with the release. Make sure to follow semantic commit message conventions and add a commit type of `fix` or `feat` so the version can be bumped.
 
 ```bash
-npm i autorelease-task-generate-changelog -D
+git diff # review changes before committing!
+git add --all
+git commit -m "fix: publish with autorelease"
 ```
-
-And add the following to the `.autoreleaserc` file so the task runs before the Github release is created.
-
-```json
-"tasks": {
-  "post": {
-    "generateChangelog": "generate-changelog:githubRelease"
-  }
-}
-```
-
-And that's it! Commit and push to GitHub and Travis CI should take over with the release. Make sure to stick to [commit message convention](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit) and start labelling commits with a type (i.e. `chore: setup project with autorelease`).
 
 ## Manual Method
 
@@ -46,7 +36,7 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
 1. *To begin, install some NPM dependencies needed for autorelease*
 
   ```bash
-  npm i autorelease autorelease-plugin-pre autorelease-plugin-github autorelease-plugin-travis autorelease-task-generate-changelog -D
+  npm i autorelease autorelease-plugin-pre autorelease-plugin-github autorelease-plugin-travis -D
   ```
 
 2. *Create an `.autoreleaserc` file in the root of your package with the following contents*
@@ -58,18 +48,11 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
       "pre",
       "github",
       "travis"
-    ],
-    "tasks": {
-      "post": {
-        "generateChangelog": "generate-changelog:githubRelease"
-      }
-    }
+    ]
   }
   ```
 
   The `branch` option will be verified in Travis CI before releasing. Set this value to the git branch you want to run autorelease from. All other branches will be denied.
-
-  The `tasks` object allows overriding of existing tasks. In this case, we are generating changelogs before releasing to github.
 
 3. *Add an `autorelease` NPM script to your `package.json`*
 
@@ -97,7 +80,13 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
 
 6. *Commit and push these changes to your GitHub repository.*
 
-  Make sure to stick to [commit message convention](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit) and start labelling commits with a type (i.e. `chore: setup project with autorelease`).
+  Make sure to follow semantic commit message conventions and add a commit type of `fix` or `feat` so the version can be bumped.
+
+  ```bash
+  git diff # review changes before committing!
+  git add --all
+  git commit -m "fix: publish with autorelease"
+  ```
 
 ### Step 2: Configure Travis CI
 

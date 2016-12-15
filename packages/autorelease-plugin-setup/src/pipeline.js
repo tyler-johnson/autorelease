@@ -41,7 +41,8 @@ async function welcome(ctx) {
       if (typeof task !== "string") {
         throw new Error("Expecting string for task.");
       }
-      T.push(task);
+      
+      if (T.indexOf(task) < 0) T.push(task);
     };
   });
 

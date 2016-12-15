@@ -25,10 +25,6 @@ const travisyml = {
 	}
 };
 
-// function P(obj, method) {
-// 	return promisify(obj[method].bind(obj));
-// }
-
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -57,17 +53,16 @@ async function fetchEnvVars(R, repoid) {
 	});
 }
 
-async function saveEnvVar(R, repoid, vars, key, value) {
-	let evar = find(vars, [ "name", key ]);
+async function saveEnvVar(R, repoid, vars, name, value) {
+	let evar = find(vars, [ "name", name ]);
 	let id = evar ? evar.id : null;
-	console.log(key, value, evar);
 
 	return await R({
 		method: id ? "PATCH" : "POST",
 		url: `/settings/env_vars${id ? '/' + id : ''}`,
 		qs: { repository_id: repoid },
 		body: { env_var: {
-			key, value, public: false
+			name, value, public: false
 		} }
 	});
 }
@@ -139,12 +134,11 @@ export default async function(ctx) {
 	// save env variables
 	const {env_vars} = await fetchEnvVars(R, repo.id);
 	const addvars = [["NPM_TOKEN", ctx.npmToken],["GH_TOKEN", ctx.githubToken]];
-	const count = addvars.length;
 	while (addvars.length) {
 		const [key,val] = addvars.shift();
 		await saveEnvVar(R, repo.id, env_vars, key, val);
 	}
-	ctx.cli.print(`Saved ${count} environment variables to Travis CI.`);
+	ctx.cli.print(`Saved NPM_TOKEN and GH_TOKEN environment variables to Travis CI.`);
 
 	// check if a travis file exists
 	let hasTravisFile;
@@ -167,13 +161,15 @@ export default async function(ctx) {
 
 		if (addFile) {
 			await writeFile(".travis.yml", yaml.safeDump(travisyml));
+			ctx.cli.print("I've created a basic .travis.yml file in your project.");
 		}
 	}
 
 	// otherwise, add the autorelease script to after_success
 	else {
 		let tyml = yaml.safeLoad(await readFile(".travis.yml", "utf-8"));
-		if (!tyml.after_success) tyml.after_success = [];
+		if (tyml.after_success == null) tyml.after_success = [];
+		if (!Array.isArray(tyml.after_success)) tyml.after_success = [tyml.after_success];
 		if (!includes(tyml.after_success, "npm run autorelease")) {
 			tyml.after_success.push("npm run autorelease");
 			await writeFile(".travis.yml", yaml.safeDump(tyml));
