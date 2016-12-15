@@ -2,7 +2,7 @@
 
 This is a guide to help you set up Autorelease to automatically publish your Node.js projects using Travis CI and Github. This guide assumes a couple of things:
 
-- You are using Github and Travis CI (obviously).
+- You are using Github and Travis CI.
 - You want to publish to a NPM registry and you have an account.
 - You use [semantic commit message conventions](../semantic-commit-messages.md)
 
@@ -22,8 +22,8 @@ autorelease setup -i pre,github,travis
 After, you can commit and push to GitHub so Travis CI will take over with the release. Make sure to follow semantic commit message conventions and add a commit type of `fix` or `feat` so the version can be bumped.
 
 ```bash
-git diff # review changes before committing!
 git add --all
+git diff HEAD # review changes before committing!
 git commit -m "fix: publish with autorelease"
 ```
 
@@ -83,8 +83,8 @@ If you are curious how Autorelease is setup or do not trust entering your NPM an
   Make sure to follow semantic commit message conventions and add a commit type of `fix` or `feat` so the version can be bumped.
 
   ```bash
-  git diff # review changes before committing!
   git add --all
+  git diff HEAD # review changes before committing!
   git commit -m "fix: publish with autorelease"
   ```
 
