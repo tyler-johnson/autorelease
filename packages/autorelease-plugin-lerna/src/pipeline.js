@@ -5,14 +5,18 @@ import createPipeline from "autorelease-pipeline";
 import {find,clone} from "lodash";
 import ProgressBar from "progress";
 
-function getUpdatedPackages(packages, publishConfig={}) {
-  const pkggraph = pkgutils.getPackageGraph(packages);
-  const differ = new PkgDiffer(packages, pkggraph, {}, publishConfig);
+function getUpdatedPackages(rootPath, packages, publishConfig={}) {
+  const packageGraph = pkgutils.getPackageGraph(packages);
+  const differ = new PkgDiffer({
+    packages, packageGraph, rootPath
+  }, {}, publishConfig);
 
   return differ.getUpdates()
     .map((update) => update.package)
     .filter((pkg) => !pkg.isPrivate());
 }
+
+const DEFAULT_PACKAGE_GLOB = ["packages/*"];
 
 async function fetchPackages(ctx, next) {
   if (!ctx.lerna) {
@@ -24,8 +28,11 @@ async function fetchPackages(ctx, next) {
     if (lerna.config.lerna) console.log("Using Lerna v%s", lerna.config.lerna);
 
     lerna.independent = lerna.config.version === "independent";
-    lerna.packages = pkgutils.getPackages(pkgutils.getPackagesPath(basedir));
-    lerna.updated = getUpdatedPackages(lerna.packages, lerna.config.publishConfig);
+    lerna.packages = pkgutils.getPackages({
+      packageConfigs: lerna.config.packages || DEFAULT_PACKAGE_GLOB,
+      rootPath: fullbase
+    });
+    lerna.updated = getUpdatedPackages(fullbase, lerna.packages, lerna.config.publishConfig);
     console.log("Releasing %s packages of %s total", lerna.updated.length, lerna.packages.length);
 
     // always add the "main" package to the list that needs releasing
