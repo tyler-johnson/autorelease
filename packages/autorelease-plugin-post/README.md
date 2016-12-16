@@ -24,6 +24,12 @@ Add the plugin to your `.autoreleaserc` config.
 }
 ```
 
+When you are ready to release, run the following command:
+
+```bash
+autorelease post
+```
+
 ### Config
 
 This plugin adds the following configuration to the `.autoreleaserc`.

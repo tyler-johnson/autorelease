@@ -12,13 +12,6 @@ Publish quickly, often and consistently with Autorelease, which can automaticall
 - **create git tags** and create releases on Github or your favorite git host.
 - and anything else you can write a JavaScript function for.
 
-To quickly get your project set up with Autorelease, run the following:
-
-```js
-npm i autorelease -g
-autorelease setup
-```
-
 ### How do I use Autorelease with ...?
 
 These are some tutorials on configuring Autorelease for popular environments.
