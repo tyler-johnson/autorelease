@@ -17,8 +17,8 @@ Publish quickly, often and consistently with Autorelease, which can automaticall
 These are some tutorials on configuring Autorelease for popular environments.
 
 - [Github + Travis CI](docs/tutorials/github-travis.md)
-- [Gitlab + Gitlab CI]()
-- [Local Command Line]()
+<!-- - [Gitlab + Gitlab CI]()
+- [Local Command Line]() -->
 
 ### Plugins
 

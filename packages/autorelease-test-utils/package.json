@@ -1,7 +1,21 @@
 {
   "name": "autorelease-test-utils",
   "version": "0.0.0",
-  "main": "lib/index.js",
+  "description": "Autorelease testing utilities.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js test.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build-test": "rollup test/index.js -c -o test.js",
+    "build": "npm-run-all clean build-lib",
+    "test": "npm run build-test && node test.js",
+    "prepublish": "npm run build"
+  },
   "dependencies": {
     "autorelease-context": "*",
     "debug": "^2.2.0",
@@ -9,7 +23,12 @@
     "mkdirp": "^0.5.1",
     "rimraf": "^2.5.4"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
   "files": [
-    "lib"
+    "index.js"
   ]
 }

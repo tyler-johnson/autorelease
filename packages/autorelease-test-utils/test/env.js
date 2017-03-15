@@ -1,6 +1,6 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
-import {env} from "../";
+import {env} from "../src/index.js";
 
 const test = tapePromise(tape);
 

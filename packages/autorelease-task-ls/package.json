@@ -1,11 +1,28 @@
 {
   "name": "autorelease-task-ls",
   "version": "0.0.0",
-  "main": "lib/index.js",
+  "description": "An Autorelease task that lists all registered tasks.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build": "npm-run-all clean build-lib",
+    "prepublish": "npm run build"
+  },
   "dependencies": {
     "chalk": "^1.1.3"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
   "files": [
-    "lib"
+    "index.js"
   ]
 }

@@ -1,14 +1,31 @@
 {
   "name": "autorelease-plugin-core",
   "version": "0.0.0",
-  "main": "lib/index.js",
+  "description": "The primary Autorelease plugin for releasing locally.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build": "npm-run-all clean build-lib",
+    "prepublish": "npm run build"
+  },
   "dependencies": {
     "autorelease-plugin-pre": "*",
     "autorelease-plugin-post": "*",
     "autorelease-task-verify-branch": "*",
     "autorelease-task-npm-publish": "*"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
   "files": [
-    "lib"
+    "index.js"
   ]
 }

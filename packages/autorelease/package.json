@@ -1,8 +1,21 @@
 {
   "name": "autorelease",
   "version": "0.0.0",
-  "main": "lib/index.js",
+  "description": "Fully Automated NPM Publish.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
   "bin": "lib/cli.js",
+  "scripts": {
+    "clean": "shx rm -f index.js cli.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build-cli": "shx echo \"#!/usr/bin/env node\" > cli.js && rollup src/cli.js -c >> cli.js && shx chmod +x cli.js",
+    "build": "npm-run-all clean build-lib build-cli",
+    "prepublish": "npm run build"
+  },
   "dependencies": {
     "autorelease-pipeline": "*",
     "autorelease-context": "*",
@@ -14,7 +27,25 @@
     "minimist": "^1.2.0",
     "resolve": "^1.1.7"
   },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
   "files": [
-    "lib"
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "auto",
+    "automatic",
+    "release",
+    "semantic",
+    "version",
+    "package",
+    "publish",
+    "commit",
+    "npm",
+    "module"
   ]
 }

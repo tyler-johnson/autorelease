@@ -1,15 +1,32 @@
 {
   "name": "autorelease-task-fetch-latest",
   "version": "0.0.0",
-  "main": "lib/index.js",
+  "description": "An Autorelease task that retrieves the latest version of a package from NPM.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js test.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build-test": "rollup test/index.js -c -o test.js",
+    "build": "npm-run-all clean build-lib",
+    "test": "npm run build-test && node test.js",
+    "prepublish": "npm run build"
+  },
   "dependencies": {
     "autorelease-task-npm-registry": "*",
     "registry-auth-token": "^3.0.1"
   },
   "devDependencies": {
-    "autorelease-test-utils": "*"
+    "autorelease-test-utils": "*",
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
   },
   "files": [
-    "lib"
+    "index.js"
   ]
 }

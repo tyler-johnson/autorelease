@@ -1,6 +1,6 @@
 import tape from "tape";
 import tapePromise from "tape-promise";
-import {Repository} from "../";
+import {Repository} from "../src/index.js";
 import fs from "fs";
 import promisify from "es6-promisify";
 
