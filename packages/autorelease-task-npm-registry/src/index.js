@@ -1,6 +1,8 @@
 import nerfDart from "nerf-dart";
 import loadNpmConf from "./npmconf";
 
+export {loadNpmConf};
+
 export default async function(ctx) {
 	const {package:pkg,basedir} = ctx;
 	let registry;

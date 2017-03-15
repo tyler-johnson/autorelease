@@ -8,7 +8,10 @@ import ProgressBar from "progress";
 function getUpdatedPackages(rootPath, packages, publishConfig={}) {
   const packageGraph = pkgutils.getPackageGraph(packages);
   const differ = new PkgDiffer({
-    packages, packageGraph, rootPath
+    getOptions() { return {}; },
+    repository: {
+      packages, packageGraph, rootPath
+    }
   }, {}, publishConfig);
 
   return differ.getUpdates()
