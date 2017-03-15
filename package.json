@@ -7,7 +7,7 @@
     "clean": "lerna run clean && lerna clean --yes",
     "build": "lerna bootstrap",
     "prepublish": "npm run build",
-    "autorelease": "node cli.js verify pre publish post"
+    "autorelease": "node packages/autorelease/cli.js verify pre publish post"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
