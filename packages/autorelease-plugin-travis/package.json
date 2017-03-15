@@ -33,5 +33,9 @@
   },
   "files": [
     "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-plugin"
   ]
 }

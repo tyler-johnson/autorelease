@@ -1,6 +1,5 @@
-import getRegistry from "autorelease-task-npm-registry";
+import getRegistry, {loadNpmConf} from "autorelease-task-npm-registry";
 import chalk from "chalk";
-import npmconf from "autorelease-task-npm-registry/lib/npmconf";
 import nerfDart from "nerf-dart";
 import promisify from "es6-promisify";
 import _getNpmToken from "get-npm-token";
@@ -47,7 +46,7 @@ export default async function(ctx) {
     }
 
     //  3.3. obtain npm token
-    const conf = await npmconf({ prefix: ctx.basedir });
+    const conf = await loadNpmConf({ prefix: ctx.basedir });
     let {username,email} = await ctx.prompt([{
       type: "input",
       name: "username",

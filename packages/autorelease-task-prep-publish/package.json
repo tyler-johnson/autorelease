@@ -25,5 +25,9 @@
   },
   "files": [
     "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-task"
   ]
 }
