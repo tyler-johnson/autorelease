@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "conventional-commits-parser": "^1.2.3",
-    "dargs": "^4.1.0",
+    "dargs": "^5.1.0",
     "lodash": "^4.16.4",
     "split2": "^2.1.0",
     "through2": "^2.0.1"
