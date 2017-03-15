@@ -10,11 +10,11 @@ export default async function(ctx) {
 	}
 
 	if (has(process.env, "TRAVIS_PULL_REQUEST") && process.env.TRAVIS_PULL_REQUEST !== "false") {
-		throw("This test run was triggered by a pull request and therefore a new version won't be published.");
+		throw("This release was triggered by a pull request and therefore a new version won't be published.");
 	}
 
 	if (process.env.TRAVIS_TAG) {
-		throw("This test run was triggered by a git tag and therefore a new version won't be published.");
+		throw("This release was triggered by a git tag and therefore a new version won't be published.");
 	}
 
 	if (branch) {
@@ -44,7 +44,7 @@ export default async function(ctx) {
 					return reject("In this run not all jobs passed and therefore a new version won't be published.");
 				}
 				else if (code === 2) {
-					return reject("This test run is not the build leader and therefore a new version won't be published.");
+					return reject("This release is not the build leader and therefore a new version won't be published.");
 				}
 				else {
 					return reject("Unkown travis-after-all error");
