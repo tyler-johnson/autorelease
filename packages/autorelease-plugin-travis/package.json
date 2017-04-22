@@ -1,0 +1,41 @@
+{
+  "name": "autorelease-plugin-travis",
+  "version": "0.0.0",
+  "description": "An Autorelease plugin for using TravisCI to release.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js test.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build-test": "rollup test/index.js -c -o test.js",
+    "build": "npm-run-all clean build-lib",
+    "test": "npm run build-test && node test.js",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "es6-promisify": "^5.0.0",
+    "js-yaml": "^3.6.1",
+    "lodash": "^4.16.4",
+    "request": "^2.78.0",
+    "travis-after-all": "^1.4.4",
+    "travis-ci": "^2.1.1"
+  },
+  "devDependencies": {
+    "autorelease": "*",
+    "autorelease-test-utils": "*",
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-plugin"
+  ]
+}

@@ -2,18 +2,32 @@ sudo: false
 language: node_js
 notifications:
   email: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - libgnome-keyring-dev
+env:
+  - CXX=g++-4.8
+cache:
+  - node_modules
 node_js:
   - '5'
-before_install:
-  - npm i -g npm@latest
+  - '6'
+  - '7'
 install:
   - npm install
 before_script:
+  - git config --global user.email "autorelease@travis-ci.org"
+  - git config --global user.name "Autorelease CI"
   - npm run lint
 script:
   - npm test
 after_success:
-  - npm run autorelease
+  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run autorelease -- -n --no-progress; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then npm run autorelease -- --no-progress; fi
 branches:
   only:
     - "master"

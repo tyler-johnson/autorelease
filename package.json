@@ -1,74 +1,27 @@
 {
   "name": "autorelease",
-  "version": "0.0.0-edge",
-  "description": "Automatically release NPM packages based on commit messages.",
-  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tyler-johnson/autorelease.git"
-  },
-  "main": "index.js",
-  "bin": "cli.js",
+  "private": true,
   "scripts": {
-    "lint": "eslint src/ test/",
-    "build": "make clean && make",
+    "lint": "eslint packages/",
+    "test": "lerna run test",
+    "clean": "lerna run clean && lerna clean --yes",
+    "build": "lerna bootstrap",
     "prepublish": "npm run build",
-    "autorelease": "node ./cli.js pre && npm publish && node ./cli.js post"
-  },
-  "dependencies": {
-    "cli-format": "^3.0.8",
-    "conventional-changelog": "^1.1.0",
-    "conventional-commits-parser": "^1.0.1",
-    "es6-promisify": "^4.0.0",
-    "fs-promise": "^0.5.0",
-    "git-branch": "^0.3.0",
-    "git-raw-commits": "^1.1.0",
-    "global-npm": "^0.3.0",
-    "lodash": "^4.6.1",
-    "minimist": "^1.2.0",
-    "nerf-dart": "^1.0.0",
-    "package-json": "^2.3.1",
-    "rc": "^1.1.6",
-    "registry-url": "^3.0.3",
-    "resolve": "^1.1.7",
-    "semver": "^5.1.0"
+    "autorelease": "node packages/autorelease/cli.js verify pre publish post"
   },
   "devDependencies": {
-    "autorelease-github": "^1.0.0",
-    "autorelease-travis": "^1.0.0",
-    "babel-eslint": "^6.0.0",
-    "babel-plugin-external-helpers": "^6.5.0",
-    "babel-plugin-transform-async-to-generator": "^6.5.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.6.4",
-    "babel-plugin-transform-es2015-parameters": "^6.6.4",
-    "babel-plugin-transform-object-rest-spread": "^6.6.4",
-    "eslint": "^2.2.0",
-    "rollup": "^0.25.4",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-json": "^2.0.0",
-    "tape": "^4.4.0"
-  },
-  "keywords": [
-    "auto",
-    "automatic",
-    "release",
-    "semantic",
-    "version",
-    "package",
-    "publish",
-    "commit"
-  ],
-  "license": "MIT",
-  "files": [
-    "cli.js",
-    "configure-npm.js",
-    "fetch-commits.js",
-    "fetch-latest.js",
-    "generate-changelog.js",
-    "index.js",
-    "prep-publish.js",
-    "publish-changelog.js",
-    "resolve-version.js",
-    "verify.js"
-  ]
+    "babel-eslint": "^7.0.0",
+    "babel-plugin-transform-async-to-generator": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-es2015-parameters": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "conventional-changelog-angular": "^1.3.3",
+    "eslint": "^3.17.1",
+    "lerna": "2.0.0-rc.3",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-json": "^2.1.0",
+    "tape": "^4.6.2",
+    "tape-promise": "^2.0.1"
+  }
 }

@@ -1,10 +1,10 @@
 {
-	"branch": "master",
-	"preset": "angular",
-	"pre": {
-		"verify": [ "autorelease-github/verify", "autorelease-travis/verify" ]
-	},
-	"post": {
-		"publishChangelog": "autorelease-github/create-release"
-	}
+  "branch": "master",
+  "preset": "angular",
+  "prerelease": "alpha",
+  "plugins": [
+    "./packages/autorelease-plugin-lerna",
+    "./packages/autorelease-plugin-github",
+    "./packages/autorelease-plugin-travis"
+  ]
 }

@@ -1,3 +1,7 @@
-/node_modules
-/*.js
-!rollup.config.js
+lib/
+.npmrc
+testrepo/
+node_modules/
+*.log
+/cli.js
+packages/autorelease/README.md

@@ -1,0 +1,37 @@
+{
+  "name": "autorelease-task-verify-branch",
+  "version": "0.0.0",
+  "description": "An Autorelease task that verifies the git branch.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js test.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build-test": "rollup test/index.js -c -o test.js",
+    "build": "npm-run-all clean build-lib",
+    "test": "npm run build-test && node test.js",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "es6-promisify": "^5.0.0",
+    "git-branch": "^0.3.0",
+    "lodash": "^4.16.4"
+  },
+  "devDependencies": {
+    "autorelease-test-utils": "*",
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-task"
+  ]
+}

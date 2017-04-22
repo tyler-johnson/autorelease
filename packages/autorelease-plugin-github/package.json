@@ -1,0 +1,37 @@
+{
+  "name": "autorelease-plugin-github",
+  "version": "0.0.0",
+  "description": "An Autorelease plugin with tasks for pushing releases to GitHub.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build": "npm-run-all clean build-lib",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "autorelease-task-git-remote": "*",
+    "autorelease-task-generate-changelog": "*",
+    "es6-promisify": "^5.0.0",
+    "git-head": "^1.14.0",
+    "github": "^9.2.0",
+    "request": "^2.76.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-plugin"
+  ]
+}

@@ -1,64 +1,34 @@
 # Autorelease
 
-[![npm](https://img.shields.io/npm/v/autorelease.svg)](https://www.npmjs.com/package/autorelease) [![David](https://img.shields.io/david/tyler-johnson/autorelease.svg)](https://david-dm.org/tyler-johnson/autorelease) [![Build Status](https://travis-ci.org/tyler-johnson/autorelease.svg?branch=master)](https://travis-ci.org/tyler-johnson/autorelease)
+[![npm](https://img.shields.io/npm/v/autorelease.svg)](https://www.npmjs.com/package/autorelease) [![Build Status](https://travis-ci.org/tyler-johnson/autorelease.svg?branch=master)](https://travis-ci.org/tyler-johnson/autorelease)
 
-This is a tool to facilitate the releasing of NPM packages based on Git commit messages. This tool is designed to handled all aspects of publishing Node modules, including:
+**_Fully Automated NPM Publish._**
 
-- Release verification to ensure the environment is configured correctly before publishing.
-- Bumping package versions using semver according to commit types.
-- Generating changelogs from commit messages.
-- Tagging the commit in Git with the new version.
+Publish quickly, often and consistently with Autorelease, which can automatically:
 
-This is tool is highly configurable and can be adapted using plugins for almost any environment.
+- **verify releases** before publishing to ensure consistency.
+- **bump the version** in your package.json and publish to NPM.
+- **generate changelogs** from your commit messages.
+- **create git tags** and create releases on Github or your favorite git host.
+- and anything else you can write a JavaScript function for.
 
-This is very similar to [semantic-release](http://ghub.io/semantic-release), but *it is much less opinionated*. By default, this library does not assume you are using any specific remote git repository host or continuous integration platform. You can configure this tool to work with the environment of your choosing.
+### How do I use Autorelease with ...?
 
-## Install
+These are some tutorials on configuring Autorelease for popular environments.
 
-Install using NPM:
+- [Github + Travis CI](docs/tutorials/github-travis.md)
+<!-- - [Gitlab + Gitlab CI]()
+- [Local Command Line]() -->
 
-```bash
-npm i autorelease --save-dev
-```
+### Plugins
 
-You can also easily setup your package for Github or Gitlab using the [`autorelease-setup`](http://ghub.io/autorelease-setup) cli. That will take you through a series of prompts and install the correct autorelease packages, including plugins.
+These are some of the plugins available for autorelease. [See NPM for a more complete list.](https://www.npmjs.com/browse/keyword/autorelease)
 
-```bash
-npm i autorelease-setup -g
-autorelease-setup
-```
-
-## Basic Usage
-
-This CLI tool is split into two parts, a before release (pre) stage and an after release (post) stage, each with a series of steps. The before release sets up the repository for release, including release verification, bumping the version number and configuring NPM. The after release stage handles changelog generation and git tagging. The steps in these stages can be configured using the `.autoreleaserc` file.
-
-To release a module using this tool, add the following to you `package.json` after installing.
-
-```json
-{
-	"scripts": {
-		"autorelease": "autorelease pre && npm publish && autorelease post"
-	}
-}
-```
-
-You will also need to generate an NPM token, either by using `npm login` or with a package like [`get-npm-token`](http://ghub.io/get-npm-token). Set the token to the `NPM_TOKEN` environment variable.
-
-```bash
-export NPM_TOKEN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-```
-
-Now you can release your package from the command line with:
-
-```bash
-npm run autorelease
-```
-
-## Plugins
-
-There are currently a handful of plugins for Autorelease to configure it for common environments.
-
-- [autorelease-github](http://ghub.io/autorelease-github) - Publish changelog and tag version using Github releases.
-- [autorelease-travis](http://ghub.io/autorelease-travis) - Only allows releases in a Travis CI environment.
-- [autorelease-gitlab](http://ghub.io/autorelease-gitlab) - Only allows releases in a Gitlab CI environment. Also publishes changelog using Gitlab tags.
-- [autorelease-gemfury](http://ghub.io/autorelease-gemfury) - Configures the package for a Gemfury release.
+| Name | Description |
+| --- | --- |
+| [core](packages/autorelease-plugin-core) | All of the main tasks for releasing from the command line. |
+| [pre](packages/autorelease-plugin-pre) | Bumps the version based on commit messages and preps the package. |
+| [post](packages/autorelease-plugin-post) | Generates the changelog file and creates a git tag. |
+| [github](packages/autorelease-plugin-github) | Create releases and upload changelogs to Github. |
+| [travis](packages/autorelease-plugin-travis) | Autorelease from a Travis CI environment. |
+| [lerna](packages/autorelease-plugin-lerna) | Integration with [lerna](http://ghub.io/lerna) packages. |

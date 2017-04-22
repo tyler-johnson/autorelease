@@ -1,0 +1,36 @@
+{
+  "name": "autorelease-plugin-pre",
+  "version": "0.0.0",
+  "description": "An Autorelease plugin containing tasks to be run before a publish.",
+  "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-johnson/autorelease.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "clean": "shx rm -f index.js",
+    "build-lib": "rollup src/index.js -c -o index.js",
+    "build": "npm-run-all clean build-lib",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "autorelease-task-fetch-latest": "*",
+    "autorelease-task-fetch-commits": "*",
+    "autorelease-task-resolve-version": "*",
+    "autorelease-task-configure-npm": "*",
+    "autorelease-task-prep-publish": "*"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.41.5",
+    "shx": "^0.2.2"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "autorelease",
+    "autorelease-plugin"
+  ]
+}
