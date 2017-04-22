@@ -9,7 +9,7 @@ export default async function(ctx) {
 		throw("This is not running on Travis CI and therefore a new version won't be published.");
 	}
 
-	if (has(process.env, "TRAVIS_PULL_REQUEST") && process.env.TRAVIS_PULL_REQUEST !== "false") {
+	if (!ctx.dryrun && has(process.env, "TRAVIS_PULL_REQUEST") && process.env.TRAVIS_PULL_REQUEST !== "false") {
 		throw("This release was triggered by a pull request and therefore a new version won't be published.");
 	}
 
