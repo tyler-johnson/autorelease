@@ -5,8 +5,6 @@ import createPipeline from "autorelease-pipeline";
 import {find,clone} from "lodash";
 import ProgressBar from "progress";
 
-const DEFAULT_PACKAGE_GLOB = ["packages/*"];
-
 async function fetchPackages(ctx, next) {
   if (!ctx.lerna) {
     const {basedir="."} = ctx;
