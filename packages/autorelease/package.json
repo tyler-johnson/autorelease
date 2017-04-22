@@ -8,7 +8,7 @@
     "url": "https://github.com/tyler-johnson/autorelease.git"
   },
   "main": "index.js",
-  "bin": "lib/cli.js",
+  "bin": "cli.js",
   "scripts": {
     "clean": "shx rm -f index.js cli.js",
     "build-lib": "rollup src/index.js -c -o index.js",
