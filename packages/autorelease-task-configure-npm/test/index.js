@@ -23,7 +23,7 @@ test("creates .npmrc file with auth token and registry", async (t) => {
   await configureNpm(ctx);
 
   const npmrc = await testrepo.readFile(".npmrc");
-  t.equals(npmrc, "//customnpmregistry.com/:_authToken=12345\n", "had npmrc file with auth token");
+  t.equals(npmrc.trim(), "//customnpmregistry.com/:_authToken=12345", "had npmrc file with auth token");
 });
 
 test("accepts npm token from environment", async (t) => {
@@ -46,7 +46,7 @@ test("accepts npm token from environment", async (t) => {
     await configureNpm(ctx);
 
     const npmrc = await testrepo.readFile(".npmrc");
-    t.equals(npmrc, "//customnpmregistry.com/:_authToken=12345\n", "had npmrc file with auth token");
+    t.equals(npmrc.trim(), "//customnpmregistry.com/:_authToken=12345", "had npmrc file with auth token");
   } finally {
     env.pop("NPM_TOKEN");
   }
