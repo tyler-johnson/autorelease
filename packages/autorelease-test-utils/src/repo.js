@@ -108,9 +108,13 @@ export default class Repository {
 
 	// commit whatever changes there were
 	commit(message) {
+		const m = message.split(/\r?\n/g)
+			.map(l => `-m "${l.replace('"', '\\"')}"`)
+			.join(" ");
+
 		return this
 			.command(`git add --all`)
-			.command(`git commit -m "${message.replace('"', '\\"')}" --allow-empty`);
+			.command(`git commit ${m} --allow-empty`);
 	}
 
 	// persist the operations
