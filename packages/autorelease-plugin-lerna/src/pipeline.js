@@ -65,7 +65,7 @@ function addLernaTask(name, fn, opts={}) {
     const packages = (updatedOnly ? updated : all).slice(0);
     let pb;
 
-    if (progress && process.stdout.isTTY && process.stdout.clearLine) {
+    if (progress && ctx.options.progress !== false && process.stdout.isTTY && process.stdout.clearLine) {
       pb = new ProgressBar(`${log ? log + " " : ""}╢:bar╟ `, {
         total: packages.length,
         complete: "█",
