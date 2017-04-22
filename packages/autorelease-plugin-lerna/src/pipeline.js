@@ -1,23 +1,9 @@
 import {resolve,join} from "path";
-import pkgutils from "lerna/lib/PackageUtilities";
 import PkgDiffer from "lerna/lib/UpdatedPackagesCollector";
+import UpdatedCommand from "lerna/lib/commands/UpdatedCommand";
 import createPipeline from "autorelease-pipeline";
 import {find,clone} from "lodash";
 import ProgressBar from "progress";
-
-function getUpdatedPackages(rootPath, packages, publishConfig={}) {
-  const packageGraph = pkgutils.getPackageGraph(packages);
-  const differ = new PkgDiffer({
-    getOptions() { return {}; },
-    repository: {
-      packages, packageGraph, rootPath
-    }
-  }, {}, publishConfig);
-
-  return differ.getUpdates()
-    .map((update) => update.package)
-    .filter((pkg) => !pkg.isPrivate());
-}
 
 const DEFAULT_PACKAGE_GLOB = ["packages/*"];
 
@@ -31,11 +17,15 @@ async function fetchPackages(ctx, next) {
     if (lerna.config.lerna) console.log("Using Lerna v%s", lerna.config.lerna);
 
     lerna.independent = lerna.config.version === "independent";
-    lerna.packages = pkgutils.getPackages({
-      packageConfigs: lerna.config.packages || DEFAULT_PACKAGE_GLOB,
-      rootPath: fullbase
-    });
-    lerna.updated = getUpdatedPackages(fullbase, lerna.packages, lerna.config.publishConfig);
+
+    const update = new UpdatedCommand([], {}, fullbase);
+    update.logger.setLogLevel("warn");
+    update.runValidations();
+    update.runPreparations();
+    const pkgdiff = new PkgDiffer(update);
+
+    lerna.packages = update.packages;
+    lerna.updated = pkgdiff.getUpdates().map(p => p.package);
     console.log("Releasing %s packages of %s total", lerna.updated.length, lerna.packages.length);
 
     // always add the "main" package to the list that needs releasing
