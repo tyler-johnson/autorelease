@@ -26,7 +26,8 @@ before_script:
 script:
   - npm test
 after_success:
-  - npm run autorelease
+  - if [[ "$TRAVIS_PULL_REQUEST" == "true" ]]; then npm run autorelease -- -n; fi
+  - if [[ "$TRAVIS_PULL_REQUEST" != "true" ]]; then npm run autorelease; fi
 branches:
   only:
     - "master"
